@@ -47,12 +47,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        checkPermission();
     }
 
 
     @SuppressLint("MissingPermission")
     private void initLocation() {
+        initMarkers();
+
+        mMap.setMyLocationEnabled(true);
 
         //récupérartion dernier position connue
         FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -86,6 +88,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
+
+    private void initMarkers() {
+        // création d'un marqueur d'exemple
+        Marker wcs = mMap.addMarker(new MarkerOptions().position(new LatLng(43.5998979, 1.4431481)));
+
+        // on crée les informations liées au marqueur
+        MarkerInfos wcsInfos = new MarkerInfos("Wild Code School", "32 rue des marchards", R.drawable.ic_android_black_24dp);
+
+        // on associe les informations au marqueur
+        wcs.setTag(wcsInfos);
+
+        // création de l'adapter et association de ce dernier à la map
+        CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(this);
+        mMap.setInfoWindowAdapter(customInfoWindow);
+    }
+
 
 
     private void checkPermission() {
@@ -163,7 +181,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMyLocationEnabled(true);
 
         mClub1 = mMap.addMarker(new MarkerOptions().position(Club1).title("CLUB ALPIN FRANCAIS DE TOULOUSE")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
