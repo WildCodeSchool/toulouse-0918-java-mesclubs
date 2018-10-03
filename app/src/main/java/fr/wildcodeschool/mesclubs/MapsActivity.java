@@ -12,6 +12,8 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,10 +21,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    LocationManager mLocationManager = null;
+    private FusedLocationProviderClient mFusedLocationClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +40,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         checkPermission();
     }
 
-    LocationManager mLocationManager = null;
+
 
     @SuppressLint("MissingPermission")
-    public void initLocation(){
-        mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+    private void initLocation(){
 
+        //récupérartion dernier position connue
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null){
+                    moveCameraOnUser(location);
+                }
+            }
+        });
+
+        //modification position utilisateur déplacement
+        mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                // effectuer une action ici !
@@ -57,6 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
+
 
     private void checkPermission() {
 
@@ -84,7 +102,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
 
             initLocation();
-            // TODO : autorisation déjà acceptée, on peut faire une action ici
 
         }
     }
@@ -118,10 +135,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.addMarker(new MarkerOptions().position(userLocation).title("You"));
-        //mMap.setMyLocationEnabled(true);
-        //CameraUpdate yourLocation = CameraUpdateFactory.newLatLngZoom(userLocation, 18);
-        //mMap.moveCamera(yourLocation);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 17.0f));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15.0f));
     }
 
 
@@ -137,7 +151,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setMyLocationEnabled(true);
 
-
+        checkPermission();
     }
 }
