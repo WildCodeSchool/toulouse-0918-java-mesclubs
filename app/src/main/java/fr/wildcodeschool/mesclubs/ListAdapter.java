@@ -18,10 +18,10 @@ public class ListAdapter extends ArrayAdapter <ClubModel>{
 
     public View getView ( int position, View convertView, ViewGroup parent){
 
-        listViewHolder viewHolder;
+        ListViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_item_list, parent, false);
-            viewHolder = new listViewHolder();
+            viewHolder = new ListViewHolder();
             viewHolder.clubName=  convertView.findViewById(R.id.clubName);
             viewHolder.sport =  convertView.findViewById(R.id.sport);
             viewHolder.sportColor = convertView.findViewById(R.id.sportColor);
@@ -29,7 +29,7 @@ public class ListAdapter extends ArrayAdapter <ClubModel>{
         }
 
         ClubModel list = getItem(position);
-        viewHolder = (listViewHolder) convertView.getTag();
+        viewHolder = (ListViewHolder) convertView.getTag();
         viewHolder.clubName.setText(list.getClubName());
         viewHolder.sport.setText(list.getSport());
         viewHolder.sportColor.setImageDrawable(new ColorDrawable(getContext().getResources().getColor(list.getColor())));
@@ -38,7 +38,7 @@ public class ListAdapter extends ArrayAdapter <ClubModel>{
     }
 }
 
-class listViewHolder{
+class ListViewHolder{
     public TextView clubName;
     public TextView sport;
     public ImageView sportColor;
