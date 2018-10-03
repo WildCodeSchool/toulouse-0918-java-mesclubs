@@ -10,11 +10,12 @@ public class ClubModel extends AppCompatActivity {
     private String  handicapped;
     private int     color;
 
-    public ClubModel(String clubName,String assMail, String sport, String handicapped) {
+    public ClubModel(int color,String clubName,String assMail, String sport, String handicapped) {
         this.clubName = clubName;
         this.assMail = assMail;
         this.sport = sport;
         this.handicapped = handicapped;
+        this.color = color;
     }
 
     public ClubModel(int color,String clubName, String sport) {
