@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent goToMap = new Intent(MainActivity.this, MapsActivity.class);
                 MainActivity.this.startActivity(goToMap);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }
         });
 
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent goToList = new Intent(MainActivity.this, ListActivity.class);
                 MainActivity.this.startActivity(goToList);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         });
 
