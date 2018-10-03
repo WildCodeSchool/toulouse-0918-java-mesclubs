@@ -18,11 +18,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        ImageView run;
-        Animation fade;
-
-        run = (ImageView) findViewById(R.id.runningMan);
-        fade = AnimationUtils.loadAnimation(this,R.anim.fade);
+        ImageView run = (ImageView) findViewById(R.id.runningMan);
+        Animation fade = AnimationUtils.loadAnimation(this,R.anim.fade);
 
         run.setAnimation(fade);
 
