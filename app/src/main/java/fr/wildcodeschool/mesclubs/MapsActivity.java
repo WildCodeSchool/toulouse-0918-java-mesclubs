@@ -11,7 +11,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -59,7 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
-               // effectuer une action ici !
+
                 moveCameraOnUser(location);
             }
 
@@ -116,12 +115,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    // TODO : l'autorisation a été donnée, nous pouvons agir
                     initLocation();
 
                 } else {
 
                     // l'autorisation a été refusée :(
+                    checkPermission();
 
                 }
                 return;
