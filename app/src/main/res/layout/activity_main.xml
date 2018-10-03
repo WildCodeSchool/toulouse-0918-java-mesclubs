@@ -10,30 +10,23 @@
     <ImageView
         android:id="@+id/image_logo"
         android:layout_width="468dp"
-        android:layout_height="274dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="299dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logomain" />
+        app:srcCompat="@drawable/logoactivity"
+        tools:layout_editor_absoluteY="0dp" />
 
     <ImageView
         android:id="@+id/image_list"
-        android:layout_width="195dp"
-        android:layout_height="211dp"
+        android:layout_width="178dp"
+        android:layout_height="197dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toEndOf="@+id/image_map"
         app:layout_constraintTop_toBottomOf="@+id/image_logo"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/liste" />
+        app:layout_constraintVertical_bias="0.381"
+        app:srcCompat="@drawable/list" />
 
     <ImageView
         android:id="@+id/image_map"
