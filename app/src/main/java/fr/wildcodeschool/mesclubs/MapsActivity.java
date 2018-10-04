@@ -27,10 +27,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
 
-
-
-
-
     LocationManager mLocationManager = null;
 
     private GoogleMap mMap;
@@ -198,17 +194,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-
-        //mClub2 = mMap.addMarker(new MarkerOptions().position(Club2).title("TUC section ESCALADE")
-                //.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-        //mClub3 = mMap.addMarker(new MarkerOptions().position(Club3).title("ASCM - ASSOCIATION SPORTIVE ET CULTURELLE MONTAUDRAN")
-          //      .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-        //mClub4 = mMap.addMarker(new MarkerOptions().position(Club4).title("INSTITUT GYMNIQUE DE TOULOUSE")
-              //  .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
-        //mClub5 = mMap.addMarker(new MarkerOptions().position(Club5).title("STADE TOULOUSAIN NATATION")
-          //      .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-
+        
         checkPermission();
     }
 
