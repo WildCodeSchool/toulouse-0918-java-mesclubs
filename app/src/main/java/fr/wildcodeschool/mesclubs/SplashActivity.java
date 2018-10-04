@@ -21,7 +21,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         ImageView run = (ImageView) findViewById(R.id.runningMan);
-        Animation fade = AnimationUtils.loadAnimation(this,R.anim.fade);
+        Animation fade = AnimationUtils.loadAnimation(this, R.anim.fade);
         final TextView enterApp = findViewById(R.id.text_go);
 
         run.setAnimation(fade);
@@ -36,13 +36,13 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if(!isPressed) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!isPressed) {
                     enterApp.performClick();
-                    }
                 }
-            }, SPLASH_TIME_OUT);
+            }
+        }, SPLASH_TIME_OUT);
     }
 }
