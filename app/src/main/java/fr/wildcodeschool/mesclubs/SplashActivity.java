@@ -13,7 +13,7 @@ import android.widget.TextView;
 public class SplashActivity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 4000;
 
-
+    public boolean isPressed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,25 +22,27 @@ public class SplashActivity extends AppCompatActivity {
 
         ImageView run = (ImageView) findViewById(R.id.runningMan);
         Animation fade = AnimationUtils.loadAnimation(this,R.anim.fade);
-        TextView enterApp = findViewById(R.id.text_go);
+        final TextView enterApp = findViewById(R.id.text_go);
 
         run.setAnimation(fade);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent homeIntent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(homeIntent);
-                finish();
-            }
-        },SPLASH_TIME_OUT);
 
         enterApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent homeIntent = new Intent(SplashActivity.this, MainActivity.class);
+                isPressed = true;
                 startActivity(homeIntent);
             }
         });
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(!isPressed) {
+                    enterApp.performClick();
+                    }
+                }
+            }, SPLASH_TIME_OUT);
     }
 }
