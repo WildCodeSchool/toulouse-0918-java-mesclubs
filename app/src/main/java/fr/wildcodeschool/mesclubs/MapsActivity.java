@@ -28,7 +28,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     LocationManager mLocationManager = null;
-
+    boolean moveCam = false;
     private GoogleMap mMap;
 
     @Override
@@ -54,7 +54,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                    moveCameraOnUser(location);
+                        moveCameraOnUser(location);
                 }
             }
         });
@@ -63,8 +63,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
+                if (moveCam) {
+                    moveCameraOnUser(location);
+                    moveCam = true;
+                }
 
-                moveCameraOnUser(location);
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
