@@ -26,17 +26,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private static final LatLng Club1 = new LatLng(43.604268, 1.441019);
-    private static final LatLng Club2 = new LatLng(43.774297, 1.686036);
-    private static final LatLng Club3 = new LatLng(43.586849, 1.435147);
-    private static final LatLng Club4 = new LatLng(43.590233, 1.436469);
-    private static final LatLng Club5 = new LatLng(43.60593, 1.453138);
+
     LocationManager mLocationManager = null;
-    private Marker mClub1;
-    private Marker mClub2;
-    private Marker mClub3;
-    private Marker mClub4;
-    private Marker mClub5;
+
     private GoogleMap mMap;
 
     @Override
@@ -92,12 +84,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void initMarkers() {
         // création d'un marqueur d'exemple
         Marker wcs = mMap.addMarker(new MarkerOptions().position(new LatLng(43.5998979, 1.4431481)));
+        Marker skiAlpin = mMap.addMarker(new MarkerOptions().position(new LatLng(43.604268, 1.441019))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
+        Marker tuc = mMap.addMarker(new MarkerOptions().position(new LatLng(43.774297, 1.686036))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+        Marker ascm = mMap.addMarker(new MarkerOptions().position(new LatLng(43.586849, 1.435147))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+        Marker gym = mMap.addMarker(new MarkerOptions().position(new LatLng(43.590233, 1.436469))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+        Marker natation = mMap.addMarker(new MarkerOptions().position(new LatLng(43.60593, 1.453138))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
+        //todo faire les dessins par sport
         // on crée les informations liées au marqueur
         MarkerInfos wcsInfos = new MarkerInfos("Wild Code School", "32 rue des marchards", R.drawable.ic_android_black_24dp);
+        MarkerInfos skiAlpinInfo = new MarkerInfos("CLUB ALPIN FRANCAIS DE TOULOUSE", "adresse",R.drawable.ic_android_black_24dp);
+        MarkerInfos tucInfo = new MarkerInfos("TUC section ESCALADE", "adresse",R.drawable.ic_android_black_24dp);
+        MarkerInfos ascmInfo = new MarkerInfos("ASCM - ASSOCIATION SPORTIVE ET CULTURELLE MONTAUDRAN", "adresse",R.drawable.ic_android_black_24dp);
+        MarkerInfos gymInfo = new MarkerInfos("INSTITUT GYMNIQUE DE TOULOUSE", "adresse",R.drawable.ic_android_black_24dp);
+        MarkerInfos natationInfo = new MarkerInfos("STADE TOULOUSAIN NATATION", "adresse",R.drawable.ic_android_black_24dp);
 
         // on associe les informations au marqueur
         wcs.setTag(wcsInfos);
+        skiAlpin.setTag(skiAlpinInfo);
+        tuc.setTag(tucInfo);
+        ascm.setTag(ascmInfo);
+        gym.setTag(gymInfo);
+        natation.setTag(natationInfo);
 
         // création de l'adapter et association de ce dernier à la map
         CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(this);
@@ -181,18 +194,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        mClub1 = mMap.addMarker(new MarkerOptions().position(Club1).title("CLUB ALPIN FRANCAIS DE TOULOUSE")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-        mClub2 = mMap.addMarker(new MarkerOptions().position(Club2).title("TUC section ESCALADE")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-        mClub3 = mMap.addMarker(new MarkerOptions().position(Club3).title("ASCM - ASSOCIATION SPORTIVE ET CULTURELLE MONTAUDRAN")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-        mClub4 = mMap.addMarker(new MarkerOptions().position(Club4).title("INSTITUT GYMNIQUE DE TOULOUSE")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
-        mClub5 = mMap.addMarker(new MarkerOptions().position(Club5).title("STADE TOULOUSAIN NATATION")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-
+        
         checkPermission();
     }
 
