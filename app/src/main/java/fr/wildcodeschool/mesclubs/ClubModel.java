@@ -9,13 +9,14 @@ public class ClubModel extends AppCompatActivity {
     private String  sport;
     private String  handicapped;
     private int     color;
+    private int     phone;
+    private String  address;
 
-    public ClubModel(int color,String clubName,String assMail, String sport, String handicapped) {
-        this.clubName = clubName;
+    public ClubModel(int phone,String address,String assMail, String handicapped) {
+        this.phone = phone;
         this.assMail = assMail;
-        this.sport = sport;
+        this.address = address;
         this.handicapped = handicapped;
-        this.color = color;
     }
 
     public ClubModel(int color,String clubName, String sport) {
@@ -62,5 +63,21 @@ public class ClubModel extends AppCompatActivity {
 
     public void setColor(int color) {
         this.color = color;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
