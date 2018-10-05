@@ -68,7 +68,6 @@
             android:layout_marginStart="2dp"
             android:layout_marginTop="8dp"
             android:text="@string/nom"
-"
             android:textColor="#686F8C"
             android:textSize="20dp"
             android:textStyle="bold"
