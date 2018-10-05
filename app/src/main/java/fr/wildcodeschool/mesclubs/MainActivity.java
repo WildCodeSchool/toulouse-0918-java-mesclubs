@@ -14,8 +14,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageView imageMap = findViewById(R.id.image_map);
-        ImageView imageList = findViewById(R.id.image_list);
+        ImageView imageMap = findViewById(R.id.map_icon);
+        ImageView imageList = findViewById(R.id.list_logo);
 
         imageMap.setOnClickListener(new View.OnClickListener() {
             @Override
