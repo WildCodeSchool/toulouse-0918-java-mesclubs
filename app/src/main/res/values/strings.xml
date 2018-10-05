@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">MesClubs</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_profil">ProfilActivity</string>
     <string name="entrer_dans_l_application">Entrer dans l\'application</string>
+    <string name="ongletti">ITINERAIRE</string>
+    <string name="ongletfiltre">FILTRE</string>
+    <string name="ongletconnect">SE CONNECTER/S'INSCRIRE</string>
+    <string name="ongletfav">FAVORIS</string>
+    <string name="nom">LOOK'n SPORT</string>
+    <string name="USER">pseudonyme</string>
 </resources>
