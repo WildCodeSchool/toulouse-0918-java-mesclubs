@@ -30,7 +30,7 @@
         app:srcCompat="@drawable/logoactivity" />
 
     <ImageView
-        android:id="@+id/mapIcon"
+        android:id="@+id/map_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -44,7 +44,7 @@
         app:srcCompat="@drawable/mapsicon" />
 
     <ImageView
-        android:id="@+id/listP"
+        android:id="@+id/list_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="180dp"
