@@ -3,14 +3,19 @@ package fr.wildcodeschool.mesclubs;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.MenuItem;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -31,6 +36,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final LatLng Club3 = new LatLng(43.586849, 1.435147);
     private static final LatLng Club4 = new LatLng(43.590233, 1.436469);
     private static final LatLng Club5 = new LatLng(43.60593, 1.453138);
+
     LocationManager mLocationManager = null;
     private Marker mClub1;
     private Marker mClub2;
@@ -38,17 +44,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Marker mClub4;
     private Marker mClub5;
     private GoogleMap mMap;
+    private DrawerLayout mDrawerLayout;
+
+
     private FusedLocationProviderClient mFusedLocationClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         checkPermission();
+
+
+        //nav
+
+
+
+
     }
 
 
