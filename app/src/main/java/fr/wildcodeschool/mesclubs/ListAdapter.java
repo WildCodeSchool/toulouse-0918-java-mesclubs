@@ -24,13 +24,13 @@ public class ListAdapter extends ArrayAdapter <ClubModel>{
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_item_list, parent, false);
             viewHolder = new ListViewHolder();
-            viewHolder.clubName=  convertView.findViewById(R.id.clubName);
-            viewHolder.sport =  convertView.findViewById(R.id.sport);
-            viewHolder.sportColor = convertView.findViewById(R.id.sportColor);
-            viewHolder.address= convertView.findViewById(R.id.address);
-            viewHolder.phone= convertView.findViewById(R.id.phone);
-            viewHolder.popUpButton = convertView.findViewById(R.id.popUpButton);
-            viewHolder.drawerInfo = convertView.findViewById(R.id.drawerInfo);
+            viewHolder.clubName     =  convertView.findViewById(R.id.clubName);
+            viewHolder.sport        = convertView.findViewById(R.id.sport);
+            viewHolder.sportColor   = convertView.findViewById(R.id.sportColor);
+            viewHolder.address      = convertView.findViewById(R.id.address);
+            viewHolder.phone        = convertView.findViewById(R.id.phone);
+            viewHolder.popUpButton  = convertView.findViewById(R.id.popUpButton);
+            viewHolder.drawerInfo   = convertView.findViewById(R.id.drawerInfo);
 
             convertView.setTag(viewHolder);
         }

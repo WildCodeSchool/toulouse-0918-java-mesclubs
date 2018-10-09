@@ -2,20 +2,21 @@ package fr.wildcodeschool.mesclubs;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
-
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageView imageMap = findViewById(R.id.image_map);
-        ImageView imageList = findViewById(R.id.image_list);
+        ImageView imageMap = findViewById(R.id.map_icon);
+        ImageView imageList = findViewById(R.id.list_logo);
 
         imageMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,7 +35,5 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
-
-
     }
 }
