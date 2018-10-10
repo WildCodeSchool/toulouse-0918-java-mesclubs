@@ -10,6 +10,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
 
@@ -22,9 +25,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView imageList = findViewById(R.id.list_logo);
         ImageView imageLogo = findViewById(R.id.image_logo);
 
-
         Animation fade = AnimationUtils.loadAnimation(this, R.anim.fade);
-
 
         imageMap.setAnimation(fade);
         imageList.setAnimation(fade);
@@ -47,5 +48,10 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+        myRef.setValue("Hello, michel!");
     }
 }
