@@ -11,9 +11,10 @@ import android.location.LocationManager;
 import android.os.Bundle;
 
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -27,15 +28,24 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
-
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     LocationManager mLocationManager = null;
     boolean moveCam = false;
 
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.connection:
+                startActivity(new Intent (this, ProfilActivity.class));
+                break;
+        }
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +81,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     moveCameraOnUser(location);
                     moveCam = true;
                 }
-
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -125,8 +134,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setInfoWindowAdapter(customInfoWindow);
     }
 
-
-
     private void checkPermission() {
 
         // vérification de l'autorisation d'accéder à la position GPS
@@ -166,13 +173,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-
     public void moveCameraOnUser(Location location) {
 
         LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15.0f));
     }
-
 
     /**
      * Manipulates the map once available.
