@@ -89,6 +89,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
+
+
+
     private void initMarkers() {
         // création d'un marqueur d'exemple
         Marker wcs = mMap.addMarker(new MarkerOptions().position(new LatLng(43.5998979, 1.4431481)));
@@ -103,14 +106,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Marker natation = mMap.addMarker(new MarkerOptions().position(new LatLng(43.60593, 1.453138))
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
+
+
         //todo faire les dessins par sport
         // on crée les informations liées au marqueur
-        MarkerInfos wcsInfos = new MarkerInfos("Wild Code School", "32 rue des marchards", R.drawable.ic_android_black_24dp);
-        MarkerInfos skiAlpinInfo = new MarkerInfos("CLUB ALPIN FRANCAIS DE TOULOUSE", "adresse",R.drawable.ic_android_black_24dp);
-        MarkerInfos tucInfo = new MarkerInfos("TUC section ESCALADE", "adresse",R.drawable.ic_android_black_24dp);
-        MarkerInfos ascmInfo = new MarkerInfos("ASCM - ASSOCIATION SPORTIVE ET CULTURELLE MONTAUDRAN", "adresse",R.drawable.ic_android_black_24dp);
-        MarkerInfos gymInfo = new MarkerInfos("INSTITUT GYMNIQUE DE TOULOUSE", "adresse",R.drawable.ic_android_black_24dp);
-        MarkerInfos natationInfo = new MarkerInfos("STADE TOULOUSAIN NATATION", "adresse",R.drawable.ic_android_black_24dp);
+        MarkerInfos wcsInfos = new MarkerInfos("Wild Code School", "32 rue des marchards",
+                R.drawable.ic_android_black_24dp, true, R.drawable.at_home, R.drawable.handicap, "At Home", "Site web");
+        MarkerInfos skiAlpinInfo = new MarkerInfos("CLUB ALPIN FRANCAIS DE TOULOUSE",
+                "adresse",R.drawable.ic_android_black_24dp, false, R.drawable.chat, R.drawable.handicap, "Ski Alpin", "Site web");
+        MarkerInfos tucInfo = new MarkerInfos("TUC section ESCALADE",
+                "adresse",R.drawable.ic_android_black_24dp,true, R.drawable.chat, R.drawable.handicap, "Escalade", "Site web");
+        MarkerInfos ascmInfo = new MarkerInfos("ASCM - ASSOCIATION SPORTIVE ET CULTURELLE MONTAUDRAN",
+                "adresse",R.drawable.ic_android_black_24dp,true, R.drawable.chat, R.drawable.handicap, "Multi-sports", "Site web");
+        MarkerInfos gymInfo = new MarkerInfos("INSTITUT GYMNIQUE DE TOULOUSE",
+                "adresse",R.drawable.ic_android_black_24dp,true, R.drawable.chat, R.drawable.handicap, "Gymnastique", "Site web");
+        MarkerInfos natationInfo = new MarkerInfos("STADE TOULOUSAIN NATATION",
+                "adresse",R.drawable.ic_android_black_24dp,true, R.drawable.chat, R.drawable.handicap, "Natation", "Site web");
 
         // on associe les informations au marqueur
         wcs.setTag(wcsInfos);
