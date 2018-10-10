@@ -3,19 +3,16 @@ package fr.wildcodeschool.mesclubs;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -28,6 +25,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -36,6 +40,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     boolean moveCam = false;
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +49,57 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
 
 
+
+    public void getClubs(){
+        final ArrayList<Club> arrayClub = new ArrayList<>();
+
+        //firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference clubRef = database.getReference("club");
+        clubRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
+                    Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
+                    arrayClub.add(club);
+                    Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.getLatitude(), club.getLongitude()))
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
+                    club = getImages(club);
+                    marker.setTag(club);
+                    //TODO récup la photo a partir de l'adresse (streetview)
+                }
+                //TODO generer les marqueurs a partir de la liste
+                CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(MapsActivity.this);
+                mMap.setInfoWindowAdapter(customInfoWindow);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public Club getImages(Club club) {
+        String sport = club.getSport();
+        if (sport.equals("ALPINISME")) {
+            club.setImage(R.drawable.ic_android_black_24dp);
+            return club;
+        }else{
+            return null;
+        }
+
+    }
+
     @SuppressLint("MissingPermission")
     private void initLocation() {
-        initMarkers();
+
+        //initMarkers();
+        getClubs();
 
         mMap.setMyLocationEnabled(true);
 
@@ -59,7 +109,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                        moveCameraOnUser(location);
+                    moveCameraOnUser(location);
                 }
             }
         });
@@ -88,54 +138,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
-
-
-
-
-    private void initMarkers() {
-        // création d'un marqueur d'exemple
-        Marker wcs = mMap.addMarker(new MarkerOptions().position(new LatLng(43.5998979, 1.4431481)));
-        Marker skiAlpin = mMap.addMarker(new MarkerOptions().position(new LatLng(43.604268, 1.441019))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
-        Marker tuc = mMap.addMarker(new MarkerOptions().position(new LatLng(43.774297, 1.686036))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-        Marker ascm = mMap.addMarker(new MarkerOptions().position(new LatLng(43.586849, 1.435147))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-        Marker gym = mMap.addMarker(new MarkerOptions().position(new LatLng(43.590233, 1.436469))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
-        Marker natation = mMap.addMarker(new MarkerOptions().position(new LatLng(43.60593, 1.453138))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-
-
-
-        //todo faire les dessins par sport
-        // on crée les informations liées au marqueur
-        MarkerInfos wcsInfos = new MarkerInfos("Wild Code School", "32 rue des marchards",
-                R.drawable.ic_android_black_24dp, true, R.drawable.at_home, R.drawable.handicap, "At Home", "Site web");
-        MarkerInfos skiAlpinInfo = new MarkerInfos("CLUB ALPIN FRANCAIS DE TOULOUSE",
-                "adresse",R.drawable.ic_android_black_24dp, false, R.drawable.chat, R.drawable.handicap, "Ski Alpin", "Site web");
-        MarkerInfos tucInfo = new MarkerInfos("TUC section ESCALADE",
-                "adresse",R.drawable.ic_android_black_24dp,true, R.drawable.chat, R.drawable.handicap, "Escalade", "Site web");
-        MarkerInfos ascmInfo = new MarkerInfos("ASCM - ASSOCIATION SPORTIVE ET CULTURELLE MONTAUDRAN",
-                "adresse",R.drawable.ic_android_black_24dp,true, R.drawable.chat, R.drawable.handicap, "Multi-sports", "Site web");
-        MarkerInfos gymInfo = new MarkerInfos("INSTITUT GYMNIQUE DE TOULOUSE",
-                "adresse",R.drawable.ic_android_black_24dp,true, R.drawable.chat, R.drawable.handicap, "Gymnastique", "Site web");
-        MarkerInfos natationInfo = new MarkerInfos("STADE TOULOUSAIN NATATION",
-                "adresse",R.drawable.ic_android_black_24dp,true, R.drawable.chat, R.drawable.handicap, "Natation", "Site web");
-
-        // on associe les informations au marqueur
-        wcs.setTag(wcsInfos);
-        skiAlpin.setTag(skiAlpinInfo);
-        tuc.setTag(tucInfo);
-        ascm.setTag(ascmInfo);
-        gym.setTag(gymInfo);
-        natation.setTag(natationInfo);
-
-        // création de l'adapter et association de ce dernier à la map
-        CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(this);
-        mMap.setInfoWindowAdapter(customInfoWindow);
-    }
-
 
 
     private void checkPermission() {
