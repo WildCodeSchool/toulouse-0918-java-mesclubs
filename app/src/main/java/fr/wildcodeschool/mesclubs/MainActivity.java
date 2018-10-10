@@ -36,6 +36,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        //Todo resize image with percentage
     }
 }
