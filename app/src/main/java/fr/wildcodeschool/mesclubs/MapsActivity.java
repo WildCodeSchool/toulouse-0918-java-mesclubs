@@ -89,6 +89,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
+
+
+
     private void initMarkers() {
         // création d'un marqueur d'exemple
         Marker wcs = mMap.addMarker(new MarkerOptions().position(new LatLng(43.5998979, 1.4431481)));

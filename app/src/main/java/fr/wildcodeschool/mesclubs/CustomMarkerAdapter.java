@@ -44,7 +44,6 @@ public class CustomMarkerAdapter implements GoogleMap.InfoWindowAdapter {
         TextView markeurWeb = view.findViewById(R.id.text_web);
 
 
-
         markerName.setText(infos.getTitle());
         markerSport.setText(infos.getSport());
         markeurWeb.setText(infos.getWeb());
