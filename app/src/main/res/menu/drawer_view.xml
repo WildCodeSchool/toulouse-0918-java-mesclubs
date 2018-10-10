@@ -22,7 +22,9 @@
             android:title="FILTRE" />
 
     </group>
-    <item android:title="Utilisateur">
+    <item
+        android:id="@+id/connec"
+        android:title="Utilisateur">
 
         <menu>
 

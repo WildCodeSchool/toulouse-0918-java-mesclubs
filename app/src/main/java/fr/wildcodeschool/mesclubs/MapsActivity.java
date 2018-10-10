@@ -9,12 +9,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
+
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -29,13 +28,14 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     LocationManager mLocationManager = null;
     boolean moveCam = false;
+
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +45,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
-
 
     @SuppressLint("MissingPermission")
     private void initLocation() {
@@ -72,7 +71,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     moveCameraOnUser(location);
                     moveCam = true;
                 }
-
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -84,9 +82,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onProviderDisabled(String provider) {
             }
         };
-
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+                                                0, locationListener);
+        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0,
+                                                0, locationListener);
     }
 
 
@@ -136,35 +135,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setInfoWindowAdapter(customInfoWindow);
     }
 
-
-
     private void checkPermission() {
 
         // vérification de l'autorisation d'accéder à la position GPS
-
         if (ContextCompat.checkSelfPermission(MapsActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-
             // l'autorisation n'est pas acceptée
-
             if (ActivityCompat.shouldShowRequestPermissionRationale(MapsActivity.this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
-
                 // l'autorisation a été refusée précédemment, on peut prévenir l'utilisateur ici
-
             } else {
-
                 // l'autorisation n'a jamais été réclamée, on la demande à l'utilisateur
-
                 ActivityCompat.requestPermissions(MapsActivity.this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         100);
             }
         } else {
-
             initLocation();
-
         }
     }
 
@@ -173,33 +161,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 100: {
-
                 // cas de notre demande d'autorisation
-
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
                     initLocation();
-
                 } else {
-
                     // l'autorisation a été refusée :(
                     checkPermission();
-
                 }
                 return;
             }
         }
     }
 
-
     public void moveCameraOnUser(Location location) {
 
         LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15.0f));
     }
-
 
     /**
      * Manipulates the map once available.
