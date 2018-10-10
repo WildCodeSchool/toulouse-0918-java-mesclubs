@@ -15,7 +15,6 @@ import com.google.android.gms.maps.model.Marker;
 public class CustomMarkerAdapter implements GoogleMap.InfoWindowAdapter {
 
 
-
     private Context context;
 
     public CustomMarkerAdapter(Context context){
@@ -43,7 +42,6 @@ public class CustomMarkerAdapter implements GoogleMap.InfoWindowAdapter {
         TextView markerSport = view.findViewById(R.id.text_sport);
         TextView markeurWeb = view.findViewById(R.id.text_web);
 
-
         markerName.setText(infos.getTitle());
         markerSport.setText(infos.getSport());
         markeurWeb.setText(infos.getWeb());
@@ -51,12 +49,9 @@ public class CustomMarkerAdapter implements GoogleMap.InfoWindowAdapter {
         markerImage.setImageDrawable(context.getResources().getDrawable(infos.getImage()));
         markerPicture.setImageDrawable(context.getResources().getDrawable(infos.getPicture()));
 
-
         if (infos.isHandicap()){
             markerHandicap.setImageDrawable(context.getResources().getDrawable(infos.getImgHandicap()));
         }
-
-
         return view;
     }
 }
