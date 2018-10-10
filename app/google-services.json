@@ -1,35 +1,42 @@
 {
   "project_info": {
-    "project_number": "178080476777",
-    "firebase_url": "https://toulouse-0918-java-mescl-517ba.firebaseio.com",
-    "project_id": "toulouse-0918-java-mescl-517ba",
-    "storage_bucket": "toulouse-0918-java-mescl-517ba.appspot.com"
+
+    "project_number": "724087223577",
+    "firebase_url": "https://mesclubs-1492e.firebaseio.com",
+    "project_id": "mesclubs-1492e",
+    "storage_bucket": "mesclubs-1492e.appspot.com"
+
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:178080476777:android:609691fb5e9ea71e",
+
+        "mobilesdk_app_id": "1:724087223577:android:609691fb5e9ea71e",
+
         "android_client_info": {
           "package_name": "fr.wildcodeschool.mesclubs"
         }
       },
       "oauth_client": [
         {
-          "client_id": "178080476777-0sd61jrje2j7fkge463lludops04p3ln.apps.googleusercontent.com",
+
+          "client_id": "724087223577-lq7qvi7vb35bb9u90em7d380ijrgqu7k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "fr.wildcodeschool.mesclubs",
-            "certificate_hash": "25d73c0571571fc5218b781ada39fd885cca0e4b"
+            "certificate_hash": "39b628db43a28908ea27523f960cb30720a85b93"
           }
         },
         {
-          "client_id": "178080476777-57vq564gt7pvth4i5erv5jomkn7v4efa.apps.googleusercontent.com",
+          "client_id": "724087223577-u742vmr0svgmdvo4o49t4ie4pbblkcvb.apps.googleusercontent.com",
+
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA07KMgWwXvnwxXMpRWNMCUlpqbpk5MGxc"
+          "current_key": "AIzaSyAHHDIhTdMktNMae19SLPMJuJrf5ybP2UA"
+
         }
       ],
       "services": {
@@ -40,7 +47,9 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "178080476777-57vq564gt7pvth4i5erv5jomkn7v4efa.apps.googleusercontent.com",
+
+              "client_id": "724087223577-u742vmr0svgmdvo4o49t4ie4pbblkcvb.apps.googleusercontent.com",
+
               "client_type": 3
             }
           ]
