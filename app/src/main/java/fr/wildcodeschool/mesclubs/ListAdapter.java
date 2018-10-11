@@ -2,6 +2,7 @@ package fr.wildcodeschool.mesclubs;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ public class ListAdapter extends ArrayAdapter <ClubModel>{
             viewHolder.popUpButton  = convertView.findViewById(R.id.popUpButton);
             viewHolder.drawerInfo   = convertView.findViewById(R.id.drawerInfo);
             viewHolder.iv_like      = convertView.findViewById((R.id.iv_like);)
+            viewHolder.iv_fav       = convertView.findViewById(R.id.iv_fav);
 
             convertView.setTag(viewHolder);
         }
@@ -54,8 +56,29 @@ public class ListAdapter extends ArrayAdapter <ClubModel>{
                 }
             }
         });
+
+        final Drawable starOn = convertView.getResources().getDrawable(R.drawable.btn_star_big_on);
+        final Drawable starOff = convertView.getResources().getDrawable(R.drawable.btn_star_big_off);
+        final ImageView starImg = viewHolder.iv_fav;
+        starImg.setTag(false); // set favorite off
+        viewHolder.iv_fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean isFavorite = ((boolean) starImg.getTag());
+                if(!isFavorite){
+                    starImg.setImageDrawable(starOn);
+                } else {
+                    starImg.setImageDrawable(starOff);
+                }
+                starImg.setTag(!isFavorite);
+            }
+        });
+
+
+
         return convertView;
     }
+
 }
 
 class ListViewHolder{
@@ -67,6 +90,8 @@ class ListViewHolder{
     public ConstraintLayout drawerInfo;
     public ImageButton      popUpButton;
     public ImageView        iv_like;
+    public ImageView        iv_fav;
+
 
 }
 
