@@ -105,36 +105,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             case "COURSE A PIED":
             case "COURSE D'ORIENTATION":
             case "marche":
-                club.setImage(R.drawable.ic_android_black_24dp);
+                club.setImage(R.drawable.course);
                 return club;
 
             case "ESCALADE":
-                club.setImage(R.drawable.ic_android_black_24dp);
+                club.setImage(R.drawable.escalade);
                 return club;
 
             case "NATATION":
-                club.setImage(R.drawable.ic_android_black_24dp);
+                club.setImage(R.drawable.natation);
                 return club;
 
             case "plongée":
-                club.setImage(R.drawable.ic_android_black_24dp);
+                club.setImage(R.drawable.plonge);
                 return club;
 
             case "randonnée":
-                club.setImage(R.drawable.ic_android_black_24dp);
+                club.setImage(R.drawable.rando);
                 return club;
 
             case "spéléologie":
-                club.setImage(R.drawable.ic_android_black_24dp);
+                club.setImage(R.drawable.speleo);
                 return club;
 
             case "VOILE":
             case "planche à voile":
-                club.setImage(R.drawable.ic_android_black_24dp);
+                club.setImage(R.drawable.voile);
                 return club;
 
             case "YOGA":
-                club.setImage(R.drawable.ic_android_black_24dp);
+                club.setImage(R.drawable.yoga);
                 return club;
         }
         return club;
