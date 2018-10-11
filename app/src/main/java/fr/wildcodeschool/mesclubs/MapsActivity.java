@@ -53,8 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-
-    public void getClubs(){
+    public void getClubs() {
         final ArrayList<Club> arrayClub = new ArrayList<>();
 
         //firebase
@@ -72,7 +71,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     marker.setTag(club);
                     //TODO récup la photo a partir de l'adresse (streetview)
                 }
-                //TODO generer les marqueurs a partir de la liste
+                // generer les marqueurs a partir de la liste
                 CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(MapsActivity.this);
                 mMap.setInfoWindowAdapter(customInfoWindow);
             }
@@ -86,14 +85,73 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public Club getImages(Club club) {
         String sport = club.getSport();
-        if (sport.equals("ALPINISME")) {
-            club.setImage(R.drawable.ic_android_black_24dp);
-            return club;
-        }else{
-            return null;
-        }
+        switch (sport) {
+            case "ALPINISME":
+                club.setImage(R.drawable.alpinisme);
+                return club;
 
+            case "AVIRON":
+                club.setImage(R.drawable.aviron);
+                return club;
+
+            case "CANOE_KAYAK":
+                club.setImage(R.drawable.canoe);
+                return club;
+
+            case "CANYONISME":
+                club.setImage(R.drawable.canyon);
+                return club;
+
+            case "COURSE A PIED":
+            case "COURSE D'ORIENTATION":
+            case "marche":
+                club.setImage(R.drawable.ic_android_black_24dp);
+                return club;
+
+            case "ESCALADE":
+                club.setImage(R.drawable.ic_android_black_24dp);
+                return club;
+
+            case "NATATION":
+                club.setImage(R.drawable.ic_android_black_24dp);
+                return club;
+
+            case "plongée":
+                club.setImage(R.drawable.ic_android_black_24dp);
+                return club;
+
+            case "randonnée":
+                club.setImage(R.drawable.ic_android_black_24dp);
+                return club;
+
+            case "spéléologie":
+                club.setImage(R.drawable.ic_android_black_24dp);
+                return club;
+
+            case "VOILE":
+            case "planche à voile":
+                club.setImage(R.drawable.ic_android_black_24dp);
+                return club;
+
+            case "YOGA":
+                club.setImage(R.drawable.ic_android_black_24dp);
+                return club;
+        }
+        return club;
     }
+
+
+//TODO methode getColors
+        /*
+    public Club getColors(Club club) {
+        String sport = club.getSport();
+        if (sport.equals("ALPINISME")) {
+            club.setColor(R.color.alpinism);
+            return club;
+        }
+        return club;*/
+
+
 
     @SuppressLint("MissingPermission")
     private void initLocation() {
