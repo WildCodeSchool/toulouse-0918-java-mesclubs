@@ -3,18 +3,15 @@ package fr.wildcodeschool.mesclubs;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -27,6 +24,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -44,12 +48,116 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
     }
+
+
+
+    public void getClubs() {
+        final ArrayList<Club> arrayClub = new ArrayList<>();
+
+        //firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference clubRef = database.getReference("club");
+        clubRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
+                    Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
+                    arrayClub.add(club);
+                    Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.getLatitude(), club.getLongitude()))
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
+                    club = getImages(club);
+                    marker.setTag(club);
+                    //TODO récup la photo a partir de l'adresse (streetview)
+                }
+                // generer les marqueurs a partir de la liste
+                CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(MapsActivity.this);
+                mMap.setInfoWindowAdapter(customInfoWindow);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public Club getImages(Club club) {
+        String sport = club.getSport();
+        switch (sport) {
+            case "ALPINISME":
+                club.setImage(R.drawable.alpinisme);
+                return club;
+
+            case "AVIRON":
+                club.setImage(R.drawable.aviron);
+                return club;
+
+            case "CANOE_KAYAK":
+                club.setImage(R.drawable.canoe);
+                return club;
+
+            case "CANYONISME":
+                club.setImage(R.drawable.canyon);
+                return club;
+
+            case "COURSE A PIED":
+            case "COURSE D'ORIENTATION":
+            case "marche":
+                club.setImage(R.drawable.course);
+                return club;
+
+            case "ESCALADE":
+                club.setImage(R.drawable.escalade);
+                return club;
+
+            case "NATATION":
+                club.setImage(R.drawable.natation);
+                return club;
+
+            case "plongée":
+                club.setImage(R.drawable.plonge);
+                return club;
+
+            case "randonnée":
+                club.setImage(R.drawable.rando);
+                return club;
+
+            case "spéléologie":
+                club.setImage(R.drawable.speleo);
+                return club;
+
+            case "VOILE":
+            case "planche à voile":
+                club.setImage(R.drawable.voile);
+                return club;
+
+            case "YOGA":
+                club.setImage(R.drawable.yoga);
+                return club;
+        }
+        return club;
+    }
+
+
+//TODO methode getColors
+        /*
+    public Club getColors(Club club) {
+        String sport = club.getSport();
+        if (sport.equals("ALPINISME")) {
+            club.setColor(R.color.alpinism);
+            return club;
+        }
+        return club;*/
+
+
+
 
     @SuppressLint("MissingPermission")
     private void initLocation() {
-        initMarkers();
 
+        getClubs();
         mMap.setMyLocationEnabled(true);
 
         //récupérartion dernier position connue
@@ -58,7 +166,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                        moveCameraOnUser(location);
+                    moveCameraOnUser(location);
                 }
             }
         });
@@ -86,42 +194,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                                 0, locationListener);
         mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0,
                                                 0, locationListener);
-    }
-
-    private void initMarkers() {
-        // création d'un marqueur d'exemple
-        Marker wcs = mMap.addMarker(new MarkerOptions().position(new LatLng(43.5998979, 1.4431481)));
-        Marker skiAlpin = mMap.addMarker(new MarkerOptions().position(new LatLng(43.604268, 1.441019))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
-        Marker tuc = mMap.addMarker(new MarkerOptions().position(new LatLng(43.774297, 1.686036))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-        Marker ascm = mMap.addMarker(new MarkerOptions().position(new LatLng(43.586849, 1.435147))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-        Marker gym = mMap.addMarker(new MarkerOptions().position(new LatLng(43.590233, 1.436469))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
-        Marker natation = mMap.addMarker(new MarkerOptions().position(new LatLng(43.60593, 1.453138))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-
-        //todo faire les dessins par sport
-        // on crée les informations liées au marqueur
-        MarkerInfos wcsInfos = new MarkerInfos("Wild Code School", "32 rue des marchards", R.drawable.ic_android_black_24dp);
-        MarkerInfos skiAlpinInfo = new MarkerInfos("CLUB ALPIN FRANCAIS DE TOULOUSE", "adresse",R.drawable.ic_android_black_24dp);
-        MarkerInfos tucInfo = new MarkerInfos("TUC section ESCALADE", "adresse",R.drawable.ic_android_black_24dp);
-        MarkerInfos ascmInfo = new MarkerInfos("ASCM - ASSOCIATION SPORTIVE ET CULTURELLE MONTAUDRAN", "adresse",R.drawable.ic_android_black_24dp);
-        MarkerInfos gymInfo = new MarkerInfos("INSTITUT GYMNIQUE DE TOULOUSE", "adresse",R.drawable.ic_android_black_24dp);
-        MarkerInfos natationInfo = new MarkerInfos("STADE TOULOUSAIN NATATION", "adresse",R.drawable.ic_android_black_24dp);
-
-        // on associe les informations au marqueur
-        wcs.setTag(wcsInfos);
-        skiAlpin.setTag(skiAlpinInfo);
-        tuc.setTag(tucInfo);
-        ascm.setTag(ascmInfo);
-        gym.setTag(gymInfo);
-        natation.setTag(natationInfo);
-
-        // création de l'adapter et association de ce dernier à la map
-        CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(this);
-        mMap.setInfoWindowAdapter(customInfoWindow);
     }
 
     private void checkPermission() {
