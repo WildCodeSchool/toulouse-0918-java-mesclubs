@@ -31,6 +31,7 @@ public class ListAdapter extends ArrayAdapter <ClubModel>{
             viewHolder.phone        = convertView.findViewById(R.id.phone);
             viewHolder.popUpButton  = convertView.findViewById(R.id.popUpButton);
             viewHolder.drawerInfo   = convertView.findViewById(R.id.drawerInfo);
+            viewHolder.iv_like      = convertView.findViewById((R.id.iv_like);)
 
             convertView.setTag(viewHolder);
         }
@@ -65,6 +66,7 @@ class ListViewHolder{
     public TextView         phone;
     public ConstraintLayout drawerInfo;
     public ImageButton      popUpButton;
+    public ImageView        iv_like;
 
 }
 
