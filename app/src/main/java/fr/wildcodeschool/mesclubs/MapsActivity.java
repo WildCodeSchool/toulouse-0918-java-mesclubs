@@ -4,6 +4,8 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,12 +16,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.internal.maps.zze;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -31,11 +35,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-
+    private  int MARKER_WIDTH = 80;
+    private  int MARKER_HEIGHT = 80;
     LocationManager mLocationManager = null;
     boolean moveCam = false;
     private GoogleMap mMap;
@@ -65,9 +71,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
                     Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
                     arrayClub.add(club);
-                    Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.getLatitude(), club.getLongitude()))
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
                     club = getImages(club);
+                    Bitmap initialMarkerIcon = BitmapFactory.decodeResource(getResources(), club.getImage());
+                    Bitmap markerIcon = Bitmap.createScaledBitmap(initialMarkerIcon, MARKER_WIDTH, MARKER_HEIGHT, false);
+                    Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.getLatitude(), club.getLongitude()))
+                            .icon(BitmapDescriptorFactory.fromBitmap(markerIcon)));
+
+
                     marker.setTag(club);
                     //TODO récup la photo a partir de l'adresse (streetview)
                 }
@@ -94,7 +104,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 club.setImage(R.drawable.aviron);
                 return club;
 
-            case "CANOE_KAYAK":
+            case "CANOE-KAYAK":
                 club.setImage(R.drawable.canoe);
                 return club;
 
@@ -136,6 +146,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             case "YOGA":
                 club.setImage(R.drawable.yoga);
                 return club;
+                default:
+                    club.setImage(R.drawable.ic_android_black_24dp);
         }
         return club;
     }
