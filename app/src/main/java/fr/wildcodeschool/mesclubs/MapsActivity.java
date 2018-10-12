@@ -40,8 +40,8 @@ import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private  int MARKER_WIDTH = 80;
-    private  int MARKER_HEIGHT = 80;
+    private  int MARKER_WIDTH = 100;
+    private  int MARKER_HEIGHT = 100;
     LocationManager mLocationManager = null;
     boolean moveCam = false;
     private GoogleMap mMap;
@@ -60,8 +60,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     public void getClubs() {
-        final ArrayList<Club> arrayClub = new ArrayList<>();
-
         //firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference clubRef = database.getReference("club");
@@ -70,8 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
                     Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
-                    arrayClub.add(club);
-                    club = getImages(club);
+                    club.setImage(getImages(club.getSport()));
                     Bitmap initialMarkerIcon = BitmapFactory.decodeResource(getResources(), club.getImage());
                     Bitmap markerIcon = Bitmap.createScaledBitmap(initialMarkerIcon, MARKER_WIDTH, MARKER_HEIGHT, false);
                     Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.getLatitude(), club.getLongitude()))
@@ -93,63 +90,54 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    public Club getImages(Club club) {
-        String sport = club.getSport();
+    public int getImages(String sport) {
+        int image;
         switch (sport) {
             case "ALPINISME":
-                club.setImage(R.drawable.alpinisme);
-                return club;
+                image = R.drawable.alpinisme;
+                break;
 
             case "AVIRON":
-                club.setImage(R.drawable.aviron);
-                return club;
-
+                image = R.drawable.aviron;
+                break;
             case "CANOE-KAYAK":
-                club.setImage(R.drawable.canoe);
-                return club;
+                image = R.drawable.canoe;
+                break;
 
             case "CANYONISME":
-                club.setImage(R.drawable.canyon);
-                return club;
-
+                image = R.drawable.canyon;
+                break;
             case "COURSE A PIED":
             case "COURSE D'ORIENTATION":
             case "marche":
-                club.setImage(R.drawable.course);
-                return club;
-
+                image = R.drawable.course;
+                break;
             case "ESCALADE":
-                club.setImage(R.drawable.escalade);
-                return club;
-
+                image = R.drawable.escalade;
+                break;
             case "NATATION":
-                club.setImage(R.drawable.natation);
-                return club;
-
+                image = R.drawable.natation;
+                break;
             case "plongée":
-                club.setImage(R.drawable.plonge);
-                return club;
-
+                image = R.drawable.plonge;
+                break;
             case "randonnée":
-                club.setImage(R.drawable.rando);
-                return club;
-
+                image = R.drawable.rando;
+                break;
             case "spéléologie":
-                club.setImage(R.drawable.speleo);
-                return club;
-
+                image = R.drawable.speleo;
+                break;
             case "VOILE":
             case "planche à voile":
-                club.setImage(R.drawable.voile);
-                return club;
-
+                image = R.drawable.voile;
+                break;
             case "YOGA":
-                club.setImage(R.drawable.yoga);
-                return club;
+                image = R.drawable.yoga;
+                break;
                 default:
-                    club.setImage(R.drawable.ic_android_black_24dp);
+                    image = R.drawable.ic_android_black_24dp;
         }
-        return club;
+        return image;
     }
 
 
