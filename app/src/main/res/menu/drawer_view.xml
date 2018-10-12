@@ -32,6 +32,11 @@
                     android:icon="@drawable/baseline_input_black_18dp"
                     android:title="@string/ongletconnect" />
 
+                <item
+                    android:id="@+id/déconnection"
+                    android:icon="@drawable/personne"
+                    android:title="SE DECONNECTER"/>
+
             </group>
         </menu>
     </item>

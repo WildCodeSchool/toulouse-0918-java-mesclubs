@@ -5,8 +5,11 @@
     <string name="entrer_dans_l_application">Entrer dans l\'application</string>
     <string name="ongletti">ITINERAIRE</string>
     <string name="ongletfiltre">FILTRE</string>
-    <string name="ongletconnect">SE CONNECTER/S'INSCRIRE</string>
+    <string name="ongletconnect">SE CONNECTER/SINSCRIRE</string>
     <string name="ongletfav">FAVORIS</string>
-    <string name="nom">LOOK'n SPORT</string>
+    <string name="nom">LOOKnSPORT</string>
     <string name="USER">pseudonyme</string>
+    <string name="title_activity_fragment">fragmentActivity</string>
+    <string name="navigation_drawer_open">open navigation drawer</string>
+    <string name="navigation_drawer_close">close navigation drawer</string>
 </resources>

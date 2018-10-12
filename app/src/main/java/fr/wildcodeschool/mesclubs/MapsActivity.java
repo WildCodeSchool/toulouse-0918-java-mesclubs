@@ -11,11 +11,14 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -29,13 +32,18 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
 
 
     LocationManager mLocationManager = null;
     boolean moveCam = false;
+    NavigationView navigationView;
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
+    private Toolbar toolbar;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,171 +52,255 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+        this.configureToolBar();
+        this.configureDrawerLayout();
+        this.configureNavigationView();
+
+    }
+
+    private void configureToolBar() {
+
+        this.toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+    }
+
+    private void configureDrawerLayout() {
+        this.mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    private void configureNavigationView() {
+
+        this.navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        navigationView.setNavigationItemSelectedListener(this);
+
     }
 
 
-    @SuppressLint("MissingPermission")
-    private void initLocation() {
-        initMarkers();
+    //ONBACK PRESS METHODE
+    @Override
 
-        mMap.setMyLocationEnabled(true);
+    public void onBackPressed() {
 
-        //récupérartion dernier position connue
-        FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                        moveCameraOnUser(location);
-                }
-            }
-        });
+        if (this.mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
 
-        //modification position utilisateur déplacement
-        mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        LocationListener locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-                if (moveCam) {
-                    moveCameraOnUser(location);
-                    moveCam = true;
-                }
+            this.mDrawerLayout.closeDrawer(GravityCompat.START);
 
-            }
-
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
-
-            public void onProviderEnabled(String provider) {
-            }
-
-            public void onProviderDisabled(String provider) {
-            }
-        };
-
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-    }
-
-    private void initMarkers() {
-        // création d'un marqueur d'exemple
-        Marker wcs = mMap.addMarker(new MarkerOptions().position(new LatLng(43.5998979, 1.4431481)));
-        Marker skiAlpin = mMap.addMarker(new MarkerOptions().position(new LatLng(43.604268, 1.441019))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
-        Marker tuc = mMap.addMarker(new MarkerOptions().position(new LatLng(43.774297, 1.686036))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-        Marker ascm = mMap.addMarker(new MarkerOptions().position(new LatLng(43.586849, 1.435147))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-        Marker gym = mMap.addMarker(new MarkerOptions().position(new LatLng(43.590233, 1.436469))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
-        Marker natation = mMap.addMarker(new MarkerOptions().position(new LatLng(43.60593, 1.453138))
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-
-        //todo faire les dessins par sport
-        // on crée les informations liées au marqueur
-        MarkerInfos wcsInfos = new MarkerInfos("Wild Code School", "32 rue des marchards", R.drawable.ic_android_black_24dp);
-        MarkerInfos skiAlpinInfo = new MarkerInfos("CLUB ALPIN FRANCAIS DE TOULOUSE", "adresse",R.drawable.ic_android_black_24dp);
-        MarkerInfos tucInfo = new MarkerInfos("TUC section ESCALADE", "adresse",R.drawable.ic_android_black_24dp);
-        MarkerInfos ascmInfo = new MarkerInfos("ASCM - ASSOCIATION SPORTIVE ET CULTURELLE MONTAUDRAN", "adresse",R.drawable.ic_android_black_24dp);
-        MarkerInfos gymInfo = new MarkerInfos("INSTITUT GYMNIQUE DE TOULOUSE", "adresse",R.drawable.ic_android_black_24dp);
-        MarkerInfos natationInfo = new MarkerInfos("STADE TOULOUSAIN NATATION", "adresse",R.drawable.ic_android_black_24dp);
-
-        // on associe les informations au marqueur
-        wcs.setTag(wcsInfos);
-        skiAlpin.setTag(skiAlpinInfo);
-        tuc.setTag(tucInfo);
-        ascm.setTag(ascmInfo);
-        gym.setTag(gymInfo);
-        natation.setTag(natationInfo);
-
-        // création de l'adapter et association de ce dernier à la map
-        CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(this);
-        mMap.setInfoWindowAdapter(customInfoWindow);
-    }
-
-
-
-    private void checkPermission() {
-
-        // vérification de l'autorisation d'accéder à la position GPS
-
-        if (ContextCompat.checkSelfPermission(MapsActivity.this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // l'autorisation n'est pas acceptée
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(MapsActivity.this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-                // l'autorisation a été refusée précédemment, on peut prévenir l'utilisateur ici
-
-            } else {
-
-                // l'autorisation n'a jamais été réclamée, on la demande à l'utilisateur
-
-                ActivityCompat.requestPermissions(MapsActivity.this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        100);
-            }
         } else {
 
-            initLocation();
+            super.onBackPressed();
 
         }
+
     }
+    //This method will trigger on item Click of navigation menu
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case 100: {
 
-                // cas de notre demande d'autorisation
+    public boolean onNavigationItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.connection:
+                startActivity(new Intent(this, ProfilActivity.class));
+                break;
+            case R.id.déconnection:
+                //check si connecté
+                //si oui logout
+                //si non toast
+                Toast.makeText(MapsActivity.this,"Vous n'êtes pas connecté", Toast.LENGTH_LONG);
 
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    initLocation();
+
+        }
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+
+
+
+
+        }
+
+
+        @SuppressLint("MissingPermission")
+        private void initLocation () {
+            initMarkers();
+
+            mMap.setMyLocationEnabled(true);
+
+            //récupérartion dernier position connue
+            FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            mFusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if (location != null) {
+                        moveCameraOnUser(location);
+                    }
+                }
+            });
+
+            //modification position utilisateur déplacement
+            mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            LocationListener locationListener = new LocationListener() {
+                public void onLocationChanged(Location location) {
+                    if (moveCam) {
+                        moveCameraOnUser(location);
+                        moveCam = true;
+                    }
+
+                }
+
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+                }
+
+                public void onProviderEnabled(String provider) {
+                }
+
+                public void onProviderDisabled(String provider) {
+                }
+            };
+
+            mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        }
+
+        private void initMarkers () {
+            // création d'un marqueur d'exemple
+            Marker wcs = mMap.addMarker(new MarkerOptions().position(new LatLng(43.5998979, 1.4431481)));
+            Marker skiAlpin = mMap.addMarker(new MarkerOptions().position(new LatLng(43.604268, 1.441019))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
+            Marker tuc = mMap.addMarker(new MarkerOptions().position(new LatLng(43.774297, 1.686036))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+            Marker ascm = mMap.addMarker(new MarkerOptions().position(new LatLng(43.586849, 1.435147))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+            Marker gym = mMap.addMarker(new MarkerOptions().position(new LatLng(43.590233, 1.436469))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+            Marker natation = mMap.addMarker(new MarkerOptions().position(new LatLng(43.60593, 1.453138))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+
+            //todo faire les dessins par sport
+            // on crée les informations liées au marqueur
+            MarkerInfos wcsInfos = new MarkerInfos("Wild Code School", "32 rue des marchards", R.drawable.ic_android_black_24dp);
+            MarkerInfos skiAlpinInfo = new MarkerInfos("CLUB ALPIN FRANCAIS DE TOULOUSE", "adresse", R.drawable.ic_android_black_24dp);
+            MarkerInfos tucInfo = new MarkerInfos("TUC section ESCALADE", "adresse", R.drawable.ic_android_black_24dp);
+            MarkerInfos ascmInfo = new MarkerInfos("ASCM - ASSOCIATION SPORTIVE ET CULTURELLE MONTAUDRAN", "adresse", R.drawable.ic_android_black_24dp);
+            MarkerInfos gymInfo = new MarkerInfos("INSTITUT GYMNIQUE DE TOULOUSE", "adresse", R.drawable.ic_android_black_24dp);
+            MarkerInfos natationInfo = new MarkerInfos("STADE TOULOUSAIN NATATION", "adresse", R.drawable.ic_android_black_24dp);
+
+            // on associe les informations au marqueur
+            wcs.setTag(wcsInfos);
+            skiAlpin.setTag(skiAlpinInfo);
+            tuc.setTag(tucInfo);
+            ascm.setTag(ascmInfo);
+            gym.setTag(gymInfo);
+            natation.setTag(natationInfo);
+
+            // création de l'adapter et association de ce dernier à la map
+            CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(this);
+            mMap.setInfoWindowAdapter(customInfoWindow);
+        }
+
+
+        private void checkPermission () {
+
+            // vérification de l'autorisation d'accéder à la position GPS
+
+            if (ContextCompat.checkSelfPermission(MapsActivity.this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                // l'autorisation n'est pas acceptée
+
+                if (ActivityCompat.shouldShowRequestPermissionRationale(MapsActivity.this,
+                        Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                    // l'autorisation a été refusée précédemment, on peut prévenir l'utilisateur ici
 
                 } else {
 
-                    // l'autorisation a été refusée :(
-                    checkPermission();
+                    // l'autorisation n'a jamais été réclamée, on la demande à l'utilisateur
 
+                    ActivityCompat.requestPermissions(MapsActivity.this,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            100);
                 }
-                return;
+            } else {
+
+                initLocation();
+
             }
         }
+
+        @Override
+        public void onRequestPermissionsResult ( int requestCode,
+        String permissions[], int[] grantResults){
+            switch (requestCode) {
+                case 100: {
+
+                    // cas de notre demande d'autorisation
+
+                    if (grantResults.length > 0
+                            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                        initLocation();
+
+                    } else {
+
+                        // l'autorisation a été refusée :(
+                        checkPermission();
+
+                    }
+                    return;
+                }
+            }
+        }
+
+
+        public void moveCameraOnUser (Location location){
+
+            LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15.0f));
+        }
+
+
+        /**
+         * Manipulates the map once available.
+         * This callback is triggered when the map is ready to be used.
+         * This is where we can add markers or lines, add listeners or move the camera. In this case,
+         * we just add a marker near Sydney, Australia.
+         * If Google Play services is not installed on the device, the user will be prompted to install
+         * it inside the SupportMapFragment. This method will only be triggered once the user has
+         * installed Google Play services and returned to the app.
+         */
+        @Override
+        public void onMapReady (GoogleMap googleMap){
+            mMap = googleMap;
+
+            checkPermission();
+        }
+
+        @Override
+        public void finish () {
+            super.finish();
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }
+
+
     }
 
 
-    public void moveCameraOnUser(Location location) {
-
-        LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15.0f));
-    }
 
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
 
-        checkPermission();
-    }
 
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
-}
+
+
+
+
+
