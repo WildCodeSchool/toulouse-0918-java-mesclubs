@@ -22,7 +22,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -40,7 +39,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import java.util.ArrayList;
 
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
@@ -49,11 +47,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     boolean moveCam = false;
     NavigationView navigationView;
     ClipData.Item map;
-
+    private int MARKER_WIDTH = 100;
+    private int MARKER_HEIGHT = 100;
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
