@@ -14,16 +14,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.Toast;
 
-import com.google.android.gms.internal.maps.zze;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -35,15 +32,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private  int MARKER_WIDTH = 100;
-    private  int MARKER_HEIGHT = 100;
     LocationManager mLocationManager = null;
     boolean moveCam = false;
+    private int MARKER_WIDTH = 100;
+    private int MARKER_HEIGHT = 100;
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
 
@@ -55,9 +49,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
     }
-
 
     public void getClubs() {
         //firebase
@@ -73,8 +65,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Bitmap markerIcon = Bitmap.createScaledBitmap(initialMarkerIcon, MARKER_WIDTH, MARKER_HEIGHT, false);
                     Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.getLatitude(), club.getLongitude()))
                             .icon(BitmapDescriptorFactory.fromBitmap(markerIcon)));
-
-
                     marker.setTag(club);
                     //TODO récup la photo a partir de l'adresse (streetview)
                 }
@@ -134,24 +124,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             case "YOGA":
                 image = R.drawable.yoga;
                 break;
-                default:
-                    image = R.drawable.ic_android_black_24dp;
+            default:
+                image = R.drawable.ic_android_black_24dp;
         }
         return image;
     }
-
-
-//TODO methode getColors
-        /*
-    public Club getColors(Club club) {
-        String sport = club.getSport();
-        if (sport.equals("ALPINISME")) {
-            club.setColor(R.color.alpinism);
-            return club;
-        }
-        return club;*/
-
-
 
     @SuppressLint("MissingPermission")
     private void initLocation() {
@@ -224,7 +201,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
 
             initLocation();
-
         }
     }
 
@@ -251,7 +227,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
     }
-
 
     public void moveCameraOnUser(Location location) {
 
