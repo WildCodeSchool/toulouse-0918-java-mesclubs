@@ -4,11 +4,14 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -28,13 +31,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     LocationManager mLocationManager = null;
     boolean moveCam = false;
+    private int MARKER_WIDTH = 100;
+    private int MARKER_HEIGHT = 100;
+
+
+
 
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
@@ -47,13 +54,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
     }
 
-
     public void getClubs() {
-        final ArrayList<Club> arrayClub = new ArrayList<>();
-
         //firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference clubRef = database.getReference("club");
@@ -62,10 +65,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
                     Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
-                    arrayClub.add(club);
+                    club.setImage(getImages(club.getSport()));
+                    Bitmap initialMarkerIcon = BitmapFactory.decodeResource(getResources(), club.getImage());
+                    Bitmap markerIcon = Bitmap.createScaledBitmap(initialMarkerIcon, MARKER_WIDTH, MARKER_HEIGHT, false);
                     Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.getLatitude(), club.getLongitude()))
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
-                    club = getImages(club);
+                            .icon(BitmapDescriptorFactory.fromBitmap(markerIcon)));
                     marker.setTag(club);
                     //TODO récup la photo a partir de l'adresse (streetview)
                 }
@@ -82,76 +86,55 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    public Club getImages(Club club) {
-        String sport = club.getSport();
+    public int getImages(String sport) {
+        int image;
         switch (sport) {
             case "ALPINISME":
-                club.setImage(R.drawable.alpinisme);
-                return club;
+                image = R.drawable.alpinisme;
+                break;
 
             case "AVIRON":
-                club.setImage(R.drawable.aviron);
-                return club;
-
-            case "CANOE_KAYAK":
-                club.setImage(R.drawable.canoe);
-                return club;
+                image = R.drawable.aviron;
+                break;
+            case "CANOE-KAYAK":
+                image = R.drawable.canoe;
+                break;
 
             case "CANYONISME":
-                club.setImage(R.drawable.canyon);
-                return club;
-
+                image = R.drawable.canyon;
+                break;
             case "COURSE A PIED":
             case "COURSE D'ORIENTATION":
             case "marche":
-                club.setImage(R.drawable.ic_android_black_24dp);
-                return club;
-
+                image = R.drawable.course;
+                break;
             case "ESCALADE":
-                club.setImage(R.drawable.ic_android_black_24dp);
-                return club;
-
+                image = R.drawable.escalade;
+                break;
             case "NATATION":
-                club.setImage(R.drawable.ic_android_black_24dp);
-                return club;
-
+                image = R.drawable.natation;
+                break;
             case "plongée":
-                club.setImage(R.drawable.ic_android_black_24dp);
-                return club;
-
+                image = R.drawable.plonge;
+                break;
             case "randonnée":
-                club.setImage(R.drawable.ic_android_black_24dp);
-                return club;
-
+                image = R.drawable.rando;
+                break;
             case "spéléologie":
-                club.setImage(R.drawable.ic_android_black_24dp);
-                return club;
-
+                image = R.drawable.speleo;
+                break;
             case "VOILE":
             case "planche à voile":
-                club.setImage(R.drawable.ic_android_black_24dp);
-                return club;
-
+                image = R.drawable.voile;
+                break;
             case "YOGA":
-                club.setImage(R.drawable.ic_android_black_24dp);
-                return club;
+                image = R.drawable.yoga;
+                break;
+            default:
+                image = R.drawable.ic_android_black_24dp;
         }
-        return club;
+        return image;
     }
-
-
-//TODO methode getColors
-        /*
-    public Club getColors(Club club) {
-        String sport = club.getSport();
-        if (sport.equals("ALPINISME")) {
-            club.setColor(R.color.alpinism);
-            return club;
-        }
-        return club;*/
-
-
-
 
     @SuppressLint("MissingPermission")
     private void initLocation() {
