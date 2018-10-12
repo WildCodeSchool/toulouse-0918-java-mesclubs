@@ -127,7 +127,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
-
     }
 
 
@@ -316,7 +315,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void moveCameraOnUser(Location location) {
-
         LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15.0f));
     }
@@ -333,7 +331,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
         checkPermission();
     }
 

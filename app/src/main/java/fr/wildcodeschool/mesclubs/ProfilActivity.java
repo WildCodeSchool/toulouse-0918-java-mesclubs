@@ -43,7 +43,6 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
         Button sendlog = findViewById(R.id.sendlog);
         Button send = findViewById(R.id.send);
 
-
         //jem'inscris
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +56,6 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                 if (semailog.isEmpty() || spassword.isEmpty()) {
                     Toast.makeText(ProfilActivity.this, "PLEASE FILL YOUR FORM",
                             Toast.LENGTH_SHORT).show();
-
                 } else {
                     singup();
                 }
@@ -78,11 +76,9 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                 if (email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(ProfilActivity.this, "PLEASE FILL YOUR FORM",
                             Toast.LENGTH_SHORT).show();
-
                 } else {
                     login();
                     pseudonom.setText(email);
-
                 }
             }
         });
@@ -107,14 +103,10 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
         Bitmap imageBitmap = (Bitmap) extras.get("data");
         mImageView.setImageBitmap(imageBitmap);
         mImageViewpage.setImageBitmap(imageBitmap);
-
     }
-
-
     private void configureToolBar() {
         this.toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
-
     }
 
     private void configureDrawerLayout() {
@@ -123,29 +115,21 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
-
     private void configureNavigationView() {
         this.navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
     }
-
 
     //ONBACK PRESS METHODE
     @Override
 
     public void onBackPressed() {
-
         if (this.mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-
             this.mDrawerLayout.closeDrawer(GravityCompat.START);
-
         } else {
             super.onBackPressed();
-
         }
     }
-
 
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -163,13 +147,9 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
             case R.id.map:
                 startActivity(new Intent(this, MapsActivity.class));
                 break;
-
-
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
-
-
     }
 
     private void singup() {
@@ -190,37 +170,26 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                                     Toast.LENGTH_SHORT).show();
                             photo.setVisibility(View.VISIBLE);
                             mImageViewpage.setVisibility(View.VISIBLE);
-
-
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-
                         } else {
                             // If sign in fails, display a message to the user.
-
                             Toast.makeText(ProfilActivity.this, "Inscription échouée",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
-
-                        // ...
                     }
                 });
-
-
     }
 
 
     private void login() {
         final ImageView mImageViewpage = findViewById(R.id.imageView);
         final Button photo = findViewById(R.id.bTakephoto);
-
         final EditText emailog = findViewById(R.id.editText_pseudosingin);
         final EditText passwordlog = findViewById(R.id.passwordnew);
         String email = emailog.getText().toString();
         String password = passwordlog.getText().toString();
-
-
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(ProfilActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -231,23 +200,15 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                                     Toast.LENGTH_SHORT).show();
                             photo.setVisibility(View.VISIBLE);
                             mImageViewpage.setVisibility(View.VISIBLE);
-
-
                             FirebaseUser user = mAuth.getCurrentUser();
-
-                        } else {
+                            } else {
                             // If sign in fails, display a message to the user.
-
                             Toast.makeText(ProfilActivity.this, "404 ERROR",
                                     Toast.LENGTH_SHORT).show();
                             //updateUI(null);
-                        }
-
-                        // ...
+                        }// ...
                     }
                 });
-
-
     }
 
 
@@ -261,7 +222,6 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
 
 
     void updateUI(FirebaseUser user) {
-
         if (user != null) {
             //photo.setClickable(true);
             startActivity(new Intent(ProfilActivity.this, MapsActivity.class));
@@ -269,8 +229,5 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
             Toast.makeText(ProfilActivity.this, "Vous n'êtes pas connecté",
                     Toast.LENGTH_SHORT).show();
         }
-
-    }
-
-
+        }
 }
