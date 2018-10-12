@@ -2,7 +2,9 @@ package fr.wildcodeschool.mesclubs;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,11 +12,16 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -26,20 +33,25 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
 
     LocationManager mLocationManager = null;
     boolean moveCam = false;
+    NavigationView navigationView;
+    ClipData.Item map;
     private int MARKER_WIDTH = 100;
     private int MARKER_HEIGHT = 100;
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +61,71 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        //Affichage du menu
+        this.configureToolBar();
+        this.configureDrawerLayout();
+        this.configureNavigationView();
+
+    }
+
+    //GESTION DU MENU
+    private void configureToolBar() {
+
+        this.toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+    }
+
+    private void configureDrawerLayout() {
+        this.mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    private void configureNavigationView() {
+
+        this.navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+    }
+
+
+    //ONBACK PRESS METHODE
+    @Override
+
+    public void onBackPressed() {
+
+        if (this.mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+
+            this.mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+
+    }
+
+    @Override
+
+    public boolean onNavigationItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.connection:
+                startActivity(new Intent(this, ProfilActivity.class));
+                break;
+            case R.id.déconnection:
+                FirebaseAuth.getInstance().signOut();
+
+                break;
+            case R.id.liste:
+                startActivity(new Intent(this, ListActivity.class));
+                break;
+
+        }
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     public void getClubs() {
@@ -130,6 +207,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         return image;
     }
+
+//TODO methode getColors
+        /*
+    public Club getColors(Club club) {
+        String sport = club.getSport();
+        if (sport.equals("ALPINISME")) {
+            club.setColor(R.color.alpinism);
+            return club;
+        }
+        return club;*/
 
     @SuppressLint("MissingPermission")
     private void initLocation() {
@@ -216,7 +303,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void moveCameraOnUser(Location location) {
-
         LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15.0f));
     }
@@ -233,7 +319,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
         checkPermission();
     }
 

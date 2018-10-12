@@ -46,6 +46,15 @@
         {
           "client_id": "724087223577-u742vmr0svgmdvo4o49t4ie4pbblkcvb.apps.googleusercontent.com",
 
+          "client_id": "724087223577-ujq472pi4vn2mjqevdo5kfs41eupr18t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.wildcodeschool.mesclubs",
+            "certificate_hash": "4451d7113efd07bb21a6f210d8231303f02ae169"
+          }
+        },
+        {
+          "client_id": "724087223577-u742vmr0svgmdvo4o49t4ie4pbblkcvb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
