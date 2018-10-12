@@ -38,8 +38,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     boolean moveCam = false;
     private int MARKER_WIDTH = 100;
     private int MARKER_HEIGHT = 100;
-
-
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
 
