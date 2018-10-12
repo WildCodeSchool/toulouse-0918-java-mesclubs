@@ -5,7 +5,13 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -15,8 +21,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageView imageMap = findViewById(R.id.image_map);
-        ImageView imageList = findViewById(R.id.image_list);
+        ImageView imageMap = findViewById(R.id.map_icon);
+        ImageView imageList = findViewById(R.id.list_logo);
+        ImageView imageLogo = findViewById(R.id.image_logo);
+
+        Animation fade = AnimationUtils.loadAnimation(this, R.anim.fade);
+
+        imageMap.setAnimation(fade);
+        imageList.setAnimation(fade);
+        imageLogo.setAnimation(fade);
 
         imageMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,5 +50,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+        myRef.setValue("Hello, michel!");
+       
+
+      
     }
 }

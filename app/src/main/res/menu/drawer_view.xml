@@ -20,9 +20,19 @@
             android:id="@+id/fitre"
             android:icon="@drawable/baseline_filter_list_black_18dp"
             android:title="FILTRE" />
+        <item
+            android:id="@+id/liste"
+            android:icon="@drawable/baseline_format_list_bulleted_black_18dp"
+            android:title="Voir la liste " />
+        <item
+            android:id="@+id/map"
+            android:icon="@drawable/baseline_format_list_bulleted_black_18dp"
+            android:title="Acceder à la carte" />
 
     </group>
-    <item android:title="Utilisateur">
+    <item
+        android:id="@+id/connec"
+        android:title="Utilisateur">
 
         <menu>
 

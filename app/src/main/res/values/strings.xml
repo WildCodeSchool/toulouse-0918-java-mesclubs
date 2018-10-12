@@ -5,11 +5,21 @@
     <string name="entrer_dans_l_application">Entrer dans l\'application</string>
     <string name="ongletti">ITINERAIRE</string>
     <string name="ongletfiltre">FILTRE</string>
-    <string name="ongletconnect">SE CONNECTER/SINSCRIRE</string>
+
+    <string name="ongletconnect">SE CONNECTER/S\'INSCRIRE</string>
     <string name="ongletfav">FAVORIS</string>
-    <string name="nom">LOOKnSPORT</string>
+
+    <string name="nom">LOOK \'n\' SPORT</string>
+    <string name="tvPhone">Phone</string>
+    <string name="tvMail">Mail</string>
+    <string name="tvAdresse">Adresse</string>
+
     <string name="USER">pseudonyme</string>
     <string name="title_activity_fragment">fragmentActivity</string>
     <string name="navigation_drawer_open">open navigation drawer</string>
     <string name="navigation_drawer_close">close navigation drawer</string>
+    <string name="bconnect">JE ME CONNECTE</string>
+    <string name="binscrire">JE /M\'INSCRIS</string>
+    <string name="bphoto">PRENDRE UNE PHOTO</string>
+
 </resources>
