@@ -32,7 +32,7 @@ public class ListAdapter extends ArrayAdapter <ClubModel>{
             viewHolder.phone        = convertView.findViewById(R.id.phone);
             viewHolder.popUpButton  = convertView.findViewById(R.id.popUpButton);
             viewHolder.drawerInfo   = convertView.findViewById(R.id.drawerInfo);
-            viewHolder.iv_like      = convertView.findViewById((R.id.iv_like);)
+            viewHolder.iv_like      = convertView.findViewById(R.id.iv_like);
             viewHolder.iv_fav       = convertView.findViewById(R.id.iv_fav);
 
             convertView.setTag(viewHolder);
@@ -56,6 +56,24 @@ public class ListAdapter extends ArrayAdapter <ClubModel>{
                 }
             }
         });
+
+        final Drawable likeOn = convertView.getResources().getDrawable(R.drawable.like);
+        final Drawable likeOff = convertView.getResources().getDrawable(R.drawable.like_off);
+        final ImageView likeImg = viewHolder.iv_like;
+        likeImg.setTag(false); // set favorite off
+        viewHolder.iv_like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean isLiked = ((boolean) likeImg.getTag());
+                if(!isLiked){
+                    likeImg.setImageDrawable(likeOn);
+                } else {
+                    likeImg.setImageDrawable(likeOff);
+                }
+                likeImg.setTag(!isLiked);
+            }
+        });
+
 
         final Drawable starOn = convertView.getResources().getDrawable(R.drawable.btn_star_big_on);
         final Drawable starOff = convertView.getResources().getDrawable(R.drawable.btn_star_big_off);
