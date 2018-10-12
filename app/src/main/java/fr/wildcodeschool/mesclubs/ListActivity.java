@@ -1,7 +1,11 @@
 package fr.wildcodeschool.mesclubs;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.text.ParseException;
@@ -19,6 +23,7 @@ public class ListActivity extends AppCompatActivity {
         ListAdapter adapter = new ListAdapter(this, results);
         listTrip.setAdapter(adapter);
     }
+
     private ArrayList<ClubModel> genererClubList() {
         ArrayList<ClubModel> results = new ArrayList<>();
 

@@ -28,6 +28,22 @@
           }
         },
         {
+          "client_id": "724087223577-vagj0gp32v4k5ebag8adbi3ou9o0jdui.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.wildcodeschool.mesclubs",
+            "certificate_hash": "a45005a2931b039cb652ada6815fc080b91eb12d"
+          }
+        },
+        {
+          "client_id": "724087223577-p47g2otgbq12cqd3gmshm2r2rbfvm58s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.wildcodeschool.mesclubs",
+            "certificate_hash": "c1760c570e8f38e1674f268a247dafda45d28510"
+          }
+        },
+        {
           "client_id": "724087223577-u742vmr0svgmdvo4o49t4ie4pbblkcvb.apps.googleusercontent.com",
 
           "client_type": 3

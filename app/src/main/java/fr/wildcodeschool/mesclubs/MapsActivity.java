@@ -14,7 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
-
+import android.support.v7.app.AppCompatActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -38,6 +39,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     boolean moveCam = false;
     private int MARKER_WIDTH = 100;
     private int MARKER_HEIGHT = 100;
+
+
+
+
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
 
@@ -79,6 +84,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
+
 
     public int getImages(String sport) {
         int image;
@@ -157,7 +163,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     moveCameraOnUser(location);
                     moveCam = true;
                 }
-
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -169,37 +174,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onProviderDisabled(String provider) {
             }
         };
-
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+                                                0, locationListener);
+        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0,
+                                                0, locationListener);
     }
+
 
 
     private void checkPermission() {
 
         // vérification de l'autorisation d'accéder à la position GPS
-
         if (ContextCompat.checkSelfPermission(MapsActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-
             // l'autorisation n'est pas acceptée
-
             if (ActivityCompat.shouldShowRequestPermissionRationale(MapsActivity.this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
-
                 // l'autorisation a été refusée précédemment, on peut prévenir l'utilisateur ici
-
             } else {
-
                 // l'autorisation n'a jamais été réclamée, on la demande à l'utilisateur
-
                 ActivityCompat.requestPermissions(MapsActivity.this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         100);
             }
         } else {
-
             initLocation();
         }
     }
@@ -209,19 +208,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 100: {
-
                 // cas de notre demande d'autorisation
-
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
                     initLocation();
-
                 } else {
-
                     // l'autorisation a été refusée :(
                     checkPermission();
-
                 }
                 return;
             }
@@ -231,10 +224,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void moveCameraOnUser(Location location) {
 
         LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15.0f));
     }
-
 
     /**
      * Manipulates the map once available.
