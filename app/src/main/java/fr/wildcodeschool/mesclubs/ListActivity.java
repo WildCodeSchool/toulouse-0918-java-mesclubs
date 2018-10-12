@@ -1,40 +1,48 @@
 package fr.wildcodeschool.mesclubs;
 
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
-import java.text.ParseException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 public class ListActivity extends AppCompatActivity {
-
+private ListView mListTrip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
-        ListView listTrip = findViewById(R.id.list_club);
-        ArrayList<ClubModel> results = genererClubList();
-        ListAdapter adapter = new ListAdapter(this, results);
-        listTrip.setAdapter(adapter);
+        getClubs();
     }
 
-    private ArrayList<ClubModel> genererClubList() {
-        ArrayList<ClubModel> results = new ArrayList<>();
+    public void getClubs() {
+        final ArrayList<Club> arrayClub = new ArrayList<>();
 
-        results.add(new ClubModel(R.color.alpinism,"ASPTT GRAND TOULOUSE OMNISPORT", "ALPINISME"));
-        results.add(new ClubModel(R.color.alpinism,"ASSOCIATION PYRENEES CLUB", "ALPINISME"));
-        results.add(new ClubModel(R.color.escalade,"ESCAPADE CLUB", "ESCALADE"));
-        results.add(new ClubModel(R.color.escalade,"LOISIRS ET MONTAGNE", "ESCALADE"));
-        results.add(new ClubModel(R.color.marche,"ASSOCIATION SPORTIVE MONTAUDRAN", "MARCHE"));
-        results.add(new ClubModel(R.color.natation,"INSTITUT GYMNIQUE DE TOULOUSE", "NATATION"));
-        results.add(new ClubModel(R.color.natation,"STADE TOULOUSAIN NATATION", "NATATION"));
-        return results;
+        //firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference clubRef = database.getReference("club");
+        clubRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
+                    Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
+                    arrayClub.add(club);
+                }
+                ListAdapter adapter = new ListAdapter(ListActivity.this, arrayClub);
+                mListTrip = findViewById(R.id.list_club);
+                mListTrip.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     @Override

@@ -36,7 +36,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     LocationManager mLocationManager = null;
     boolean moveCam = false;
-
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
 
@@ -48,10 +47,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
     }
-
-
 
     public void getClubs() {
         final ArrayList<Club> arrayClub = new ArrayList<>();
@@ -75,10 +71,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(MapsActivity.this);
                 mMap.setInfoWindowAdapter(customInfoWindow);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }
@@ -139,20 +133,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         return club;
     }
-
-
-//TODO methode getColors
-        /*
-    public Club getColors(Club club) {
-        String sport = club.getSport();
-        if (sport.equals("ALPINISME")) {
-            club.setColor(R.color.alpinism);
-            return club;
-        }
-        return club;*/
-
-
-
 
     @SuppressLint("MissingPermission")
     private void initLocation() {
@@ -218,7 +198,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
+    public void onRequestPermissionsResult (int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 100: {
@@ -235,23 +215,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    public void moveCameraOnUser(Location location) {
+    public void moveCameraOnUser (Location location) {
 
         LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15.0f));
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady (GoogleMap googleMap) {
         mMap = googleMap;
 
         checkPermission();

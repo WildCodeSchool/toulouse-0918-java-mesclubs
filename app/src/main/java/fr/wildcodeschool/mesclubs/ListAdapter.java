@@ -12,13 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
 
-public class ListAdapter extends ArrayAdapter <ClubModel>{
+public class ListAdapter extends ArrayAdapter <Club> {
 
-    public ListAdapter(Context context,ArrayList<ClubModel> list){
+    public ListAdapter (Context context,ArrayList<Club> list){
         super(context, 0, list);
     }
 
-    public View getView ( int position, View convertView, ViewGroup parent){
+    public View getView ( int position, View convertView, ViewGroup parent) {
 
         ListViewHolder viewHolder;
         if (convertView == null) {
@@ -35,20 +35,19 @@ public class ListAdapter extends ArrayAdapter <ClubModel>{
             convertView.setTag(viewHolder);
         }
 
-
-        ClubModel list = getItem(position);
+        Club list = getItem(position);
         viewHolder = (ListViewHolder) convertView.getTag();
         viewHolder.clubName.setText(list.getClubName());
         viewHolder.sport.setText(list.getSport());
-        viewHolder.sportColor.setImageDrawable(new ColorDrawable(getContext().getResources().getColor(list.getColor())));
+      // viewHolder.sportColor.setImageDrawable(new ColorDrawable(getContext().getResources().getColor(list.getColor())));
 
         final ListViewHolder finalViewHolder = viewHolder;
         viewHolder.popUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(finalViewHolder.drawerInfo.getVisibility() == View.VISIBLE){
+                if (finalViewHolder.drawerInfo.getVisibility() == View.VISIBLE) {
                     finalViewHolder.drawerInfo.setVisibility(View.GONE);
-                }else{
+                } else {
                     finalViewHolder.drawerInfo.setVisibility(View.VISIBLE);
                 }
             }
@@ -57,7 +56,7 @@ public class ListAdapter extends ArrayAdapter <ClubModel>{
     }
 }
 
-class ListViewHolder{
+class ListViewHolder {
     public TextView         clubName;
     public TextView         sport;
     public ImageView        sportColor;

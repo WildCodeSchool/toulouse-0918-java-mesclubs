@@ -1,19 +1,14 @@
 package fr.wildcodeschool.mesclubs;
 
-
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.text.style.BackgroundColorSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
 public class CustomMarkerAdapter implements GoogleMap.InfoWindowAdapter {
-
 
     private Context context;
 
@@ -44,7 +39,6 @@ public class CustomMarkerAdapter implements GoogleMap.InfoWindowAdapter {
         markerSport.setText(club.getSport());
         markeurWeb.setText(club.getWebsite());
         markerImage.setImageDrawable(context.getResources().getDrawable(club.getImage()));
-
 
         if (club.isHandicapped()){
             markerHandicap.setImageDrawable(context.getResources().getDrawable(R.drawable.handicap));
