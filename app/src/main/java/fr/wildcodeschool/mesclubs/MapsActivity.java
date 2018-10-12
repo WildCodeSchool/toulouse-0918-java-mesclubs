@@ -14,7 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,7 +31,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -39,10 +38,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     boolean moveCam = false;
     private int MARKER_WIDTH = 100;
     private int MARKER_HEIGHT = 100;
-
-
-
-
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
 
@@ -175,11 +170,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         };
         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
-                                                0, locationListener);
+                0, locationListener);
         mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0,
-                                                0, locationListener);
+                0, locationListener);
     }
-
 
 
     private void checkPermission() {
