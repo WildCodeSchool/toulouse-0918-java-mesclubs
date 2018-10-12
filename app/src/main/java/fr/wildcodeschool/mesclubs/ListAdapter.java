@@ -11,28 +11,30 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 
-public class ListAdapter extends ArrayAdapter <ClubModel>{
+public class ListAdapter extends ArrayAdapter<ClubModel> {
 
-    public ListAdapter(Context context,ArrayList<ClubModel> list){
+    public ListAdapter(Context context, ArrayList<ClubModel> list) {
         super(context, 0, list);
     }
 
-    public View getView ( int position, View convertView, ViewGroup parent){
+    public View getView(int position, View convertView, ViewGroup parent) {
 
         ListViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_item_list, parent, false);
             viewHolder = new ListViewHolder();
-            viewHolder.clubName     =  convertView.findViewById(R.id.clubName);
-            viewHolder.sport        = convertView.findViewById(R.id.sport);
-            viewHolder.sportColor   = convertView.findViewById(R.id.sportColor);
-            viewHolder.address      = convertView.findViewById(R.id.address);
-            viewHolder.phone        = convertView.findViewById(R.id.phone);
-            viewHolder.popUpButton  = convertView.findViewById(R.id.popUpButton);
-            viewHolder.drawerInfo   = convertView.findViewById(R.id.drawerInfo);
-            viewHolder.iv_fav       = convertView.findViewById(R.id.iv_fav);
+            viewHolder.clubName = convertView.findViewById(R.id.clubName);
+            viewHolder.sport = convertView.findViewById(R.id.sport);
+            viewHolder.sportColor = convertView.findViewById(R.id.sportColor);
+            viewHolder.address = convertView.findViewById(R.id.address);
+            viewHolder.phone = convertView.findViewById(R.id.phone);
+            viewHolder.popUpButton = convertView.findViewById(R.id.popUpButton);
+            viewHolder.drawerInfo = convertView.findViewById(R.id.drawerInfo);
+            viewHolder.iv_like = convertView.findViewById(R.id.iv_like);
+            viewHolder.iv_fav = convertView.findViewById(R.id.iv_fav);
 
             convertView.setTag(viewHolder);
         }
@@ -48,13 +50,31 @@ public class ListAdapter extends ArrayAdapter <ClubModel>{
         viewHolder.popUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(finalViewHolder.drawerInfo.getVisibility() == View.VISIBLE){
+                if (finalViewHolder.drawerInfo.getVisibility() == View.VISIBLE) {
                     finalViewHolder.drawerInfo.setVisibility(View.GONE);
-                }else{
+                } else {
                     finalViewHolder.drawerInfo.setVisibility(View.VISIBLE);
                 }
             }
         });
+
+        final Drawable likeOn = convertView.getResources().getDrawable(R.drawable.like);
+        final Drawable likeOff = convertView.getResources().getDrawable(R.drawable.like_off);
+        final ImageView likeImg = viewHolder.iv_like;
+        likeImg.setTag(false); // set favorite off
+        viewHolder.iv_like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean isLiked = ((boolean) likeImg.getTag());
+                if (!isLiked) {
+                    likeImg.setImageDrawable(likeOn);
+                } else {
+                    likeImg.setImageDrawable(likeOff);
+                }
+                likeImg.setTag(!isLiked);
+            }
+        });
+
 
         final Drawable starOn = convertView.getResources().getDrawable(R.drawable.btn_star_big_on);
         final Drawable starOff = convertView.getResources().getDrawable(R.drawable.btn_star_big_off);
@@ -64,7 +84,7 @@ public class ListAdapter extends ArrayAdapter <ClubModel>{
             @Override
             public void onClick(View view) {
                 boolean isFavorite = ((boolean) starImg.getTag());
-                if(!isFavorite){
+                if (!isFavorite) {
                     starImg.setImageDrawable(starOn);
                 } else {
                     starImg.setImageDrawable(starOff);
@@ -74,21 +94,22 @@ public class ListAdapter extends ArrayAdapter <ClubModel>{
         });
 
 
-
         return convertView;
     }
 
 }
 
-class ListViewHolder{
-    public TextView         clubName;
-    public TextView         sport;
-    public ImageView        sportColor;
-    public TextView         address;
-    public TextView         phone;
+class ListViewHolder {
+    public TextView clubName;
+    public TextView sport;
+    public ImageView sportColor;
+    public TextView address;
+    public TextView phone;
     public ConstraintLayout drawerInfo;
-    public ImageButton      popUpButton;
-    public ImageView        iv_fav;
+    public ImageButton popUpButton;
+    public ImageView iv_like;
+    public ImageView iv_fav;
+
 
 }
 
