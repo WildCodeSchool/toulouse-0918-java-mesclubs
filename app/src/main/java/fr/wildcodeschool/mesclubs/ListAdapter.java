@@ -28,7 +28,6 @@ public class ListAdapter extends ArrayAdapter <Club> {
             viewHolder.sport        = convertView.findViewById(R.id.sport);
             viewHolder.sportColor   = convertView.findViewById(R.id.sportColor);
             viewHolder.address      = convertView.findViewById(R.id.address);
-            viewHolder.phone        = convertView.findViewById(R.id.phone);
             viewHolder.popUpButton  = convertView.findViewById(R.id.popUpButton);
             viewHolder.drawerInfo   = convertView.findViewById(R.id.drawerInfo);
 
