@@ -20,6 +20,14 @@
             android:id="@+id/fitre"
             android:icon="@drawable/baseline_filter_list_black_18dp"
             android:title="FILTRE" />
+        <item
+            android:id="@+id/liste"
+            android:icon="@drawable/baseline_format_list_bulleted_black_18dp"
+            android:title="Voir la liste " />
+        <item
+            android:id="@+id/map"
+            android:icon="@drawable/baseline_format_list_bulleted_black_18dp"
+            android:title="Acceder à la carte" />
 
     </group>
     <item
@@ -33,6 +41,11 @@
                     android:id="@+id/connection"
                     android:icon="@drawable/baseline_input_black_18dp"
                     android:title="@string/ongletconnect" />
+
+                <item
+                    android:id="@+id/déconnection"
+                    android:icon="@drawable/personne"
+                    android:title="SE DECONNECTER"/>
 
             </group>
         </menu>
