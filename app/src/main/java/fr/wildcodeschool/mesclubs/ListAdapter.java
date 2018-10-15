@@ -14,13 +14,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ListAdapter extends ArrayAdapter<ClubModel> {
+public class ListAdapter extends ArrayAdapter <Club> {
 
-    public ListAdapter(Context context, ArrayList<ClubModel> list) {
+    public ListAdapter (Context context,ArrayList<Club> list){
         super(context, 0, list);
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView ( int position, View convertView, ViewGroup parent) {
 
         ListViewHolder viewHolder;
         if (convertView == null) {
@@ -30,21 +30,18 @@ public class ListAdapter extends ArrayAdapter<ClubModel> {
             viewHolder.sport = convertView.findViewById(R.id.sport);
             viewHolder.sportColor = convertView.findViewById(R.id.sportColor);
             viewHolder.address = convertView.findViewById(R.id.address);
-            viewHolder.phone = convertView.findViewById(R.id.phone);
             viewHolder.popUpButton = convertView.findViewById(R.id.popUpButton);
             viewHolder.drawerInfo = convertView.findViewById(R.id.drawerInfo);
             viewHolder.iv_like = convertView.findViewById(R.id.iv_like);
             viewHolder.iv_fav = convertView.findViewById(R.id.iv_fav);
-
             convertView.setTag(viewHolder);
         }
 
-
-        ClubModel list = getItem(position);
+        Club list = getItem(position);
         viewHolder = (ListViewHolder) convertView.getTag();
         viewHolder.clubName.setText(list.getClubName());
         viewHolder.sport.setText(list.getSport());
-        viewHolder.sportColor.setImageDrawable(new ColorDrawable(getContext().getResources().getColor(list.getColor())));
+      // viewHolder.sportColor.setImageDrawable(new ColorDrawable(getContext().getResources().getColor(list.getColor())));
 
         final ListViewHolder finalViewHolder = viewHolder;
         viewHolder.popUpButton.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +72,6 @@ public class ListAdapter extends ArrayAdapter<ClubModel> {
             }
         });
 
-
         final Drawable starOn = convertView.getResources().getDrawable(R.drawable.btn_star_big_on);
         final Drawable starOff = convertView.getResources().getDrawable(R.drawable.btn_star_big_off);
         final ImageView starImg = viewHolder.iv_fav;
@@ -100,17 +96,15 @@ public class ListAdapter extends ArrayAdapter<ClubModel> {
 }
 
 class ListViewHolder {
-    public TextView clubName;
-    public TextView sport;
-    public ImageView sportColor;
-    public TextView address;
-    public TextView phone;
+    public TextView         clubName;
+    public TextView         sport;
+    public ImageView        sportColor;
+    public TextView         address;
+    public TextView         phone;
     public ConstraintLayout drawerInfo;
-    public ImageButton popUpButton;
-    public ImageView iv_like;
-    public ImageView iv_fav;
-
-
+    public ImageButton      popUpButton;
+    public ImageView        iv_like;
+    public ImageView        iv_fav;
 }
 
 

@@ -1,12 +1,13 @@
 package fr.wildcodeschool.mesclubs;
 
-import android.content.Intent;
+
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -14,12 +15,19 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
+
 
 public class ListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     NavigationView navigationView;
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
+    private ListView mListTrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +37,34 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
         this.configureToolBar();
         this.configureDrawerLayout();
         this.configureNavigationView();
-        ListView listTrip = findViewById(R.id.list_club);
-        ArrayList<ClubModel> results = genererClubList();
-        ListAdapter adapter = new ListAdapter(this, results);
-        listTrip.setAdapter(adapter);
+        getClubs();
+    }
+
+    public void getClubs() {
+        final ArrayList<Club> arrayClub = new ArrayList<>();
+
+        //firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference clubRef = database.getReference("club");
+        clubRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
+                    Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
+                    arrayClub.add(club);
+                }
+                ListAdapter adapter = new ListAdapter(ListActivity.this, arrayClub);
+                mListTrip = findViewById(R.id.list_club);
+                mListTrip.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+
+
     }
 
     //GESTION DE L'AFFICHAGE DU MENU
@@ -85,18 +117,6 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     //GESTION DE LA LISTE
 
 
-    private ArrayList<ClubModel> genererClubList() {
-        ArrayList<ClubModel> results = new ArrayList<>();
-
-        results.add(new ClubModel(R.color.alpinism, "ASPTT GRAND TOULOUSE OMNISPORT", "ALPINISME"));
-        results.add(new ClubModel(R.color.alpinism, "ASSOCIATION PYRENEES CLUB", "ALPINISME"));
-        results.add(new ClubModel(R.color.escalade, "ESCAPADE CLUB", "ESCALADE"));
-        results.add(new ClubModel(R.color.escalade, "LOISIRS ET MONTAGNE", "ESCALADE"));
-        results.add(new ClubModel(R.color.marche, "ASSOCIATION SPORTIVE MONTAUDRAN", "MARCHE"));
-        results.add(new ClubModel(R.color.natation, "INSTITUT GYMNIQUE DE TOULOUSE", "NATATION"));
-        results.add(new ClubModel(R.color.natation, "STADE TOULOUSAIN NATATION", "NATATION"));
-        return results;
-    }
 
     @Override
     public void finish() {
