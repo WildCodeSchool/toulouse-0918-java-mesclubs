@@ -88,8 +88,6 @@ public class ListAdapter extends ArrayAdapter <Club> {
                 starImg.setTag(!isFavorite);
             }
         });
-
-
         return convertView;
     }
 

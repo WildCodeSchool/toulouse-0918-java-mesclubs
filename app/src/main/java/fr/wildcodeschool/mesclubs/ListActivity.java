@@ -12,9 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -62,9 +60,6 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
-
-
     }
 
     //GESTION DE L'AFFICHAGE DU MENU
@@ -113,10 +108,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-
     //GESTION DE LA LISTE
-
-
 
     @Override
     public void finish() {

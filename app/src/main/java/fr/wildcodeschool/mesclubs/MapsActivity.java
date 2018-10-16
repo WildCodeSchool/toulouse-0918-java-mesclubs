@@ -21,7 +21,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -90,9 +89,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.navigationView = (NavigationView) findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(this);
-
     }
-
 
     //ONBACK PRESS METHODE
     @Override
@@ -105,7 +102,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         } else {
             super.onBackPressed();
         }
-
     }
 
     @Override
@@ -122,7 +118,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.liste:
                 startActivity(new Intent(this, ListActivity.class));
                 break;
-
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
@@ -143,7 +138,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.getLatitude(), club.getLongitude()))
                             .icon(BitmapDescriptorFactory.fromBitmap(markerIcon)));
                     marker.setTag(club);
-                    //TODO récup la photo a partir de l'adresse (streetview)
                 }
                 // generer les marqueurs a partir de la liste
                 CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(MapsActivity.this);
@@ -287,7 +281,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
     }
-
 
     public void moveCameraOnUser(Location location) {
 
