@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="false"
+    android:background="@drawable/backgroundmain"
     android:orientation="vertical">
 
     <ImageView
@@ -33,7 +35,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_sport"
-        tools:text="Name" />
+        tools:text="Name"
+        android:textColor="#fff"/>
 
     <TextView
         android:id="@+id/text_sport"
@@ -49,21 +52,25 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/marker_image" />
+        app:layout_constraintTop_toBottomOf="@+id/marker_image"
+        android:textColor="#fff"/>
 
     <TextView
         android:id="@+id/text_web"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
         android:autoLink="web|all"
         android:text="Site web"
         android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/guideline11"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toBottomOf="@+id/marker_name" />
+        app:layout_constraintStart_toEndOf="@+id/iv_net"
+        app:layout_constraintTop_toBottomOf="@+id/marker_name"
+        android:textColor="#fff"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline11"
@@ -89,7 +96,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline12"
-        app:layout_constraintEnd_toStartOf="@+id/imageView6"
+        app:layout_constraintEnd_toStartOf="@+id/iv_share"
         app:layout_constraintHorizontal_bias="0.449"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline11"
@@ -107,24 +114,25 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline12"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintStart_toEndOf="@+id/imageView6"
+        app:layout_constraintStart_toEndOf="@+id/iv_share"
         app:layout_constraintTop_toTopOf="@+id/guideline11"
         app:srcCompat="@drawable/like_off" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/iv_net"
         android:layout_width="17dp"
         android:layout_height="21dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline11"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/marker_name"
         app:srcCompat="@drawable/weblogo" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/iv_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -161,5 +169,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline12" />
+
+    <TextView
+        android:id="@+id/tv_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_like"
+        app:layout_constraintTop_toTopOf="@+id/guideline11"
+        tools:text="counter"
+        android:textColor="#fff"/>
 
 </android.support.constraint.ConstraintLayout>
