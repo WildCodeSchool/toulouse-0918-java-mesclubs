@@ -69,10 +69,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.configureNavigationView();
     }
 
-
-
-
-
     //GESTION DU MENU
     private void configureToolBar() {
 
@@ -153,6 +149,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(MapsActivity.this);
                 mMap.setInfoWindowAdapter(customInfoWindow);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -274,7 +271,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
-    public void onRequestPermissionsResult (int requestCode,
+    public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 100: {
@@ -299,7 +296,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
-    public void onMapReady (GoogleMap googleMap) {
+    public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         checkPermission();
     }
