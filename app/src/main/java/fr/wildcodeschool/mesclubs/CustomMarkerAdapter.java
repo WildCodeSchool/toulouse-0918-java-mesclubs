@@ -41,7 +41,7 @@ public class CustomMarkerAdapter implements GoogleMap.InfoWindowAdapter {
         markerImage.setImageDrawable(context.getResources().getDrawable(club.getImage()));
 
         if (club.isHandicapped()){
-            markerHandicap.setImageDrawable(context.getResources().getDrawable(R.drawable.handicap));
+            markerHandicap.setImageDrawable(context.getResources().getDrawable(R.drawable.handicapicon));
         }
         return view;
     }
