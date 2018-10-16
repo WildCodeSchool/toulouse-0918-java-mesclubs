@@ -1,8 +1,9 @@
 package fr.wildcodeschool.mesclubs;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class ListAdapter extends ArrayAdapter <Club> {
+
 
     public ListAdapter (Context context,ArrayList<Club> list){
         super(context, 0, list);
@@ -29,11 +31,13 @@ public class ListAdapter extends ArrayAdapter <Club> {
             viewHolder.clubName = convertView.findViewById(R.id.clubName);
             viewHolder.sport = convertView.findViewById(R.id.sport);
             viewHolder.sportColor = convertView.findViewById(R.id.sportColor);
-            viewHolder.address = convertView.findViewById(R.id.address);
             viewHolder.popUpButton = convertView.findViewById(R.id.popUpButton);
             viewHolder.drawerInfo = convertView.findViewById(R.id.drawerInfo);
             viewHolder.iv_like = convertView.findViewById(R.id.iv_like);
             viewHolder.iv_fav = convertView.findViewById(R.id.iv_fav);
+            viewHolder.tv_address = convertView.findViewById(R.id.tv_address);
+            viewHolder.tv_website = convertView.findViewById(R.id.tv_website);
+            viewHolder.iv_share = convertView.findViewById(R.id.iv_share);
             convertView.setTag(viewHolder);
         }
 
@@ -41,7 +45,12 @@ public class ListAdapter extends ArrayAdapter <Club> {
         viewHolder = (ListViewHolder) convertView.getTag();
         viewHolder.clubName.setText(list.getClubName());
         viewHolder.sport.setText(list.getSport());
-      // viewHolder.sportColor.setImageDrawable(new ColorDrawable(getContext().getResources().getColor(list.getColor())));
+        viewHolder.tv_address.setText(list.getAddress());
+        viewHolder.sportColor.setImageDrawable(getContext().getResources().getDrawable(list.getImage()));
+        viewHolder.tv_website.setText(list.getWebsite());
+        if(viewHolder.tv_website.getText().length() == 0){
+            viewHolder.tv_website.setText(R.string.tvWebsite);
+        }
 
         final ListViewHolder finalViewHolder = viewHolder;
         viewHolder.popUpButton.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +61,24 @@ public class ListAdapter extends ArrayAdapter <Club> {
                 } else {
                     finalViewHolder.drawerInfo.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+
+
+        final ListViewHolder finalViewHolder1 = viewHolder;
+        viewHolder.iv_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message  = getContext().getResources().getString(R.string.sahreBody);
+                String sport    = finalViewHolder1.sport.getText().toString();
+                String clubName = finalViewHolder1.clubName.getText().toString();
+                String webSite  = finalViewHolder1.tv_website.getText().toString();
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                String shareBodyText =  message + sport + " " + clubName + " " + webSite;
+                shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"My App");
+                shareIntent.putExtra(Intent.EXTRA_TEXT,shareBodyText);
+                getContext().startActivity(Intent.createChooser(shareIntent,"Share via"));
             }
         });
 
@@ -98,13 +125,15 @@ public class ListAdapter extends ArrayAdapter <Club> {
 class ListViewHolder {
     public TextView         clubName;
     public TextView         sport;
-    public ImageView        sportColor;
-    public TextView         address;
     public TextView         phone;
+    public TextView         tv_address;
+    public TextView         tv_website;
+    public ImageView        sportColor;
     public ConstraintLayout drawerInfo;
     public ImageButton      popUpButton;
     public ImageView        iv_like;
     public ImageView        iv_fav;
+    public ImageView        iv_share;
 }
 
 

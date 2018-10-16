@@ -12,9 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,20 +49,68 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
                     Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
+                    club.setImage(getImages(club.getSport()));
                     arrayClub.add(club);
                 }
                 ListAdapter adapter = new ListAdapter(ListActivity.this, arrayClub);
                 mListTrip = findViewById(R.id.list_club);
                 mListTrip.setAdapter(adapter);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
 
+    public int getImages(String sport) {
+        int image;
 
+        switch (sport) {
+            case "ALPINISME":
+                image = R.drawable.alpinisme;
+                break;
 
+            case "AVIRON":
+                image = R.drawable.aviron;
+                break;
+            case "CANOE-KAYAK":
+                image = R.drawable.canoe;
+                break;
+
+            case "CANYONISME":
+                image = R.drawable.canyon;
+                break;
+            case "COURSE A PIED":
+            case "COURSE D'ORIENTATION":
+            case "marche":
+                image = R.drawable.course;
+                break;
+            case "ESCALADE":
+                image = R.drawable.escalade;
+                break;
+            case "NATATION":
+                image = R.drawable.natation;
+                break;
+            case "plongée":
+                image = R.drawable.plonge;
+                break;
+            case "randonnée":
+                image = R.drawable.rando;
+                break;
+            case "spéléologie":
+                image = R.drawable.speleo;
+                break;
+            case "VOILE":
+            case "planche à voile":
+                image = R.drawable.voile;
+                break;
+            case "YOGA":
+                image = R.drawable.yoga;
+                break;
+            default:
+                image = R.drawable.ic_android_black_24dp;
+        }
+        return image;
     }
 
     //GESTION DE L'AFFICHAGE DU MENU

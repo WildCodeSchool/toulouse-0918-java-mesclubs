@@ -13,6 +13,8 @@
     <string name="tvPhone">Phone</string>
     <string name="tvMail">Mail</string>
     <string name="tvAdresse">Adresse</string>
+    <string name="tvWebsite">Pas de site disponible pour ce club</string>
+    <string name="sahreBody">J\'adore ce club :</string>
 
     <string name="USER">pseudonyme</string>
     <string name="title_activity_fragment">fragmentActivity</string>

@@ -4,6 +4,7 @@ public class Club {
     private String  clubName;
     private String website;
     private String  sport;
+    private String address;
     private boolean  handicapped;
     private double latitude;
     private double longitude;
@@ -24,7 +25,16 @@ public class Club {
         this.picture = picture;
         this.imgHandicap = imgHandicap;
     }
-    public Club(int color,String clubName, String sport) {
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Club(int color, String clubName, String sport) {
         this.color = color;
         this.clubName = clubName;
         this.sport = sport;
