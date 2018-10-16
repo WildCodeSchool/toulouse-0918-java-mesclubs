@@ -64,7 +64,6 @@ public class ListAdapter extends ArrayAdapter <Club> {
             }
         });
 
-
         final ListViewHolder finalViewHolder1 = viewHolder;
         viewHolder.iv_share.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,11 +114,8 @@ public class ListAdapter extends ArrayAdapter <Club> {
                 starImg.setTag(!isFavorite);
             }
         });
-
-
         return convertView;
     }
-
 }
 
 class ListViewHolder {
