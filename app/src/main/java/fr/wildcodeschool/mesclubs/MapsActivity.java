@@ -12,7 +12,6 @@ import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -26,10 +25,8 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -55,19 +52,18 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
 
+    final static int POPUP_POSITION_X = 0;
+    final static int POPUP_POSITION_Y = 0;
     LocationManager mLocationManager = null;
     boolean moveCam = false;
-
+    int counter = 0;
     NavigationView navigationView;
     ClipData.Item map;
     private int MARKER_WIDTH = 100;
     private int MARKER_HEIGHT = 100;
-
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
-    final static int POPUP_POSITION_X = 0;
-    final static int POPUP_POSITION_Y = 0;
     private PopupWindow popUp;
 
     @Override
@@ -324,12 +320,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void popupBuilder(Marker marker) {
 
         Display display = getWindowManager().getDefaultDisplay();
-
+        
         Point size = new Point();
         display.getSize(size);
         int width = (int) Math.round(size.x * 0.8);
-        int height = (int) Math.round(size.y * 0.6);
-
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View popUpView = inflater.inflate(R.layout.item_marker, null);
@@ -346,28 +340,55 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         ImageView markerHandicap = popUpView.findViewById(R.id.image_handicap);
         TextView markerSport = popUpView.findViewById(R.id.text_sport);
         TextView markeurWeb = popUpView.findViewById(R.id.text_web);
-        ImageView ivLike = popUpView.findViewById(R.id.iv_like);
+        final ImageView ivLike = popUpView.findViewById(R.id.iv_like);
         final ImageView ivFav = popUpView.findViewById(R.id.iv_fav);
         ImageView ivShare = popUpView.findViewById(R.id.iv_share);
+        final TextView tvCounter = popUpView.findViewById(R.id.tv_counter);
 
         markerName.setText(club.getClubName());
         markerSport.setText(club.getSport());
         markeurWeb.setText(club.getWebsite());
         markerImage.setImageDrawable(MapsActivity.this.getResources().getDrawable(club.getImage()));
+        ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_off));
+        ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like_off));
+        tvCounter.setText(String.valueOf(counter));
 
-        if (club.isHandicapped()){
+        if (club.isHandicapped()) {
             markerHandicap.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.handicapicon));
         }
 
+        //Click on Favoris
+        ivFav.setTag(false); // set favorite off
         ivFav.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                boolean isFav = false;
-                if (isFav) {
-                    ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_off));
-                } else {
+            public void onClick(View view) {
+                boolean isFav = ((boolean) ivFav.getTag());
+                if (!isFav) {
                     ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_on));
+                } else {
+                    ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_off));
                 }
+                ivFav.setTag(!isFav);
+            }
+        });
+
+        //Click on like
+        ivLike.setTag(false); // set favorite off
+        ivLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                boolean isliked = ((boolean) ivLike.getTag());
+                if (!isliked) {
+                    ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like));
+                    counter++;
+                    tvCounter.setText(String.valueOf(counter));
+                } else {
+                    ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like_off));
+                    counter--;
+                    tvCounter.setText(String.valueOf(counter));
+                }
+                ivLike.setTag(!isliked);
             }
         });
     }
