@@ -67,14 +67,12 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
             case "ALPINISME":
                 image = R.drawable.alpinisme;
                 break;
-
             case "AVIRON":
                 image = R.drawable.aviron;
                 break;
             case "CANOE-KAYAK":
                 image = R.drawable.canoe;
                 break;
-
             case "CANYONISME":
                 image = R.drawable.canyon;
                 break;
