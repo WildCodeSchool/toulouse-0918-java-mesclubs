@@ -64,10 +64,7 @@ public class Club {
         this.imgHandicap = imgHandicap;
     }
 
-    public int getColor() {
-
-        return color;
-    }
+    public int getColor() { return color; }
 
     public void setColor(int color) {
         this.color = color;
