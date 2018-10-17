@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -20,7 +22,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListPopupWindow;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -53,6 +66,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
+    final static int POPUP_POSITION_X = 0;
+    final static int POPUP_POSITION_Y = 0;
+    private PopupWindow popUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,8 +156,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     marker.setTag(club);
                 }
                 // generer les marqueurs a partir de la liste
-                CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(MapsActivity.this);
-                mMap.setInfoWindowAdapter(customInfoWindow);
+                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        popupBuilder(marker);
+                        return false;
+                    }
+                });
+                //CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(MapsActivity.this);
+                //mMap.setInfoWindowAdapter(customInfoWindow);
             }
 
             @Override
@@ -299,4 +322,46 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.finish();
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
+
+    private void popupBuilder(Marker marker) {
+
+        Display display = getWindowManager().getDefaultDisplay();
+
+        Point size = new Point();
+        display.getSize(size);
+        int width = (int) Math.round(size.x * 0.8);
+        int height = (int) Math.round(size.y * 0.6);
+
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popUpView = inflater.inflate(R.layout.item_marker, null);
+
+        //creation fenetre popup
+        boolean focusable = true;
+        popUp = new PopupWindow(popUpView, width, ListPopupWindow.WRAP_CONTENT, focusable);
+
+        //show popup
+        popUp.showAtLocation(popUpView, Gravity.CENTER, POPUP_POSITION_X, POPUP_POSITION_Y);
+        final Club club = (Club) marker.getTag();
+        TextView markerName = popUpView.findViewById(R.id.marker_name);
+        ImageView markerImage = popUpView.findViewById(R.id.marker_image);
+        ImageView markerHandicap = popUpView.findViewById(R.id.image_handicap);
+        TextView markerSport = popUpView.findViewById(R.id.text_sport);
+        TextView markeurWeb = popUpView.findViewById(R.id.text_web);
+
+        markerName.setText(club.getClubName());
+        markerSport.setText(club.getSport());
+        markeurWeb.setText(club.getWebsite());
+        markerImage.setImageDrawable(MapsActivity.this.getResources().getDrawable(club.getImage()));
+
+        if (club.isHandicapped()){
+            markerHandicap.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.handicapicon));
+        }
+
+
+
+
+    }
+
 }
+
