@@ -12,6 +12,7 @@ import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -344,7 +345,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         final ImageView ivFav = popUpView.findViewById(R.id.iv_fav);
         ImageView ivShare = popUpView.findViewById(R.id.iv_share);
         ImageView markerItinerary = popUpView.findViewById(R.id.iv_itinerary);
-        final TextView tvCounter = popUpView.findViewById(R.id.tv_counter);
         final TextView tvCounter = popUpView.findViewById(R.id.tv_counter);
 
         markerName.setText(club.getClubName());
