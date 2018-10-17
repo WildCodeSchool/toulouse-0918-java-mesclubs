@@ -114,8 +114,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_share"
-        app:layout_constraintTop_toTopOf="@+id/guideline11"
-        app:srcCompat="@drawable/like_off" />
+        app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
     <ImageView
         android:id="@+id/iv_net"
@@ -179,12 +178,11 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:textColor="#fff"
         app:layout_constraintBottom_toTopOf="@+id/guideline12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_like"
-        app:layout_constraintTop_toTopOf="@+id/guideline11"
-        tools:text="counter"
-        android:textColor="#fff"/>
+        app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
     <ImageView
         android:id="@+id/iv_itinerary"
