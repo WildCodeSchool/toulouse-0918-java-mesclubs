@@ -184,4 +184,19 @@
         app:layout_constraintStart_toEndOf="@+id/iv_like"
         app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
+    <ImageView
+        android:id="@+id/iv_itinerary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/marker_image"
+        app:layout_constraintHorizontal_bias="0.078"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon_map" />
+
 </android.support.constraint.ConstraintLayout>
