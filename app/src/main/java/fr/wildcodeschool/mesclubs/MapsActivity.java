@@ -163,8 +163,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         return false;
                     }
                 });
-                //CustomMarkerAdapter customInfoWindow = new CustomMarkerAdapter(MapsActivity.this);
-                //mMap.setInfoWindowAdapter(customInfoWindow);
             }
 
             @Override
@@ -348,6 +346,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         ImageView markerHandicap = popUpView.findViewById(R.id.image_handicap);
         TextView markerSport = popUpView.findViewById(R.id.text_sport);
         TextView markeurWeb = popUpView.findViewById(R.id.text_web);
+        ImageView ivLike = popUpView.findViewById(R.id.iv_like);
+        final ImageView ivFav = popUpView.findViewById(R.id.iv_fav);
+        ImageView ivShare = popUpView.findViewById(R.id.iv_share);
 
         markerName.setText(club.getClubName());
         markerSport.setText(club.getSport());
@@ -358,10 +359,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             markerHandicap.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.handicapicon));
         }
 
-
-
-
+        ivFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isFav = false;
+                if (isFav) {
+                    ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_off));
+                } else {
+                    ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_on));
+                }
+            }
+        });
     }
-
 }
 
