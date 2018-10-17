@@ -349,6 +349,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         ImageView ivLike = popUpView.findViewById(R.id.iv_like);
         final ImageView ivFav = popUpView.findViewById(R.id.iv_fav);
         ImageView ivShare = popUpView.findViewById(R.id.iv_share);
+        ImageView markerItinerary = popUpView.findViewById(R.id.iv_itinerary);
+
+
+        markerItinerary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                assert club != null;
+                intent.setData(Uri.parse("http://maps.google.com/maps?.34&daddr=" + club.getLatitude() + "," + club.getLongitude()));
+                startActivity(intent);
+
+            }
+
+        });
 
         markerName.setText(club.getClubName());
         markerSport.setText(club.getSport());
