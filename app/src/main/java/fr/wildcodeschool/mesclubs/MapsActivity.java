@@ -348,7 +348,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         final TextView tvCounter = popUpView.findViewById(R.id.tv_counter);
 
 
-
         markerName.setText(club.getClubName());
         markerSport.setText(club.getSport());
         markeurWeb.setText(club.getWebsite());
@@ -362,14 +361,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         //Bouton Share
-
-
-
-
         ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message  = "J'adore ce club !";
+                String message  = getString(R.string.sahreBody);
                 String sport    = markerSport.getText().toString();
                 String clubName = markerName.getText().toString();
                 String webSite  = markeurWeb.getText().toString();
@@ -381,15 +376,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 startActivity(Intent.createChooser(shareIntent,"Share via"));
 
 
-
-
             }
         });
-
-
-
-
-
 
       //Bouton itinéraire
          markerItinerary.setOnClickListener(new View.OnClickListener() {
