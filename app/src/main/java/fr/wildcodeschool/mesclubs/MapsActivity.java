@@ -68,7 +68,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     final static int POPUP_POSITION_Y = 0;
     LocationManager mLocationManager = null;
     boolean moveCam = false;
-    int counter = 0;
+    //int counter = 0;
     NavigationView navigationView;
     ClipData.Item map;
     private int MARKER_WIDTH = 100;
@@ -152,11 +152,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 startActivity(new Intent(this, ListActivity.class));
                 break;
 
+            case R.id.filtre_distance:
+                mMap.clear();
+                getClubsByDistance();
+                break;
+
             case R.id.filtre_hand:
                 mMap.clear();
                 getClubsByHand();
                 break;
-
 
             case R.id.filtre_sport:
                 final TextView tvFiltre = findViewById(R.id.tv_filtre);
@@ -385,6 +389,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
                     Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
+                    club.setId(clubSnapshot.getKey());
                     club.setImage(getImages(club.getSport()));
                     Bitmap initialMarkerIcon = BitmapFactory.decodeResource(getResources(), club.getImage());
                     Bitmap markerIcon = Bitmap.createScaledBitmap(initialMarkerIcon, MARKER_WIDTH, MARKER_HEIGHT, false);
@@ -446,6 +451,39 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference clubRef = database.getReference("club");
         clubRef.orderByChild("handicapped").equalTo(true)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
+                            Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
+                            club.setImage(getImages(club.getSport()));
+                            Bitmap initialMarkerIcon = BitmapFactory.decodeResource(getResources(), club.getImage());
+                            Bitmap markerIcon = Bitmap.createScaledBitmap(initialMarkerIcon, MARKER_WIDTH, MARKER_HEIGHT, false);
+                            Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.getLatitude(), club.getLongitude()))
+                                    .icon(BitmapDescriptorFactory.fromBitmap(markerIcon)));
+                            marker.setTag(club);
+                        }
+                        // generer les marqueurs a partir de la liste
+                        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                            @Override
+                            public boolean onMarkerClick(Marker marker) {
+                                popupBuilder(marker);
+                                return false;
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+    }
+
+    public void getClubsByDistance() {
+        //firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference clubRef = database.getReference("club");
+        clubRef.orderByChild("latitude").limitToFirst(5)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -631,7 +669,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         updateUI(currentUser);
     }
 
-    void updateUI(FirebaseUser user) {
+    public void updateUI(FirebaseUser user) {
         final View hedeaderLayout = navigationView.getHeaderView(0);
         if (user != null) {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -664,144 +702,148 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             target.setVisible(true);
         }
     }
-        private void popupBuilder (Marker marker){
 
-            Display display = getWindowManager().getDefaultDisplay();
+    private void popupBuilder(Marker marker) {
 
-            Point size = new Point();
-            display.getSize(size);
-            int width = (int) Math.round(size.x * 0.8);
+        Display display = getWindowManager().getDefaultDisplay();
 
-            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            final View popUpView = inflater.inflate(R.layout.item_marker, null);
+        Point size = new Point();
+        display.getSize(size);
+        int width = (int) Math.round(size.x * 0.8);
 
-            //creation fenetre popup
-            boolean focusable = true;
-            popUp = new PopupWindow(popUpView, width, ListPopupWindow.WRAP_CONTENT, focusable);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View popUpView = inflater.inflate(R.layout.item_marker, null);
 
-            //show popup
-            popUp.showAtLocation(popUpView, Gravity.CENTER, POPUP_POSITION_X, POPUP_POSITION_Y);
-            final Club club = (Club) marker.getTag();
-            final TextView markerName = popUpView.findViewById(R.id.marker_name);
-            ImageView markerImage = popUpView.findViewById(R.id.marker_image);
-            ImageView markerHandicap = popUpView.findViewById(R.id.image_handicap);
-            final TextView markerSport = popUpView.findViewById(R.id.text_sport);
-            final TextView markeurWeb = popUpView.findViewById(R.id.text_web);
-            final ImageView ivLike = popUpView.findViewById(R.id.iv_like);
-            final ImageView ivFav = popUpView.findViewById(R.id.iv_fav);
-            ImageView ivShare = popUpView.findViewById(R.id.image_share);
-            ImageView markerItinerary = popUpView.findViewById(R.id.iv_itinerary);
-            final TextView tvCounter = popUpView.findViewById(R.id.tv_counter);
+        //creation fenetre popup
+        boolean focusable = true;
+        popUp = new PopupWindow(popUpView, width, ListPopupWindow.WRAP_CONTENT, focusable);
 
-
-            markerName.setText(club.getClubName());
-            markerSport.setText(club.getSport());
-            markeurWeb.setText(club.getWebsite());
-            markerImage.setImageDrawable(MapsActivity.this.getResources().getDrawable(club.getImage()));
-            ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_off));
-            ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like_off));
-            tvCounter.setText(String.valueOf(counter));
-
-            if (club.isHandicapped()) {
-                markerHandicap.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.handicapicon));
-            }
-
-            //Bouton Share
-            ivShare.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String message = getString(R.string.sahreBody);
-                    String sport = markerSport.getText().toString();
-                    String clubName = markerName.getText().toString();
-                    String webSite = markeurWeb.getText().toString();
-                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.setType("text/plain");
-                    String shareText = message + " " + sport + " " + clubName + " " + webSite;
-                    shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Look'n'Sport");
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
-                    startActivity(Intent.createChooser(shareIntent, "Share via"));
-                }
-            });
-
-            //Bouton itinéraire
-            markerItinerary.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_VIEW);
-                    assert club != null;
-                    intent.setData(Uri.parse("http://maps.google.com/maps?.34&daddr=" + club.getLatitude() + "," + club.getLongitude()));
-                    startActivity(intent);
-                }
-            });
-
-            //Click on Favoris
-            ivFav.setTag(false); // set favorite off
-            ivFav.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    boolean isFav = ((boolean) ivFav.getTag());
-                    if (!isFav) {
-                        ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_on));
-                    } else {
-                        ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_off));
-                    }
-                    ivFav.setTag(!isFav);
-                }
-            });
-
-            // ********BASTIEN*******
-            // CECI EST UNE PARTIE EN COUR DE TRAVAIL MERCI D'ACCEPTER LA PULL REQUEST QUI N'EST PAS LA DESSUS, JE M'EN OCCUPE APRES.
-
-            //Click on like
-            ivLike.setTag(false); // set favorite off
-            ivLike.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    boolean isliked = ((boolean) ivLike.getTag());
-                    if (!isliked) {
-                        ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like));
-                        counter++;
-                        tvCounter.setText(String.valueOf(counter));
-                    } else {
-                        ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like_off));
-                        counter--;
-                        tvCounter.setText(String.valueOf(counter));
-                    }
-                    ivLike.setTag(!isliked);
-                }
-
-            });
-                    /*FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    final DatabaseReference clubRef = database.getReference("club");
-                    clubRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
-                                Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
-                                String key = clubRef.getKey();
-                                clubRef.child(key).child("counter").setValue(club.getCounter() +1);*/
+        //show popup
+        popUp.showAtLocation(popUpView, Gravity.CENTER, POPUP_POSITION_X, POPUP_POSITION_Y);
+        final Club club = (Club) marker.getTag();
+        final TextView markerName = popUpView.findViewById(R.id.marker_name);
+        ImageView markerImage = popUpView.findViewById(R.id.marker_image);
+        ImageView markerHandicap = popUpView.findViewById(R.id.image_handicap);
+        final TextView markerSport = popUpView.findViewById(R.id.text_sport);
+        final TextView markeurWeb = popUpView.findViewById(R.id.text_web);
+        final ImageView ivLike = popUpView.findViewById(R.id.iv_like);
+        final ImageView ivFav = popUpView.findViewById(R.id.iv_fav);
+        ImageView ivShare = popUpView.findViewById(R.id.image_share);
+        ImageView markerItinerary = popUpView.findViewById(R.id.iv_itinerary);
+        final TextView tvCounter = popUpView.findViewById(R.id.tv_counter);
 
 
-                                /*if (club.equals("LOPT9FLQHKb8DzymffF")) {
-                                    DatabaseReference test = clubSnapshot.getRef().child("counter");
-                                    test.setValue(club.getCounter() + 1);
+        markerName.setText(club.getClubName());
+        markerSport.setText(club.getSport());
+        markeurWeb.setText(club.getWebsite());
+        markerImage.setImageDrawable(MapsActivity.this.getResources().getDrawable(club.getImage()));
+        ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_off));
+        ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like_off));
+        tvCounter.setText(String.valueOf(club.getCounter()));
 
-                            }
-                        }}
-                        // if (clubRef.getChild().equals("LOPT9FLQHKb8DzymffF"));
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }*/
-
-
-            // "LOPT9FLQHKb8DzymffF"
-
+        if (club.isHandicapped()) {
+            markerHandicap.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.handicapicon));
         }
+
+        //Bouton Share
+        ivShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message = getString(R.string.sahreBody);
+                String sport = markerSport.getText().toString();
+                String clubName = markerName.getText().toString();
+                String webSite = markeurWeb.getText().toString();
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                String shareText = message + " " + sport + " " + clubName + " " + webSite;
+                shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Look'n'Sport");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+                startActivity(Intent.createChooser(shareIntent, "Share via"));
+            }
+        });
+
+        //Bouton itinéraire
+        markerItinerary.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                assert club != null;
+                intent.setData(Uri.parse("http://maps.google.com/maps?.34&daddr=" + club.getLatitude() + "," + club.getLongitude()));
+                startActivity(intent);
+            }
+        });
+
+        //Click on Favoris
+        ivFav.setTag(false); // set favorite off
+        ivFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean isFav = ((boolean) ivFav.getTag());
+                if (!isFav) {
+                    ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_on));
+                } else {
+                    ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_off));
+                }
+                ivFav.setTag(!isFav);
+            }
+        });
+
+        //Click on like
+        ivLike.setTag(false); // set favorite off
+        ivLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                boolean isliked = ((boolean) ivLike.getTag());
+                if (!isliked) {
+                    ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like));
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    final DatabaseReference clubRef = database.getReference("club").child(club.getId());
+                    clubRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Club thisClub = dataSnapshot.getValue(Club.class);
+                            int counter = thisClub.getCounter();
+                            counter++;
+                            thisClub.setCounter(counter);
+                            clubRef.setValue(thisClub);
+                            tvCounter.setText(String.valueOf(thisClub.getCounter()));
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                } else {
+                    ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like_off));
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    final DatabaseReference clubRef = database.getReference("club").child(club.getId());
+                    clubRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Club thisClub = dataSnapshot.getValue(Club.class);
+                            int counter = thisClub.getCounter();
+                            counter--;
+                            thisClub.setCounter(counter);
+                            clubRef.setValue(thisClub);
+                            tvCounter.setText(String.valueOf(thisClub.getCounter()));
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+                ivLike.setTag(!isliked);
+            }
+        });
+
     }
+}
 
 
 
