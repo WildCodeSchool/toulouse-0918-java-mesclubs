@@ -12,8 +12,9 @@ public class Club {
     private int image;
     private int picture;
     private int imgHandicap;
+    private int counter;
 
-    public Club(String clubName, String website, String sport, boolean handicapped, double latitude, double longitude, int color, int image, int picture, int imgHandicap) {
+    public Club(String clubName, String website, String sport, boolean handicapped, double latitude, double longitude, int color, int image, int picture, int imgHandicap, int counter) {
         this.clubName = clubName;
         this.website = website;
         this.sport = sport;
@@ -24,6 +25,15 @@ public class Club {
         this.image = image;
         this.picture = picture;
         this.imgHandicap = imgHandicap;
+        this.counter = counter;
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
     }
 
     public String getAddress() {
