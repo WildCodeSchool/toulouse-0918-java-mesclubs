@@ -27,6 +27,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListPopupWindow;
 import android.widget.PopupWindow;
@@ -57,7 +58,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     final static int POPUP_POSITION_Y = 0;
     LocationManager mLocationManager = null;
     boolean moveCam = false;
-    int counter = 0;
+    //int counter = 0;
     NavigationView navigationView;
     ClipData.Item map;
     private int MARKER_WIDTH = 100;
@@ -66,6 +67,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
     private PopupWindow popUp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,16 +133,237 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.liste:
                 startActivity(new Intent(this, ListActivity.class));
                 break;
+
+            case R.id.filtre_hand:
+                mMap.clear();
+                getClubsByHand();
+                break;
+
+
+            case R.id.filtre_sport:
+                final TextView tvFiltre = findViewById(R.id.tv_filtre);
+                final TextView tvFiltreAlpinisme = findViewById(R.id.tv_filter_alpinisme);
+                final TextView tvFiltreAviron = findViewById(R.id.tv_filter_aviron);
+                final TextView tvFiltreCanoe = findViewById(R.id.tv_filter_canoe);
+                final TextView tvFiltreCanyonisme = findViewById(R.id.tv_filter_canyonisme);
+                final TextView tvFiltreCourse = findViewById(R.id.tv_filter_course);
+                final TextView tvFiltreEcalade = findViewById(R.id.tv_filter_ecalade);
+                final TextView tvFiltreNatation = findViewById(R.id.tv_filter_natation);
+                final TextView tvFiltreVoile = findViewById(R.id.tv_filter_voile);
+                final TextView tvFiltreRando = findViewById(R.id.tv_filter_randonne);
+                final TextView tvFiltreSpeleo = findViewById(R.id.tv_filter_speleo);
+                final TextView tvFiltreYoga = findViewById(R.id.tv_filter_yoga);
+                final TextView tvFiltrePlonge = findViewById(R.id.tv_filter_plonge);
+                final TextView tvNotFiltre = findViewById(R.id.tv_filtre_remove);
+
+                showFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                        ,  tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                        ,  tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga , tvFiltrePlonge, tvNotFiltre);
+
+                tvFiltreAlpinisme.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMap.clear();
+                        final String sport = tvFiltreAlpinisme.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                ,  tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                ,  tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga , tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreAviron.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMap.clear();
+                        final String sport = tvFiltreAviron.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                ,  tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                ,  tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga , tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreCanoe.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMap.clear();
+                        final String sport = tvFiltreCanoe.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                ,  tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                ,  tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga , tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreCanyonisme.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMap.clear();
+                        final String sport = tvFiltreCanyonisme.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                ,  tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                ,  tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga , tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreCourse.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMap.clear();
+                        final String sport = tvFiltreCourse.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                ,  tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                ,  tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga , tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreEcalade.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMap.clear();
+                        final String sport = tvFiltreEcalade.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                ,  tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                ,  tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga , tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreNatation.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMap.clear();
+                        final String sport = tvFiltreNatation.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                ,  tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                ,  tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga , tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreVoile.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMap.clear();
+                        final String sport = tvFiltreVoile.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                ,  tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                ,  tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga , tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreRando.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMap.clear();
+                        final String sport = tvFiltreRando.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                ,  tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                ,  tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga , tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreSpeleo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMap.clear();
+                        final String sport = tvFiltreSpeleo.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                ,  tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                ,  tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga , tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreYoga.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMap.clear();
+                        final String sport = tvFiltreYoga.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                ,  tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                ,  tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga , tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltrePlonge.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMap.clear();
+                        final String sport = tvFiltrePlonge.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                ,  tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                ,  tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga , tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvNotFiltre.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getClubs();
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                ,  tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                ,  tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga , tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void showFilters(TextView tvFiltre, TextView tvFiltreAlpinisme, TextView tvFiltreAviron, TextView tvFiltreCanoe
+            , TextView tvFiltreCanyonisme, TextView tvFiltreCourse, TextView tvFiltreEcalade, TextView tvFiltreNatation
+            , TextView tvFiltreVoile, TextView tvFiltreRando, TextView tvFiltreSpeleo, TextView tvFiltreYoga
+            , TextView tvFiltrePlonge, TextView tvNotFiltre)
+    {
+        tvFiltre.setVisibility(View.VISIBLE);
+        tvFiltreAlpinisme.setVisibility(View.VISIBLE);
+        tvFiltreAviron.setVisibility(View.VISIBLE);
+        tvFiltreCanoe.setVisibility(View.VISIBLE);
+        tvFiltreCanyonisme.setVisibility(View.VISIBLE);
+        tvFiltreCourse.setVisibility(View.VISIBLE);
+        tvFiltreEcalade.setVisibility(View.VISIBLE);
+        tvFiltreNatation.setVisibility(View.VISIBLE);
+        tvFiltreVoile.setVisibility(View.VISIBLE);
+        tvFiltreRando.setVisibility(View.VISIBLE);
+        tvFiltreSpeleo.setVisibility(View.VISIBLE);
+        tvFiltreYoga.setVisibility(View.VISIBLE);
+        tvFiltrePlonge.setVisibility(View.VISIBLE);
+        tvNotFiltre.setVisibility(View.VISIBLE);
+    }
+
+    public void dontShowFilters(TextView tvFiltre, TextView tvFiltreAlpinisme, TextView tvFiltreAviron, TextView tvFiltreCanoe
+            , TextView tvFiltreCanyonisme, TextView tvFiltreCourse, TextView tvFiltreEcalade, TextView tvFiltreNatation
+            , TextView tvFiltreVoile, TextView tvFiltreRando, TextView tvFiltreSpeleo, TextView tvFiltreYoga
+            , TextView tvFiltrePlonge, TextView tvNotFiltre) {
+        tvFiltre.setVisibility(View.INVISIBLE);
+        tvFiltreAlpinisme.setVisibility(View.INVISIBLE);
+        tvFiltreAviron.setVisibility(View.INVISIBLE);
+        tvFiltreCanoe.setVisibility(View.INVISIBLE);
+        tvFiltreCanyonisme.setVisibility(View.INVISIBLE);
+        tvFiltreCourse.setVisibility(View.INVISIBLE);
+        tvFiltreEcalade.setVisibility(View.INVISIBLE);
+        tvFiltreNatation.setVisibility(View.INVISIBLE);
+        tvFiltreVoile.setVisibility(View.INVISIBLE);
+        tvFiltreRando.setVisibility(View.INVISIBLE);
+        tvFiltreSpeleo.setVisibility(View.INVISIBLE);
+        tvFiltreYoga.setVisibility(View.INVISIBLE);
+        tvFiltrePlonge.setVisibility(View.INVISIBLE);
+        tvNotFiltre.setVisibility(View.INVISIBLE);
     }
 
     public void getClubs() {
         //firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference clubRef = database.getReference("club");
-        clubRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        clubRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
@@ -166,6 +389,72 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+    }
+
+    public void getClubsBySport(String sport) {
+        //firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference clubRef = database.getReference("club");
+        clubRef.orderByChild("sport").equalTo(sport)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
+                            Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
+                            club.setImage(getImages(club.getSport()));
+                            Bitmap initialMarkerIcon = BitmapFactory.decodeResource(getResources(), club.getImage());
+                            Bitmap markerIcon = Bitmap.createScaledBitmap(initialMarkerIcon, MARKER_WIDTH, MARKER_HEIGHT, false);
+                            Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.getLatitude(), club.getLongitude()))
+                                    .icon(BitmapDescriptorFactory.fromBitmap(markerIcon)));
+                            marker.setTag(club);
+                        }
+                        // generer les marqueurs a partir de la liste
+                        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                            @Override
+                            public boolean onMarkerClick(Marker marker) {
+                                popupBuilder(marker);
+                                return false;
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+    }
+
+    public void getClubsByHand() {
+        //firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference clubRef = database.getReference("club");
+        clubRef.orderByChild("handicapped").equalTo(true)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
+                            Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
+                            club.setImage(getImages(club.getSport()));
+                            Bitmap initialMarkerIcon = BitmapFactory.decodeResource(getResources(), club.getImage());
+                            Bitmap markerIcon = Bitmap.createScaledBitmap(initialMarkerIcon, MARKER_WIDTH, MARKER_HEIGHT, false);
+                            Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.getLatitude(), club.getLongitude()))
+                                    .icon(BitmapDescriptorFactory.fromBitmap(markerIcon)));
+                            marker.setTag(club);
+                        }
+                        // generer les marqueurs a partir de la liste
+                        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                            @Override
+                            public boolean onMarkerClick(Marker marker) {
+                                popupBuilder(marker);
+                                return false;
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
     }
 
     public int getImages(String sport) {
@@ -262,7 +551,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void checkPermission() {
-
         // vérification de l'autorisation d'accéder à la position GPS
         if (ContextCompat.checkSelfPermission(MapsActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -321,7 +609,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void popupBuilder(Marker marker) {
 
         Display display = getWindowManager().getDefaultDisplay();
-        
+
         Point size = new Point();
         display.getSize(size);
         int width = (int) Math.round(size.x * 0.8);
@@ -353,14 +641,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         markerImage.setImageDrawable(MapsActivity.this.getResources().getDrawable(club.getImage()));
         ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_off));
         ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like_off));
-        tvCounter.setText(String.valueOf(counter));
+        tvCounter.setText(String.valueOf(club.getCounter()));
 
         if (club.isHandicapped()) {
             markerHandicap.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.handicapicon));
         }
-     
-      //Bouton itinéraire
-         markerItinerary.setOnClickListener(new View.OnClickListener() {
+
+        //Bouton itinéraire
+        markerItinerary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
@@ -395,12 +683,38 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 boolean isliked = ((boolean) ivLike.getTag());
                 if (!isliked) {
                     ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like));
-                    counter++;
-                    tvCounter.setText(String.valueOf(counter));
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    final DatabaseReference clubRef = database.getReference("club");
+                    clubRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
+                                /*Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
+                                String key = clubRef.getKey();
+                                clubRef.child(key).child("counter").setValue(club.getCounter() +1);*/
+
+
+                                /*if (club.equals("LOPT9FLQHKb8DzymffF")) {
+                                    DatabaseReference test = clubSnapshot.getRef().child("counter");
+                                    test.setValue(club.getCounter() + 1);
+                                }*/
+                            }
+                        }
+                        // if (clubRef.getChild().equals("LOPT9FLQHKb8DzymffF"));
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                    // "LOPT9FLQHKb8DzymffF"
+
+                    tvCounter.setText(String.valueOf(club.getCounter()));
                 } else {
                     ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like_off));
-                    counter--;
-                    tvCounter.setText(String.valueOf(counter));
+                    //counter--;
+                    //tvCounter.setText(String.valueOf(counter));
                 }
                 ivLike.setTag(!isliked);
             }

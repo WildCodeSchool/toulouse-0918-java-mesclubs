@@ -23,5 +23,20 @@
     <string name="bconnect">JE ME CONNECTE</string>
     <string name="binscrire">JE /M\'INSCRIS</string>
     <string name="bphoto">PRENDRE UNE PHOTO</string>
+    <string name="alpinisme">ALPINISME</string>
+    <string name="aviron">AVIRON</string>
+    <string name="canoe_kayak">CANOE-KAYAK</string>
+    <string name="canyonisme">CANYONISME</string>
+    <string name="course_a_pied">COURSE A PIED</string>
+    <string name="escalade">ESCALADE</string>
+    <string name="natation">NATATION</string>
+    <string name="randonn_e">randonnée</string>
+    <string name="plong_e">plongée</string>
+    <string name="sp_l_ologie">spéléologie</string>
+    <string name="voile">VOILE</string>
+    <string name="yoga">YOGA</string>
+    <string name="retirer_les_filtres">Retirer les filtres</string>
+    <string name="filtre_handicap">FILTRE HANDICAP</string>
+    <string name="filtre_par_sport">FILTRE PAR SPORT</string>
 
 </resources>
