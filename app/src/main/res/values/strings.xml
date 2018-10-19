@@ -42,5 +42,6 @@
     <string name="plongee">PLONGEE</string>
     <string name="randonnee">RANDONNEE</string>
     <string name="speleologie">SPELEOLOGIE</string>
+    <string name="filtre_distance">FILTRE DISTANCE</string>
 
 </resources>
