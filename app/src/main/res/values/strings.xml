@@ -38,5 +38,9 @@
     <string name="retirer_les_filtres">Retirer les filtres</string>
     <string name="filtre_handicap">FILTRE HANDICAP</string>
     <string name="filtre_par_sport">FILTRE PAR SPORT</string>
+    <string name="course_d_orientation">COURSE D\'ORIENTATION</string>
+    <string name="plongee">PLONGEE</string>
+    <string name="randonnee">RANDONNEE</string>
+    <string name="speleologie">SPELEOLOGIE</string>
 
 </resources>

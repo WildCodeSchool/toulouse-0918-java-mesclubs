@@ -486,13 +486,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case "NATATION":
                 image = R.drawable.natation;
                 break;
-            case "plongée":
+            case "PLONGEE":
                 image = R.drawable.plonge;
                 break;
-            case "randonnée":
+            case "RANDONNEE":
                 image = R.drawable.rando;
                 break;
-            case "spéléologie":
+            case "SPELEOLOGIE":
                 image = R.drawable.speleo;
                 break;
             case "VOILE":
@@ -673,6 +673,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 ivFav.setTag(!isFav);
             }
         });
+
+        // ********BASTIEN*******
+        // CECI EST UNE PARTIE EN COUR DE TRAVAIL MERCI D'ACCEPTER LA PULL REQUEST QUI N'EST PAS LA DESSUS, JE M'EN OCCUPE APRES.
 
         //Click on like
         ivLike.setTag(false); // set favorite off
