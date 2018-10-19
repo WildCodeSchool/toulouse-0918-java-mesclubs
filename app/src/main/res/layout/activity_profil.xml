@@ -41,7 +41,7 @@
                 app:layout_constraintVertical_bias="0.19999999" />
 
             <EditText
-                android:id="@+id/editText_pseudo"
+                android:id="@+id/et_pseudo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -53,7 +53,7 @@
                 android:hint="Pseudo"
                 android:inputType="textPersonName"
                 android:textColor="#ffffff"
-                app:layout_constraintBottom_toTopOf="@+id/password"
+                app:layout_constraintBottom_toTopOf="@+id/et_password"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.333"
                 app:layout_constraintStart_toEndOf="@+id/textView"
@@ -61,7 +61,7 @@
                 app:layout_constraintVertical_bias="0.716" />
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/et_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -99,7 +99,7 @@
                 app:layout_constraintVertical_bias="0.564" />
 
             <EditText
-                android:id="@+id/editText_pseudosingin"
+                android:id="@+id/et_pseudosingin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -113,11 +113,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.33"
                 app:layout_constraintStart_toEndOf="@+id/textView3"
-                app:layout_constraintTop_toBottomOf="@+id/password"
+                app:layout_constraintTop_toBottomOf="@+id/et_password"
                 app:layout_constraintVertical_bias="0.348" />
 
             <EditText
-                android:id="@+id/passwordnew"
+                android:id="@+id/et_passwordSignIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -130,7 +130,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.33"
                 app:layout_constraintStart_toEndOf="@+id/textView3"
-                app:layout_constraintTop_toBottomOf="@+id/editText_pseudosingin"
+                app:layout_constraintTop_toBottomOf="@+id/et_pseudosingin"
                 app:layout_constraintVertical_bias="0.06999999" />
 
             <Button
@@ -144,8 +144,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/password"
-                app:layout_constraintVertical_bias="0.097" />
+                app:layout_constraintTop_toBottomOf="@+id/et_password"
+                app:layout_constraintVertical_bias="0.097"/>
 
             <Button
                 android:id="@+id/sendlog"
@@ -162,7 +162,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/passwordnew"
+                app:layout_constraintTop_toBottomOf="@+id/et_passwordSignIn"
                 app:layout_constraintVertical_bias="0.29" />
 
             <android.support.v7.widget.Toolbar

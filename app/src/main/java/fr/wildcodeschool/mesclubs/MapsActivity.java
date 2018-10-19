@@ -12,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -20,8 +21,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,6 +41,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,6 +58,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     ClipData.Item map;
     private int MARKER_WIDTH = 100;
     private int MARKER_HEIGHT = 100;
+    Menu menu;
+    private FirebaseAuth mAuth;
 
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
@@ -60,6 +70,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        mAuth           = FirebaseAuth.getInstance();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -106,6 +117,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (this.mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
 
             this.mDrawerLayout.closeDrawer(GravityCompat.START);
+            menu = navigationView.getMenu();
+            MenuItem target = menu.findItem(R.id.connection);
+            target.setVisible(true);
         } else {
             super.onBackPressed();
         }
@@ -121,6 +135,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 break;
             case R.id.déconnection:
                 FirebaseAuth.getInstance().signOut();
+                updateUI(null);
 
                 break;
             case R.id.liste:
@@ -188,13 +203,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case "NATATION":
                 image = R.drawable.natation;
                 break;
-            case "plongée":
+            case "PLONGEE":
                 image = R.drawable.plonge;
                 break;
-            case "randonnée":
+            case "RANDONNEE":
                 image = R.drawable.rando;
                 break;
-            case "spéléologie":
+            case "SPELEOLOGIE":
                 image = R.drawable.speleo;
                 break;
             case "VOILE":
@@ -291,7 +306,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-
     public void moveCameraOnUser(Location location) {
 
         LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
@@ -308,5 +322,45 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
+    }
+
+    void updateUI(FirebaseUser user) {
+        final View hedeaderLayout = navigationView.getHeaderView(0);
+        if (user != null) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference userfirebase = database.getReference("User");
+            userfirebase.child(mAuth.getUid()).child("picture").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String value = dataSnapshot.getValue(String.class);
+                    if (value != null && !value.isEmpty()) {
+                        ImageView photo = hedeaderLayout.findViewById(R.id.image_header);
+                        Glide.with(MapsActivity.this)
+                                .load(value)
+                                .apply(RequestOptions.circleCropTransform())
+                                .into(photo);
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {}
+            });
+            TextView pseudo = hedeaderLayout.findViewById(R.id.et_pseudo);
+            pseudo.setText(user.getEmail());
+            menu = navigationView.getMenu();
+            MenuItem target = menu.findItem(R.id.connection);
+            target.setVisible(false);
+        }else {
+            menu = navigationView.getMenu();
+            MenuItem target = menu.findItem(R.id.connection);
+            target.setVisible(true);
+        }
     }
 }
