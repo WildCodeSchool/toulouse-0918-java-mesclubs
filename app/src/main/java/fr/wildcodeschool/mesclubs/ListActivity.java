@@ -119,6 +119,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                 image = R.drawable.ic_android_black_24dp;
         }
         return image;
+
     }
 
     //GESTION DE L'AFFICHAGE DU MENU
