@@ -726,9 +726,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        // ********BASTIEN*******
-        // CECI EST UNE PARTIE EN COUR DE TRAVAIL MERCI D'ACCEPTER LA PULL REQUEST QUI N'EST PAS LA DESSUS, JE M'EN OCCUPE APRES.
-
         //Click on like
         ivLike.setTag(false); // set favorite off
         ivLike.setOnClickListener(new View.OnClickListener() {
@@ -777,39 +774,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
                 ivLike.setTag(!isliked);
             }
-
         });
-                    /*FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    final DatabaseReference clubRef = database.getReference("club");
-                    clubRef.child(club.).child("counter").setValue(club.getCounter() +1);
-
-                    clubRef.addValueEventListener(new ValueEventListener() {
-
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
-                                Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
-                                String key = clubRef.getKey();
-
-                                */
-
-
-                                /*if (club.equals("LOPT9FLQHKb8DzymffF")) {
-                                    DatabaseReference test = clubSnapshot.getRef().child("counter");
-                                    test.setValue(club.getCounter() + 1);
-
-                            }
-                        }}
-                        // if (clubRef.getChild().equals("LOPT9FLQHKb8DzymffF"));
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }*/
-
-
-        // "LOPT9FLQHKb8DzymffF"
-
-
     }
 }
 
