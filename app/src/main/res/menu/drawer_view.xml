@@ -4,16 +4,16 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/itinairaire"
+            android:id="@+id/filtre_distance"
             android:color="#ffffff"
-            android:icon="@drawable/baseline_directions_black_18dp"
+            android:icon="@drawable/baseline_filter_list_black_18dp"
             android:radius="5dp"
             android:shape="rectangle"
-            android:title="@string/ongletti" />
+            android:title="@string/filtre_distance" />
 
         <item
             android:id="@+id/filtre_hand"
-            android:icon="@drawable/baseline_favorite_black_18dp"
+            android:icon="@drawable/baseline_filter_list_black_18dp"
             android:title="@string/filtre_handicap" />
         <item
             android:id="@+id/filtre_sport"

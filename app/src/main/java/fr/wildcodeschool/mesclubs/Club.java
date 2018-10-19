@@ -1,11 +1,11 @@
 package fr.wildcodeschool.mesclubs;
 
 public class Club {
-    private String  clubName;
+    private String clubName;
     private String website;
-    private String  sport;
+    private String sport;
     private String address;
-    private boolean  handicapped;
+    private boolean handicapped;
     private double latitude;
     private double longitude;
     private int color;
@@ -13,6 +13,7 @@ public class Club {
     private int picture;
     private int imgHandicap;
     private int counter;
+    private String id;
 
     public Club(String clubName, String website, String sport, boolean handicapped, double latitude, double longitude, int color, int image, int picture, int imgHandicap, int counter) {
         this.clubName = clubName;
@@ -26,6 +27,24 @@ public class Club {
         this.picture = picture;
         this.imgHandicap = imgHandicap;
         this.counter = counter;
+
+    }
+
+    public Club(int color, String clubName, String sport) {
+        this.color = color;
+        this.clubName = clubName;
+        this.sport = sport;
+    }
+
+    public Club() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getCounter() {
@@ -42,12 +61,6 @@ public class Club {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public Club(int color, String clubName, String sport) {
-        this.color = color;
-        this.clubName = clubName;
-        this.sport = sport;
     }
 
     public int getImage() {
@@ -74,13 +87,13 @@ public class Club {
         this.imgHandicap = imgHandicap;
     }
 
-    public int getColor() { return color; }
+    public int getColor() {
+        return color;
+    }
 
     public void setColor(int color) {
         this.color = color;
     }
-
-    public Club() {}
 
     public String getClubName() {
         return clubName;
