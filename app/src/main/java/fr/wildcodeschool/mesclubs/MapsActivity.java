@@ -615,7 +615,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         int width = (int) Math.round(size.x * 0.8);
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popUpView = inflater.inflate(R.layout.item_marker, null);
+        final View popUpView = inflater.inflate(R.layout.item_marker, null);
 
         //creation fenetre popup
         boolean focusable = true;
@@ -624,16 +624,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //show popup
         popUp.showAtLocation(popUpView, Gravity.CENTER, POPUP_POSITION_X, POPUP_POSITION_Y);
         final Club club = (Club) marker.getTag();
-        TextView markerName = popUpView.findViewById(R.id.marker_name);
+        final TextView markerName = popUpView.findViewById(R.id.marker_name);
         ImageView markerImage = popUpView.findViewById(R.id.marker_image);
         ImageView markerHandicap = popUpView.findViewById(R.id.image_handicap);
-        TextView markerSport = popUpView.findViewById(R.id.text_sport);
-        TextView markeurWeb = popUpView.findViewById(R.id.text_web);
+        final TextView markerSport = popUpView.findViewById(R.id.text_sport);
+        final TextView markeurWeb = popUpView.findViewById(R.id.text_web);
         final ImageView ivLike = popUpView.findViewById(R.id.iv_like);
         final ImageView ivFav = popUpView.findViewById(R.id.iv_fav);
-        ImageView ivShare = popUpView.findViewById(R.id.iv_share);
+        ImageView ivShare = popUpView.findViewById(R.id.image_share);
         ImageView markerItinerary = popUpView.findViewById(R.id.iv_itinerary);
         final TextView tvCounter = popUpView.findViewById(R.id.tv_counter);
+
 
         markerName.setText(club.getClubName());
         markerSport.setText(club.getSport());
@@ -647,8 +648,26 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             markerHandicap.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.handicapicon));
         }
 
-        //Bouton itinéraire
-        markerItinerary.setOnClickListener(new View.OnClickListener() {
+        //Bouton Share
+        ivShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message  = getString(R.string.sahreBody);
+                String sport    = markerSport.getText().toString();
+                String clubName = markerName.getText().toString();
+                String webSite  = markeurWeb.getText().toString();
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                String shareText =  message + " " + sport + " " + clubName + " " + webSite;
+                shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Look'n'Sport");
+                shareIntent.putExtra(Intent.EXTRA_TEXT,shareText);
+                startActivity(Intent.createChooser(shareIntent,"Share via"));
+            }
+        });
+
+      //Bouton itinéraire
+         markerItinerary.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
