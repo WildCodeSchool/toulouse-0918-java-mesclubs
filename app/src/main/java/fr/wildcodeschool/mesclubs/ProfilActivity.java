@@ -51,14 +51,12 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
     ImageView       mImageViewpage;
     ImageView       mImageView;
     EditText        et_pseudo;
-    EditText        emailLog;
-    EditText        password;
-    EditText        passwordLog;
     Button          photo;
     View            hedeaderLayout;
     Uri             uriProfileImage;
     Uri             photoStringLink;
     Menu            menu;
+    ImageView       photos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,49 +67,12 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
         this.configureNavigationView();
 
         mAuth           = FirebaseAuth.getInstance();
-        Button sendlog  = findViewById(R.id.sendlog);
-        Button send     = findViewById(R.id.send);
         mImageView      = findViewById(R.id.imageView);
         mImageViewpage  = findViewById(R.id.image_header);
-        emailLog        = findViewById(R.id.et_pseudosingin);
-        passwordLog     = findViewById(R.id.et_passwordSignIn);
-        et_pseudo       = findViewById(R.id.et_pseudo);
-        password        = findViewById(R.id.et_password);
         photo           = findViewById(R.id.bTakephoto);
         hedeaderLayout  = navigationView.getHeaderView(0);
+        photos          = hedeaderLayout.findViewById(R.id.image_header);
 
-        //jem'inscris
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAuth = FirebaseAuth.getInstance();
-                String semailog = et_pseudo.getText().toString();
-                String spassword = password.getText().toString();
-                if (semailog.isEmpty() || spassword.isEmpty()) {
-                    Toast.makeText(ProfilActivity.this, "PLEASE FILL YOUR FORM",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    singup();
-                }
-            }
-        });
-
-        //jemeconnecte
-        sendlog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAuth = FirebaseAuth.getInstance();
-                String email = emailLog.getText().toString();
-                String passwordField = passwordLog.getText().toString();
-                if (email.isEmpty() || passwordField.isEmpty()) {
-                    Toast.makeText(ProfilActivity.this, "PLEASE FILL YOUR FORM",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    login();
-                    emailLog.setText(email);
-                }
-            }
-        });
         //Prendre la photo
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,54 +80,6 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                 showImageChooser();
             }
         });
-    }
-
-    private void singup() {
-        String semail = et_pseudo.getText().toString().trim();
-        String spassword = password.getText().toString().trim();
-        mAuth.createUserWithEmailAndPassword(semail, spassword)
-                .addOnCompleteListener(ProfilActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(ProfilActivity.this, "Inscription reussi",
-                                    Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(ProfilActivity.this, "Inscription échouée",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-                    }
-                });
-    }
-
-    private void login() {
-        String email = emailLog.getText().toString();
-        String passwordField = passwordLog.getText().toString();
-        mAuth.signInWithEmailAndPassword(email, passwordField)
-                .addOnCompleteListener(ProfilActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(ProfilActivity.this, "Vous êtes connecté",
-                                    Toast.LENGTH_SHORT).show();
-                            finish();
-                            overridePendingTransition(0, 0);
-                            startActivity(getIntent());
-                            overridePendingTransition(0, 0);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(ProfilActivity.this, "404 ERROR",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-                    }
-                });
     }
 
     private void showImageChooser() {
@@ -178,13 +91,12 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ImageView photo = hedeaderLayout.findViewById(R.id.image_header);
             if(requestCode == CAMERA_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
             uriProfileImage = data.getData();
             try {
                 Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriProfileImage);
                 mImageView.setImageBitmap(imageBitmap);
-                photo.setImageBitmap(imageBitmap);
+                photos.setImageBitmap(imageBitmap);
                 uploadImageToFirebaseStorage();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -258,8 +170,6 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String value = dataSnapshot.getValue(String.class);
                     if (value != null && !value.isEmpty()) {
-                        photo.setVisibility(View.VISIBLE);
-                        mImageView.setVisibility(View.VISIBLE);
                         ImageView photo = hedeaderLayout.findViewById(R.id.image_header);
                         Glide.with(ProfilActivity.this)
                                 .load(value)
@@ -267,6 +177,7 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                                 .into(photo);
                         Glide.with(ProfilActivity.this)
                                 .load(value)
+                                .apply(RequestOptions.circleCropTransform())
                                 .into(mImageView);
                     }
                 }
@@ -275,9 +186,6 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
             });
             TextView pseudo = hedeaderLayout.findViewById(R.id.et_pseudo);
             pseudo.setText(user.getEmail());
-            //startActivity(new Intent(ProfilActivity.this, MainActivity.class));
-            //mDrawerLayout.findViewById(R.id.connection);
-            //mDrawerLayout.setVisibility(View.INVISIBLE);
             menu = navigationView.getMenu();
             MenuItem target = menu.findItem(R.id.connection);
             target.setVisible(false);
@@ -287,6 +195,7 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
             target.setVisible(true);
         }
     }
+
     private void configureToolBar() {
         this.toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);

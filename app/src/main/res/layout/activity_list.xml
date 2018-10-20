@@ -7,44 +7,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ListActivity"
-    >
+    tools:context=".ListActivity">
+
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradiant">
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar4"
-        android:layout_width="51dp"
-        android:layout_height="51dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="320dp"
-        android:layout_marginStart="320dp"
-        android:background="@drawable/ic_menu_black_24dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.41"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.96" />
+            <ListView
+                android:id="@+id/list_club"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-    <ListView
-        android:id="@+id/list_club"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
 
-    </ListView>
-</android.support.constraint.ConstraintLayout>
+
+            </ListView>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar4"
+                android:layout_width="52dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="8dp"
+
+                android:background="@drawable/toolbar_background"
+                android:bottomLeftRadius="17dp"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                android:topLeftRadius="17dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.89" />
+
+        </android.support.constraint.ConstraintLayout>
 
     </FrameLayout>
 
@@ -53,11 +59,13 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="left"
-        android:theme="@style/NavigationView"
         android:fitsSystemWindows="true"
+        android:theme="@style/NavigationView"
+        app:headerLayout="@layout/nav_header"
         app:itemTextColor="#22427C"
-        app:menu="@menu/drawer_view"
-        app:headerLayout="@layout/nav_header"/>
+        app:menu="@menu/drawer_view">
+
+    </android.support.design.widget.NavigationView>
 
 
 </android.support.v4.widget.DrawerLayout>
