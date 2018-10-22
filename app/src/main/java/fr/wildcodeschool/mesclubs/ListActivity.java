@@ -34,7 +34,10 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private ListView mListTrip;
     private FirebaseAuth mAuth;
+    ImageView photo;
+    View hedeaderLayout;
     Menu menu;
+    Menu menu2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,8 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
         this.configureDrawerLayout();
         this.configureNavigationView();
         mAuth = FirebaseAuth.getInstance();
+        hedeaderLayout = navigationView.getHeaderView(0);
+        photo = hedeaderLayout.findViewById(R.id.image_header);
         getClubs();
     }
 
@@ -153,8 +158,9 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.connection:
-                startActivity(new Intent(this, ProfilActivity.class));
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
+
             case R.id.déconnection:
                 //check si connecté
                 //si oui logout
@@ -162,6 +168,12 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                 FirebaseAuth.getInstance().signOut();
                 updateUI(null);
                 Toast.makeText(ListActivity.this, "Vous n'êtes pas connecté", Toast.LENGTH_LONG);
+                break;
+
+            case R.id.profile:
+                startActivity(new Intent(ListActivity.this,ProfilActivity.class));
+                break;
+
             case R.id.map:
                 startActivity(new Intent(this, MapsActivity.class));
                 break;
@@ -179,7 +191,6 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     }
 
     void updateUI(FirebaseUser user) {
-        final View hedeaderLayout = navigationView.getHeaderView(0);
         if (user != null) {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference userfirebase = database.getReference("User");
@@ -188,7 +199,6 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String value = dataSnapshot.getValue(String.class);
                     if (value != null && !value.isEmpty()) {
-                        ImageView photo = hedeaderLayout.findViewById(R.id.image_header);
                         Glide.with(ListActivity.this)
                                 .load(value)
                                 .apply(RequestOptions.circleCropTransform())
@@ -197,7 +207,6 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
                 }
             });
             TextView pseudo = hedeaderLayout.findViewById(R.id.et_pseudo);
@@ -205,10 +214,13 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
             menu = navigationView.getMenu();
             MenuItem target = menu.findItem(R.id.connection);
             target.setVisible(false);
-        }else {
+        } else {
             menu = navigationView.getMenu();
             MenuItem target = menu.findItem(R.id.connection);
             target.setVisible(true);
+            menu2 = navigationView.getMenu();
+            MenuItem target2 = menu2.findItem(R.id.profile);
+            target2.setVisible(false);
         }
     }
 

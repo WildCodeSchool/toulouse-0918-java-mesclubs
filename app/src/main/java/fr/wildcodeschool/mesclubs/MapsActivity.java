@@ -74,6 +74,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private int MARKER_WIDTH = 100;
     private int MARKER_HEIGHT = 100;
     Menu menu;
+    Menu menu2;
     private FirebaseAuth mAuth;
 
     private GoogleMap mMap;
@@ -150,6 +151,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 break;
             case R.id.liste:
                 startActivity(new Intent(this, ListActivity.class));
+                break;
+
+            case R.id.profile:
+                startActivity(new Intent(MapsActivity.this,ProfilActivity.class));
                 break;
 
             case R.id.filtre_distance:
@@ -700,6 +705,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             menu = navigationView.getMenu();
             MenuItem target = menu.findItem(R.id.connection);
             target.setVisible(true);
+            menu2 = navigationView.getMenu();
+            MenuItem target2 = menu2.findItem(R.id.profile);
+            target2.setVisible(false);
         }
     }
 

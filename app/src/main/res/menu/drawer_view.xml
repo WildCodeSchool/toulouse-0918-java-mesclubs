@@ -38,6 +38,10 @@
 
             <group android:checkableBehavior="single">
                 <item
+                    android:id="@+id/profile"
+                    android:icon="@drawable/baseline_input_black_18dp"
+                    android:title="@string/onglet_profile" />
+                <item
                     android:id="@+id/connection"
                     android:icon="@drawable/baseline_input_black_18dp"
                     android:title="@string/ongletconnect" />

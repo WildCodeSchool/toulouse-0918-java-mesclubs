@@ -26,7 +26,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
@@ -131,6 +130,7 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
     }
     
     private void saveUserInformation() {
+
         //se connecter a firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference userfirebase = database.getReference("User");
