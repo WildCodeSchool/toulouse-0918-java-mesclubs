@@ -31,8 +31,8 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         Button send = findViewById(R.id.send);
-        etPseudo = findViewById(R.id.et_pseudo);
-        etPassword = findViewById(R.id.et_password);
+        etPseudo = findViewById(R.id.etPseudo);
+        etPassword = findViewById(R.id.etPassword);
         mAuth = FirebaseAuth.getInstance();
         loadingMe = (CircularProgressButton) findViewById(R.id.send);
 

@@ -140,7 +140,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
-            TextView pseudo = headerLayout.findViewById(R.id.et_pseudo);
+            TextView pseudo = headerLayout.findViewById(R.id.etPseudo);
             pseudo.setText(user.getEmail());
             connection = navigationView.getMenu();
             MenuItem target = connection.findItem(R.id.connection);

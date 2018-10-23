@@ -32,10 +32,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        etSinscrire = findViewById(R.id.et_sinscrire);
+        etSinscrire = findViewById(R.id.etSinscrire);
         mAuth = FirebaseAuth.getInstance();
-        passwordLog = findViewById(R.id.et_password);
-        emailLog = findViewById(R.id.et_pseudo);
+        passwordLog = findViewById(R.id.etPassword);
+        emailLog = findViewById(R.id.etPseudo);
         loadingMe = (CircularProgressButton) findViewById(R.id.send);
 
 

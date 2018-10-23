@@ -185,7 +185,7 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
-            TextView pseudo = hedeaderLayout.findViewById(R.id.et_pseudo);
+            TextView pseudo = hedeaderLayout.findViewById(R.id.etPseudo);
             pseudo.setText(user.getEmail());
             menu = navigationView.getMenu();
             MenuItem target = menu.findItem(R.id.connection);

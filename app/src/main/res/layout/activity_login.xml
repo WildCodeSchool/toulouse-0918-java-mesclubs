@@ -8,7 +8,7 @@
     tools:context=".LoginActivity">
 
     <EditText
-        android:id="@+id/et_pseudo"
+        android:id="@+id/etPseudo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -30,7 +30,7 @@
         app:layout_constraintVertical_bias="0.437" />
 
     <EditText
-        android:id="@+id/et_password"
+        android:id="@+id/etPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -72,7 +72,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/et_password"
+        app:layout_constraintBottom_toTopOf="@+id/etPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,16 +89,16 @@
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline10"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toBottomOf="@+id/et_password"
+        app:layout_constraintTop_toBottomOf="@+id/etPassword"
         app:layout_constraintVertical_bias="0.423"
         app:spinning_bar_color="#fff"
         app:spinning_bar_padding="6dp"
         app:spinning_bar_width="4dp" />
 
     <TextView
-        android:id="@+id/et_sinscrire"
+        android:id="@+id/etSinscrire"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
