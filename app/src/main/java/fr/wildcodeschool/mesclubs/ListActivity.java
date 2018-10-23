@@ -26,7 +26,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import java.util.ArrayList;
 
 public class ListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     NavigationView navigationView;
@@ -35,9 +34,9 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     private ListView mListTrip;
     private FirebaseAuth mAuth;
     ImageView photo;
-    View hedeaderLayout;
-    Menu menu;
-    Menu menu2;
+    View headerLayout;
+    Menu connection;
+    Menu profil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +47,8 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
         this.configureDrawerLayout();
         this.configureNavigationView();
         mAuth = FirebaseAuth.getInstance();
-        hedeaderLayout = navigationView.getHeaderView(0);
-        photo = hedeaderLayout.findViewById(R.id.image_header);
+        headerLayout = navigationView.getHeaderView(0);
+        photo = headerLayout.findViewById(R.id.image_header);
         getClubs();
     }
 
@@ -61,7 +60,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
 
     //GESTION DE L'AFFICHAGE DU MENU
     private void configureToolBar() {
-        this.toolbar = (Toolbar) findViewById(R.id.toolbar4);
+        this.toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
@@ -141,17 +140,17 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
-            TextView pseudo = hedeaderLayout.findViewById(R.id.et_pseudo);
+            TextView pseudo = headerLayout.findViewById(R.id.et_pseudo);
             pseudo.setText(user.getEmail());
-            menu = navigationView.getMenu();
-            MenuItem target = menu.findItem(R.id.connection);
+            connection = navigationView.getMenu();
+            MenuItem target = connection.findItem(R.id.connection);
             target.setVisible(false);
         } else {
-            menu = navigationView.getMenu();
-            MenuItem target = menu.findItem(R.id.connection);
+            connection = navigationView.getMenu();
+            MenuItem target = connection.findItem(R.id.connection);
             target.setVisible(true);
-            menu2 = navigationView.getMenu();
-            MenuItem target2 = menu2.findItem(R.id.profile);
+            profil = navigationView.getMenu();
+            MenuItem target2 = profil.findItem(R.id.profile);
             target2.setVisible(false);
         }
     }

@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText emailLog;
     EditText passwordLog;
-    TextView et_sinscrire;
+    TextView etSinscrire;
     FirebaseUser currentUser;
     CircularProgressButton loadingMe;
     private FirebaseAuth mAuth;
@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        et_sinscrire = findViewById(R.id.et_sinscrire);
+        etSinscrire = findViewById(R.id.et_sinscrire);
         mAuth = FirebaseAuth.getInstance();
         passwordLog = findViewById(R.id.et_password);
         emailLog = findViewById(R.id.et_pseudo);
@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        et_sinscrire.setOnClickListener(new View.OnClickListener() {
+        etSinscrire.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {

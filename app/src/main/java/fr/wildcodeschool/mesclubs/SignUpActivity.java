@@ -20,8 +20,8 @@ import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    EditText et_pseudo;
-    EditText et_password;
+    EditText etPseudo;
+    EditText etPassword;
     CircularProgressButton loadingMe;
     private FirebaseAuth mAuth;
 
@@ -31,8 +31,8 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         Button send = findViewById(R.id.send);
-        et_pseudo = findViewById(R.id.et_pseudo);
-        et_password = findViewById(R.id.et_password);
+        etPseudo = findViewById(R.id.et_pseudo);
+        etPassword = findViewById(R.id.et_password);
         mAuth = FirebaseAuth.getInstance();
         loadingMe = (CircularProgressButton) findViewById(R.id.send);
 
@@ -40,8 +40,8 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mAuth = FirebaseAuth.getInstance();
-                String semailog = et_pseudo.getText().toString();
-                String spassword = et_password.getText().toString();
+                String semailog = etPseudo.getText().toString();
+                String spassword = etPassword.getText().toString();
                 if (semailog.isEmpty() || spassword.isEmpty()) {
                     Toast.makeText(SignUpActivity.this, "PLEASE FILL YOUR FORM",
                             Toast.LENGTH_SHORT).show();
@@ -73,8 +73,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void singup() {
-        String semail = et_pseudo.getText().toString().trim();
-        String spassword = et_password.getText().toString().trim();
+        String semail = etPseudo.getText().toString().trim();
+        String spassword = etPassword.getText().toString().trim();
         mAuth.createUserWithEmailAndPassword(semail, spassword)
                 .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override

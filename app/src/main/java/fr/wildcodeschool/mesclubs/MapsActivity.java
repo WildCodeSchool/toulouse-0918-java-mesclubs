@@ -74,8 +74,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     ClipData.Item map;
     private int MARKER_WIDTH = 100;
     private int MARKER_HEIGHT = 100;
-    Menu menu;
-    Menu menu2;
+    Menu connection;
+    Menu profil;
     private FirebaseAuth mAuth;
 
     private GoogleMap mMap;
@@ -130,8 +130,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (this.mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
 
             this.mDrawerLayout.closeDrawer(GravityCompat.START);
-            menu = navigationView.getMenu();
-            MenuItem target = menu.findItem(R.id.connection);
+            connection = navigationView.getMenu();
+            MenuItem target = connection.findItem(R.id.connection);
             target.setVisible(true);
         } else {
             super.onBackPressed();
@@ -611,7 +611,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void updateUI(FirebaseUser user) {
-        final View hedeaderLayout = navigationView.getHeaderView(0);
+        final View headerLayout = navigationView.getHeaderView(0);
         if (user != null) {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference userfirebase = database.getReference("User");
@@ -620,7 +620,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String value = dataSnapshot.getValue(String.class);
                     if (value != null && !value.isEmpty()) {
-                        ImageView photo = hedeaderLayout.findViewById(R.id.image_header);
+                        ImageView photo = headerLayout.findViewById(R.id.image_header);
                         Glide.with(MapsActivity.this)
                                 .load(value)
                                 .apply(RequestOptions.circleCropTransform())
@@ -632,17 +632,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
-            TextView pseudo = hedeaderLayout.findViewById(R.id.et_pseudo);
+            TextView pseudo = headerLayout.findViewById(R.id.et_pseudo);
             pseudo.setText(user.getEmail());
-            menu = navigationView.getMenu();
-            MenuItem target = menu.findItem(R.id.connection);
+            connection = navigationView.getMenu();
+            MenuItem target = connection.findItem(R.id.connection);
             target.setVisible(false);
         } else {
-            menu = navigationView.getMenu();
-            MenuItem target = menu.findItem(R.id.connection);
+            connection = navigationView.getMenu();
+            MenuItem target = connection.findItem(R.id.connection);
             target.setVisible(true);
-            menu2 = navigationView.getMenu();
-            MenuItem target2 = menu2.findItem(R.id.profile);
+            profil = navigationView.getMenu();
+            MenuItem target2 = profil.findItem(R.id.profile);
             target2.setVisible(false);
         }
     }
@@ -785,7 +785,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 ivLike.setTag(!isliked);
             }
         });
-
     }
 }
 

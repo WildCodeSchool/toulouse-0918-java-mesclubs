@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,27 +36,25 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 
 public class ProfilActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final int CAMERA_REQUEST = 101;
+    NavigationView navigationView;
+    ImageView mImageViewpage;
+    ImageView mImageView;
+    EditText etPseudo;
+    Button photo;
+    View hedeaderLayout;
+    Uri uriProfileImage;
+    Uri photoStringLink;
+    Menu menu;
+    ImageView photos;
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
     private FirebaseAuth mAuth;
-
-    NavigationView  navigationView;
-    ImageView       mImageViewpage;
-    ImageView       mImageView;
-    EditText        et_pseudo;
-    Button          photo;
-    View            hedeaderLayout;
-    Uri             uriProfileImage;
-    Uri             photoStringLink;
-    Menu            menu;
-    ImageView       photos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +64,12 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
         this.configureDrawerLayout();
         this.configureNavigationView();
 
-        mAuth           = FirebaseAuth.getInstance();
-        mImageView      = findViewById(R.id.imageView);
-        mImageViewpage  = findViewById(R.id.image_header);
-        photo           = findViewById(R.id.bTakephoto);
-        hedeaderLayout  = navigationView.getHeaderView(0);
-        photos          = hedeaderLayout.findViewById(R.id.image_header);
+        mAuth = FirebaseAuth.getInstance();
+        mImageView = findViewById(R.id.userImage);
+        mImageViewpage = findViewById(R.id.image_header);
+        photo = findViewById(R.id.bTakephoto);
+        hedeaderLayout = navigationView.getHeaderView(0);
+        photos = hedeaderLayout.findViewById(R.id.image_header);
 
         //Prendre la photo
         photo.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +89,7 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-            if(requestCode == CAMERA_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             uriProfileImage = data.getData();
             try {
                 Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriProfileImage);
@@ -105,13 +104,13 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
 
     private void uploadImageToFirebaseStorage() {
         final StorageReference profileImageRef = FirebaseStorage.getInstance().
-                getReference("profilepics/" + System.currentTimeMillis() + ".jpg" );
+                getReference("profilepics/" + System.currentTimeMillis() + ".jpg");
         if (uriProfileImage != null) {
             profileImageRef.putFile(uriProfileImage)
                     .continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                         @Override
                         public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                            if (!task.isSuccessful()){
+                            if (!task.isSuccessful()) {
                                 throw task.getException();
                             }
                             return profileImageRef.getDownloadUrl();
@@ -119,7 +118,7 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                     }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()){
+                    if (task.isSuccessful()) {
                         photoStringLink = task.getResult();
                         saveUserInformation();
                     }
@@ -128,14 +127,14 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
 
         }
     }
-    
+
     private void saveUserInformation() {
 
         //se connecter a firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference userfirebase = database.getReference("User");
         userfirebase.child(mAuth.getUid()).child("picture").setValue(photoStringLink.toString());
-        String displayName = et_pseudo.getText().toString();
+        String displayName = etPseudo.getText().toString();
         FirebaseUser user = mAuth.getCurrentUser();
         UserProfileChangeRequest profil = new UserProfileChangeRequest.Builder()
                 .setDisplayName(displayName)
@@ -181,15 +180,17 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                                 .into(mImageView);
                     }
                 }
+
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {}
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
             });
             TextView pseudo = hedeaderLayout.findViewById(R.id.et_pseudo);
             pseudo.setText(user.getEmail());
             menu = navigationView.getMenu();
             MenuItem target = menu.findItem(R.id.connection);
             target.setVisible(false);
-        }else {
+        } else {
             menu = navigationView.getMenu();
             MenuItem target = menu.findItem(R.id.connection);
             target.setVisible(true);

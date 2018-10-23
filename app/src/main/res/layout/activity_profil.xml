@@ -53,7 +53,7 @@
                 app:layout_constraintVertical_bias="0.89" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/userImage"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="8dp"
@@ -78,7 +78,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/button_design"
                 android:enabled="true"
-                android:text="Galerie"
+                android:text="@string/galeri"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline14"
