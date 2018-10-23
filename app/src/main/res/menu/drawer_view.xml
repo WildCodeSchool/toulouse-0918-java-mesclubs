@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
 
@@ -36,6 +37,10 @@
         <menu>
 
             <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/profile"
+                    android:icon="@drawable/baseline_input_black_18dp"
+                    android:title="@string/onglet_profile" />
                 <item
                     android:id="@+id/connection"
                     android:icon="@drawable/baseline_input_black_18dp"

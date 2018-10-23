@@ -23,16 +23,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Display;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.widget.ListPopupWindow;
 import android.widget.PopupWindow;
+
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -45,11 +51,16 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+import static fr.wildcodeschool.mesclubs.Singleton.getImages;
 
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, NavigationView.OnNavigationItemSelectedListener {
@@ -63,6 +74,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     ClipData.Item map;
     private int MARKER_WIDTH = 100;
     private int MARKER_HEIGHT = 100;
+    Menu connection;
+    Menu profil;
+    private FirebaseAuth mAuth;
+
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
@@ -74,6 +89,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        mAuth = FirebaseAuth.getInstance();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -114,6 +130,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (this.mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
 
             this.mDrawerLayout.closeDrawer(GravityCompat.START);
+            connection = navigationView.getMenu();
+            MenuItem target = connection.findItem(R.id.connection);
+            target.setVisible(true);
         } else {
             super.onBackPressed();
         }
@@ -128,10 +147,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 break;
             case R.id.déconnection:
                 FirebaseAuth.getInstance().signOut();
+                updateUI(null);
 
                 break;
             case R.id.liste:
                 startActivity(new Intent(this, ListActivity.class));
+                break;
+
+            case R.id.profile:
+                startActivity(new Intent(MapsActivity.this,ProfilActivity.class));
                 break;
 
             case R.id.filtre_distance:
@@ -363,33 +387,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void getClubs() {
-        //firebase
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference clubRef = database.getReference("club");
-        clubRef.addValueEventListener(new ValueEventListener() {
+        Singleton singleton = Singleton.getInstance();
+        ArrayList<Club> clubs =  singleton.getListClub();
+        for (Club club : clubs) {
+            Bitmap initialMarkerIcon = BitmapFactory.decodeResource(getResources(), club.getImage());
+            Bitmap markerIcon = Bitmap.createScaledBitmap(initialMarkerIcon, MARKER_WIDTH, MARKER_HEIGHT, false);
+            Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.getLatitude(), club.getLongitude()))
+                    .icon(BitmapDescriptorFactory.fromBitmap(markerIcon)));
+            marker.setTag(club);
+        }
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
-                    Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
-                    club.setId(clubSnapshot.getKey());
-                    club.setImage(getImages(club.getSport()));
-                    Bitmap initialMarkerIcon = BitmapFactory.decodeResource(getResources(), club.getImage());
-                    Bitmap markerIcon = Bitmap.createScaledBitmap(initialMarkerIcon, MARKER_WIDTH, MARKER_HEIGHT, false);
-                    Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.getLatitude(), club.getLongitude()))
-                            .icon(BitmapDescriptorFactory.fromBitmap(markerIcon)));
-                    marker.setTag(club);
-                }
-                // generer les marqueurs a partir de la liste
-                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                    @Override
-                    public boolean onMarkerClick(Marker marker) {
-                        popupBuilder(marker);
-                        return false;
-                    }
-                });
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public boolean onMarkerClick(Marker marker) {
+                popupBuilder(marker);
+                return false;
             }
         });
     }
@@ -420,6 +431,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             }
                         });
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                     }
@@ -452,6 +464,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             }
                         });
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                     }
@@ -484,61 +497,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             }
                         });
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
-    }
-
-    public int getImages(String sport) {
-        int image;
-
-        switch (sport) {
-            case "ALPINISME":
-                image = R.drawable.alpinisme;
-                break;
-
-            case "AVIRON":
-                image = R.drawable.aviron;
-                break;
-            case "CANOE-KAYAK":
-                image = R.drawable.canoe;
-                break;
-
-            case "CANYONISME":
-                image = R.drawable.canyon;
-                break;
-            case "COURSE A PIED":
-            case "COURSE D'ORIENTATION":
-            case "marche":
-                image = R.drawable.course;
-                break;
-            case "ESCALADE":
-                image = R.drawable.escalade;
-                break;
-            case "NATATION":
-                image = R.drawable.natation;
-                break;
-            case "PLONGEE":
-                image = R.drawable.plonge;
-                break;
-            case "RANDONNEE":
-                image = R.drawable.rando;
-                break;
-            case "SPELEOLOGIE":
-                image = R.drawable.speleo;
-                break;
-            case "VOILE":
-            case "planche à voile":
-                image = R.drawable.voile;
-                break;
-            case "YOGA":
-                image = R.drawable.yoga;
-                break;
-            default:
-                image = R.drawable.ic_android_black_24dp;
-        }
-        return image;
     }
 
     @SuppressLint("MissingPermission")
@@ -637,6 +600,51 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
+    }
+
+    public void updateUI(FirebaseUser user) {
+        final View headerLayout = navigationView.getHeaderView(0);
+        if (user != null) {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference userfirebase = database.getReference("User");
+            userfirebase.child(mAuth.getUid()).child("picture").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String value = dataSnapshot.getValue(String.class);
+                    if (value != null && !value.isEmpty()) {
+                        ImageView photo = headerLayout.findViewById(R.id.image_header);
+                        Glide.with(MapsActivity.this)
+                                .load(value)
+                                .apply(RequestOptions.circleCropTransform())
+                                .into(photo);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+            TextView pseudo = headerLayout.findViewById(R.id.etPseudo);
+            pseudo.setText(user.getEmail());
+            connection = navigationView.getMenu();
+            MenuItem target = connection.findItem(R.id.connection);
+            target.setVisible(false);
+        } else {
+            connection = navigationView.getMenu();
+            MenuItem target = connection.findItem(R.id.connection);
+            target.setVisible(true);
+            profil = navigationView.getMenu();
+            MenuItem target2 = profil.findItem(R.id.profile);
+            target2.setVisible(false);
+        }
     }
 
     private void popupBuilder(Marker marker) {
@@ -747,6 +755,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             clubRef.setValue(thisClub);
                             tvCounter.setText(String.valueOf(thisClub.getCounter()));
                         }
+
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -766,6 +775,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             clubRef.setValue(thisClub);
                             tvCounter.setText(String.valueOf(thisClub.getCounter()));
                         }
+
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -777,5 +787,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 }
+
 
 

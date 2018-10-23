@@ -7,7 +7,9 @@
     <string name="ongletfiltre">FILTRE</string>
 
     <string name="ongletconnect">SE CONNECTER/S\'INSCRIRE</string>
+    <string name="onglet_profile">Profile</string>
     <string name="ongletfav">FAVORIS</string>
+    <string name="se_connecter">se connecter</string>
 
     <string name="nom">LOOK \'n\' SPORT</string>
     <string name="tvPhone">Phone</string>
@@ -15,8 +17,11 @@
     <string name="tvAdresse">Adresse</string>
     <string name="tvWebsite">Pas de site disponible pour ce club</string>
     <string name="sahreBody">J\'adore ce club :</string>
+    <string name="s_inscrire">S\'inscrire</string>
+
 
     <string name="USER">pseudonyme</string>
+    <string name="galeri">Galerie</string>
     <string name="title_activity_fragment">fragmentActivity</string>
     <string name="navigation_drawer_open">open navigation drawer</string>
     <string name="navigation_drawer_close">close navigation drawer</string>
@@ -43,5 +48,20 @@
     <string name="randonnee">RANDONNEE</string>
     <string name="speleologie">SPELEOLOGIE</string>
     <string name="filtre_distance">FILTRE DISTANCE</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Mot de pass</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
 
 </resources>
