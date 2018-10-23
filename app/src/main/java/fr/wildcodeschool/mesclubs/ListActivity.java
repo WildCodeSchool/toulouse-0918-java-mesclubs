@@ -54,77 +54,9 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void getClubs() {
-        final ArrayList<Club> arrayClub = new ArrayList<>();
-
-        //firebase
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference clubRef = database.getReference("club");
-        clubRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
-                    Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
-                    club.setImage(getImages(club.getSport()));
-                    arrayClub.add(club);
-                }
-                ListAdapter adapter = new ListAdapter(ListActivity.this, arrayClub);
-                mListTrip = findViewById(R.id.list_club);
-                mListTrip.setAdapter(adapter);
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-    }
-
-    public int getImages(String sport) {
-        int image;
-
-        switch (sport) {
-            case "ALPINISME":
-                image = R.drawable.alpinisme;
-                break;
-            case "AVIRON":
-                image = R.drawable.aviron;
-                break;
-            case "CANOE-KAYAK":
-                image = R.drawable.canoe;
-                break;
-            case "CANYONISME":
-                image = R.drawable.canyon;
-                break;
-            case "COURSE A PIED":
-            case "COURSE D'ORIENTATION":
-            case "marche":
-                image = R.drawable.course;
-                break;
-            case "ESCALADE":
-                image = R.drawable.escalade;
-                break;
-            case "NATATION":
-                image = R.drawable.natation;
-                break;
-            case "PLONGEE":
-                image = R.drawable.plonge;
-                break;
-            case "RANDONNEE":
-                image = R.drawable.rando;
-                break;
-            case "SPELEOLOGIE":
-                image = R.drawable.speleo;
-                break;
-            case "VOILE":
-            case "planche à voile":
-                image = R.drawable.voile;
-                break;
-            case "YOGA":
-                image = R.drawable.yoga;
-                break;
-            default:
-                image = R.drawable.ic_android_black_24dp;
-        }
-        return image;
-
+        ListAdapter adapter = new ListAdapter(ListActivity.this, Singleton.getInstance().getListClub());
+        mListTrip = findViewById(R.id.list_club);
+        mListTrip.setAdapter(adapter);
     }
 
     //GESTION DE L'AFFICHAGE DU MENU

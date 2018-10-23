@@ -1,35 +1,29 @@
 package fr.wildcodeschool.mesclubs;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
     EditText et_pseudo;
     EditText et_password;
+    CircularProgressButton loadingMe;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
         et_pseudo = findViewById(R.id.et_pseudo);
         et_password = findViewById(R.id.et_password);
         mAuth = FirebaseAuth.getInstance();
+        loadingMe = (CircularProgressButton) findViewById(R.id.send);
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +46,27 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this, "PLEASE FILL YOUR FORM",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    singup();
+                    @SuppressLint("StaticFieldLeak") AsyncTask<String, String, String> demoLogin = new AsyncTask<String, String, String>() {
+                        @Override
+                        protected String doInBackground(String... params) {
+                            try {
+                                Thread.sleep(3000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            return "done";
+                        }
+
+                        @Override
+                        protected void onPostExecute(String s) {
+                            if (s.equals("done")) {
+                                singup();
+                            }
+                        }
+                    };
+
+                    loadingMe.startAnimation();
+                    demoLogin.execute();
                 }
             }
         });
@@ -71,11 +86,14 @@ public class SignUpActivity extends AppCompatActivity {
                             Intent goToMain = new Intent(SignUpActivity.this, ProfilActivity.class);
                             SignUpActivity.this.startActivity(goToMain);
                             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            finish();
 
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(SignUpActivity.this, "Inscription échouée",
                                     Toast.LENGTH_SHORT).show();
+                            finish();
+                            startActivity(new Intent(SignUpActivity.this, SignUpActivity.class));
                         }
                     }
                 });

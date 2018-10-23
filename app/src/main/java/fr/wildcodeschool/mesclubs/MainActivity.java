@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
         ImageView imageList = findViewById(R.id.list_logo);
         ImageView imageLogo = findViewById(R.id.image_logo);
 
+        Singleton.getInstance();
+
         Animation fade = AnimationUtils.loadAnimation(this, R.anim.fade);
 
         imageMap.setAnimation(fade);

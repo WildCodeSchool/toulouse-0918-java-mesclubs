@@ -9,6 +9,7 @@
     <string name="ongletconnect">SE CONNECTER/S\'INSCRIRE</string>
     <string name="onglet_profile">Profile</string>
     <string name="ongletfav">FAVORIS</string>
+    <string name="se_connecter">se connecter</string>
 
     <string name="nom">LOOK \'n\' SPORT</string>
     <string name="tvPhone">Phone</string>
@@ -16,8 +17,8 @@
     <string name="tvAdresse">Adresse</string>
     <string name="tvWebsite">Pas de site disponible pour ce club</string>
     <string name="sahreBody">J\'adore ce club :</string>
-    <string name="sinscrire">S\'inscrire</string>
-    <string name="connec">Ce connecter</string>
+    <string name="s_inscrire">S\'inscrire</string>
+
 
     <string name="USER">pseudonyme</string>
     <string name="title_activity_fragment">fragmentActivity</string>
