@@ -39,6 +39,7 @@ public class ListAdapter extends ArrayAdapter <Club> {
             viewHolder.tv_website = convertView.findViewById(R.id.tv_website);
             viewHolder.iv_share = convertView.findViewById(R.id.iv_share);
             viewHolder.iv_map = convertView.findViewById(R.id.iv_map);
+            viewHolder.tv_map = convertView.findViewById(R.id.tv_map);
             convertView.setTag(viewHolder);
         }
 
@@ -99,11 +100,14 @@ public class ListAdapter extends ArrayAdapter <Club> {
             }
         });
 
+
+
+
+
+        // Bouton itinéraire
+
         final double lat = list.getLatitude();
         final double lon  =list.getLongitude();
-
-
-
         viewHolder.iv_map.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -112,6 +116,20 @@ public class ListAdapter extends ArrayAdapter <Club> {
                 intentmap.setAction(android.content.Intent.ACTION_VIEW);
                 intentmap.setData(Uri.parse("http://maps.google.com/maps?.34&daddr=" + list.getLatitude() + "," + list.getLongitude()));
                 getContext().startActivity(intentmap);
+            }
+        });
+
+
+
+        viewHolder.tv_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intentiti = new Intent();
+                intentiti.setAction(android.content.Intent.ACTION_VIEW);
+                intentiti.setData(Uri.parse("http://maps.google.com/maps?.34&daddr=" + list.getLatitude() + "," + list.getLongitude()));
+                getContext().startActivity(intentiti);
+
             }
         });
 
@@ -149,6 +167,7 @@ class ListViewHolder {
     public ImageView        iv_fav;
     public ImageView        iv_share;
     public ImageView        iv_map;
+    public TextView         tv_map;
 }
 
 
