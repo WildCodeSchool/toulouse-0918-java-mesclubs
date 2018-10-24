@@ -100,10 +100,6 @@ public class ListAdapter extends ArrayAdapter <Club> {
             }
         });
 
-
-
-
-
         // Bouton itinéraire
 
         final double lat = list.getLatitude();
@@ -119,8 +115,7 @@ public class ListAdapter extends ArrayAdapter <Club> {
             }
         });
 
-
-
+        viewHolder.tv_map.setText(R.string.go);
         viewHolder.tv_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

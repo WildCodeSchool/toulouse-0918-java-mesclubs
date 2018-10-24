@@ -242,7 +242,6 @@
             android:layout_marginBottom="88dp"
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
-            android:text="Allez - y !"
             android:textColor="@color/common_google_signin_btn_text_dark_default"
             app:layout_constraintBottom_toBottomOf="@+id/iv_share"
             app:layout_constraintStart_toStartOf="@+id/guideline" />
