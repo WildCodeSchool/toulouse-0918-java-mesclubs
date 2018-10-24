@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -81,7 +82,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
     private PopupWindow popUp;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -761,11 +761,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
         //Click on like
-        ivLike.setTag(false); // set favorite off
+        SharedPreferences sharedPref = MapsActivity.this.getSharedPreferences("clubid", Context.MODE_PRIVATE);
+        boolean isLiked = sharedPref.getBoolean(club.getId(), false);
+        if (isLiked) {
+            ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like));
+        } else {
+            ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like_off));
+        }
+
+        ivLike.setTag(isLiked); // set favorite off
         ivLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 boolean isliked = ((boolean) ivLike.getTag());
                 if (!isliked) {
                     ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like));
@@ -780,6 +787,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             thisClub.setCounter(counter);
                             clubRef.setValue(thisClub);
                             tvCounter.setText(String.valueOf(thisClub.getCounter()));
+                            likePreferences(dataSnapshot.getKey(), true);
                         }
 
                         @Override
@@ -800,6 +808,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             thisClub.setCounter(counter);
                             clubRef.setValue(thisClub);
                             tvCounter.setText(String.valueOf(thisClub.getCounter()));
+                            likePreferences(dataSnapshot.getKey(), false);
                         }
 
                         @Override
@@ -811,6 +820,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 ivLike.setTag(!isliked);
             }
         });
+    }
+
+    public void likePreferences(String clubId, boolean isLiked) {
+        SharedPreferences sharedPref = MapsActivity.this.getSharedPreferences("clubid", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(clubId, isLiked);
+        editor.commit();
     }
 }
 

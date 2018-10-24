@@ -16,27 +16,6 @@ public class Club {
     private String id;
     private double distance;
 
-    public Club(String clubName, String website, String sport, boolean handicapped, double latitude, double longitude, int color, int image, int picture, int imgHandicap, int counter) {
-        this.clubName = clubName;
-        this.website = website;
-        this.sport = sport;
-        this.handicapped = handicapped;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.color = color;
-        this.image = image;
-        this.picture = picture;
-        this.imgHandicap = imgHandicap;
-        this.counter = counter;
-
-    }
-
-    public Club(int color, String clubName, String sport) {
-        this.color = color;
-        this.clubName = clubName;
-        this.sport = sport;
-    }
-
     public Club() {
     }
 

@@ -64,7 +64,6 @@ public class SignUpActivity extends AppCompatActivity {
                             }
                         }
                     };
-
                     loadingMe.startAnimation();
                     demoLogin.execute();
                 }
@@ -87,7 +86,6 @@ public class SignUpActivity extends AppCompatActivity {
                             SignUpActivity.this.startActivity(goToMain);
                             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             finish();
-
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(SignUpActivity.this, "Inscription échouée",
