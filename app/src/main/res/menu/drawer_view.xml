@@ -26,7 +26,7 @@
             android:title="Voir la liste " />
         <item
             android:id="@+id/map"
-            android:icon="@drawable/baseline_format_list_bulleted_black_18dp"
+            android:icon="@drawable/mapsicon"
             android:title="Acceder à la carte" />
 
     </group>
