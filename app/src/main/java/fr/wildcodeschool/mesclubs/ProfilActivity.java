@@ -1,8 +1,10 @@
 package fr.wildcodeschool.mesclubs;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -15,7 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,13 +41,15 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
+
 public class ProfilActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final int CAMERA_REQUEST = 101;
     NavigationView navigationView;
     ImageView mImageViewpage;
     ImageView mImageView;
     EditText etPseudo;
-    Button photo;
+    CircularProgressButton loadingMe;
     View hedeaderLayout;
     Uri uriProfileImage;
     Uri photoStringLink;
@@ -67,15 +70,36 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
         mAuth = FirebaseAuth.getInstance();
         mImageView = findViewById(R.id.userImage);
         mImageViewpage = findViewById(R.id.image_header);
-        photo = findViewById(R.id.bTakephoto);
+        loadingMe = (CircularProgressButton) findViewById(R.id.send);
         hedeaderLayout = navigationView.getHeaderView(0);
         photos = hedeaderLayout.findViewById(R.id.image_header);
 
         //Prendre la photo
-        photo.setOnClickListener(new View.OnClickListener() {
+        loadingMe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showImageChooser();
+
+                @SuppressLint("StaticFieldLeak") AsyncTask<String, String, String> demoLogin = new AsyncTask<String, String, String>() {
+                    @Override
+                    protected String doInBackground(String... params) {
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        return "done";
+                    }
+
+                    @Override
+                    protected void onPostExecute(String s) {
+                        if (s.equals("done")) {
+                            showImageChooser();
+                        }
+                    }
+                };
+
+                loadingMe.startAnimation();
+                demoLogin.execute();
             }
         });
     }
@@ -134,10 +158,10 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference userfirebase = database.getReference("User");
         userfirebase.child(mAuth.getUid()).child("picture").setValue(photoStringLink.toString());
-        String displayName = etPseudo.getText().toString();
+//        String displayName = etPseudo.getText().toString();
         FirebaseUser user = mAuth.getCurrentUser();
         UserProfileChangeRequest profil = new UserProfileChangeRequest.Builder()
-                .setDisplayName(displayName)
+                //     .setDisplayName(displayName)
                 .setPhotoUri(photoStringLink)
                 .build();
         user.updateProfile(profil)
@@ -147,6 +171,9 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                         if (task.isSuccessful()) {
                             Toast.makeText(ProfilActivity.this, "Profile Updated",
                                     Toast.LENGTH_SHORT).show();
+                            finish();
+                            startActivity(new Intent(ProfilActivity.this, ProfilActivity.class));
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         }
                     }
                 });

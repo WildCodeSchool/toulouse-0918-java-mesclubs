@@ -41,7 +41,9 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private ListView mListTrip;
     private FirebaseAuth mAuth;
+
     private ArrayList<Club> listClub = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
