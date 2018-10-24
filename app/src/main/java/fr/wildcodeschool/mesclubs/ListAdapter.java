@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
@@ -52,10 +53,13 @@ public class ListAdapter extends ArrayAdapter<Club> {
             viewHolder.tv_address = convertView.findViewById(R.id.tv_address);
             viewHolder.tv_website = convertView.findViewById(R.id.tv_website);
             viewHolder.iv_share = convertView.findViewById(R.id.iv_share);
+            viewHolder.iv_map = convertView.findViewById(R.id.iv_map);
             convertView.setTag(viewHolder);
         }
 
+
         final Club club = getItem(position);
+
         viewHolder = (ListViewHolder) convertView.getTag();
         viewHolder.clubName.setText(club.getClubName());
         viewHolder.sport.setText(club.getSport());
@@ -95,8 +99,7 @@ public class ListAdapter extends ArrayAdapter<Club> {
             }
         });
 
-        final Drawable likeOn = convertView.getResources().getDrawable(R.drawable.like);
-        final Drawable likeOff = convertView.getResources().getDrawable(R.drawable.like_off);
+
         final ImageView ivLike = convertView.findViewById(R.id.iv_like);
         final TextView tvCounter = convertView.findViewById(R.id.tv_counter);
         final ImageView likeImg = viewHolder.iv_like;
@@ -163,6 +166,23 @@ public class ListAdapter extends ArrayAdapter<Club> {
             }
         });
 
+        final double lat = club.getLatitude();
+        final double lon  =club.getLongitude();
+
+
+
+        viewHolder.iv_map.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intentmap = new Intent();
+                intentmap.setAction(android.content.Intent.ACTION_VIEW);
+                intentmap.setData(Uri.parse("http://maps.google.com/maps?.34&daddr=" + club.getLatitude() + "," + club.getLongitude()));
+                getContext().startActivity(intentmap);
+            }
+        });
+
+
         final Drawable starOn = convertView.getResources().getDrawable(R.drawable.btn_star_big_on);
         final Drawable starOff = convertView.getResources().getDrawable(R.drawable.btn_star_big_off);
         final ImageView starImg = viewHolder.iv_fav;
@@ -192,10 +212,11 @@ class ListViewHolder {
     public TextView tv_website;
     public ImageView sportColor;
     public ConstraintLayout drawerInfo;
-    public ImageButton popUpButton;
-    public ImageView iv_like;
-    public ImageView iv_fav;
-    public ImageView iv_share;
+    public ImageButton      popUpButton;
+    public ImageView        iv_like;
+    public ImageView        iv_fav;
+    public ImageView        iv_share;
+    public ImageView        iv_map;
 }
 
 

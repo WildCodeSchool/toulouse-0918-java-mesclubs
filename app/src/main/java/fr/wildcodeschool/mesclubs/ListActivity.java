@@ -27,6 +27,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
+import static fr.wildcodeschool.mesclubs.Singleton.getImages;
+
 public class ListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     NavigationView navigationView;
     ImageView photo;
@@ -37,6 +41,9 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private ListView mListTrip;
     private FirebaseAuth mAuth;
+
+    private ArrayList<Club> listClub = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,9 +115,268 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
             case R.id.map:
                 startActivity(new Intent(this, MapsActivity.class));
                 break;
+
+            case R.id.filtre_distance:
+                //getClubsByDistance();
+                break;
+
+            case R.id.filtre_hand:
+                getClubsByHand();
+                break;
+
+            case R.id.filtre_sport:
+                final TextView tvFiltre = findViewById(R.id.tv_filtre);
+                final TextView tvFiltreAlpinisme = findViewById(R.id.tv_filter_alpinisme);
+                final TextView tvFiltreAviron = findViewById(R.id.tv_filter_aviron);
+                final TextView tvFiltreCanoe = findViewById(R.id.tv_filter_canoe);
+                final TextView tvFiltreCanyonisme = findViewById(R.id.tv_filter_canyonisme);
+                final TextView tvFiltreCourse = findViewById(R.id.tv_filter_course);
+                final TextView tvFiltreEcalade = findViewById(R.id.tv_filter_ecalade);
+                final TextView tvFiltreNatation = findViewById(R.id.tv_filter_natation);
+                final TextView tvFiltreVoile = findViewById(R.id.tv_filter_voile);
+                final TextView tvFiltreRando = findViewById(R.id.tv_filter_randonne);
+                final TextView tvFiltreSpeleo = findViewById(R.id.tv_filter_speleo);
+                final TextView tvFiltreYoga = findViewById(R.id.tv_filter_yoga);
+                final TextView tvFiltrePlonge = findViewById(R.id.tv_filter_plonge);
+                final TextView tvNotFiltre = findViewById(R.id.tv_filtre_remove);
+
+                showFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                        , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                        , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
+
+                tvFiltreAlpinisme.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String sport = tvFiltreAlpinisme.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreAviron.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String sport = tvFiltreAviron.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreCanoe.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String sport = tvFiltreCanoe.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreCanyonisme.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String sport = tvFiltreCanyonisme.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreCourse.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String sport = tvFiltreCourse.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreEcalade.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String sport = tvFiltreEcalade.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreNatation.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String sport = tvFiltreNatation.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreVoile.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String sport = tvFiltreVoile.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreRando.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String sport = tvFiltreRando.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreSpeleo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String sport = tvFiltreSpeleo.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltreYoga.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String sport = tvFiltreYoga.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvFiltrePlonge.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String sport = tvFiltrePlonge.getText().toString();
+                        getClubsBySport(sport);
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
+
+                tvNotFiltre.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getClubs();
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                                , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
+                    }
+                });
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void showFilters(TextView tvFiltre, TextView tvFiltreAlpinisme, TextView tvFiltreAviron, TextView tvFiltreCanoe
+            , TextView tvFiltreCanyonisme, TextView tvFiltreCourse, TextView tvFiltreEcalade, TextView tvFiltreNatation
+            , TextView tvFiltreVoile, TextView tvFiltreRando, TextView tvFiltreSpeleo, TextView tvFiltreYoga
+            , TextView tvFiltrePlonge, TextView tvNotFiltre) {
+        tvFiltre.setVisibility(View.VISIBLE);
+        tvFiltreAlpinisme.setVisibility(View.VISIBLE);
+        tvFiltreAviron.setVisibility(View.VISIBLE);
+        tvFiltreCanoe.setVisibility(View.VISIBLE);
+        tvFiltreCanyonisme.setVisibility(View.VISIBLE);
+        tvFiltreCourse.setVisibility(View.VISIBLE);
+        tvFiltreEcalade.setVisibility(View.VISIBLE);
+        tvFiltreNatation.setVisibility(View.VISIBLE);
+        tvFiltreVoile.setVisibility(View.VISIBLE);
+        tvFiltreRando.setVisibility(View.VISIBLE);
+        tvFiltreSpeleo.setVisibility(View.VISIBLE);
+        tvFiltreYoga.setVisibility(View.VISIBLE);
+        tvFiltrePlonge.setVisibility(View.VISIBLE);
+        tvNotFiltre.setVisibility(View.VISIBLE);
+    }
+
+    public void dontShowFilters(TextView tvFiltre, TextView tvFiltreAlpinisme, TextView tvFiltreAviron, TextView tvFiltreCanoe
+            , TextView tvFiltreCanyonisme, TextView tvFiltreCourse, TextView tvFiltreEcalade, TextView tvFiltreNatation
+            , TextView tvFiltreVoile, TextView tvFiltreRando, TextView tvFiltreSpeleo, TextView tvFiltreYoga
+            , TextView tvFiltrePlonge, TextView tvNotFiltre) {
+        tvFiltre.setVisibility(View.INVISIBLE);
+        tvFiltreAlpinisme.setVisibility(View.INVISIBLE);
+        tvFiltreAviron.setVisibility(View.INVISIBLE);
+        tvFiltreCanoe.setVisibility(View.INVISIBLE);
+        tvFiltreCanyonisme.setVisibility(View.INVISIBLE);
+        tvFiltreCourse.setVisibility(View.INVISIBLE);
+        tvFiltreEcalade.setVisibility(View.INVISIBLE);
+        tvFiltreNatation.setVisibility(View.INVISIBLE);
+        tvFiltreVoile.setVisibility(View.INVISIBLE);
+        tvFiltreRando.setVisibility(View.INVISIBLE);
+        tvFiltreSpeleo.setVisibility(View.INVISIBLE);
+        tvFiltreYoga.setVisibility(View.INVISIBLE);
+        tvFiltrePlonge.setVisibility(View.INVISIBLE);
+        tvNotFiltre.setVisibility(View.INVISIBLE);
+    }
+
+    public void getClubsBySport(String sport) {
+        //firebase
+        listClub.clear();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference clubRef = database.getReference("club");
+        clubRef.orderByChild("sport").equalTo(sport)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
+                            Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
+                            club.setImage(getImages(club.getSport()));
+                            listClub.add(club);
+                        }
+                        ListAdapter adapter = new ListAdapter(ListActivity.this, listClub);
+                        mListTrip = findViewById(R.id.list_club);
+                        mListTrip.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+    }
+
+    public void getClubsByHand() {
+        //firebase
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference clubRef = database.getReference("club");
+        clubRef.orderByChild("handicapped").equalTo(true)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
+                            Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
+                            club.setImage(getImages(club.getSport()));
+                            listClub.add(club);
+                        }
+                        ListAdapter adapter = new ListAdapter(ListActivity.this, listClub);
+                        mListTrip = findViewById(R.id.list_club);
+                        mListTrip.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
     }
 
     @Override
