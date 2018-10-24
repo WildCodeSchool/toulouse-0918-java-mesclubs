@@ -7,39 +7,41 @@
         <item
             android:id="@+id/filtre_distance"
             android:color="#ffffff"
-            android:icon="@drawable/baseline_filter_list_black_18dp"
+            android:icon="@drawable/baseline_filter_list_black_36"
             android:radius="5dp"
             android:shape="rectangle"
             android:title="@string/filtre_distance" />
 
         <item
             android:id="@+id/filtre_hand"
-            android:icon="@drawable/baseline_filter_list_black_18dp"
+            android:icon="@drawable/baseline_filter_list_black_36"
             android:title="@string/filtre_handicap" />
         <item
             android:id="@+id/filtre_sport"
-            android:icon="@drawable/baseline_filter_list_black_18dp"
+            android:icon="@drawable/baseline_filter_list_black_36"
             android:title="@string/filtre_par_sport" />
         <item
             android:id="@+id/liste"
             android:icon="@drawable/baseline_format_list_bulleted_black_18dp"
-            android:title="Voir la liste " />
+            android:title="@string/Voirlaliste" />
         <item
             android:id="@+id/map"
-            android:icon="@drawable/baseline_format_list_bulleted_black_18dp"
-            android:title="Acceder à la carte" />
+            android:icon="@drawable/baseline_map_black_36"
+            android:title="@string/Accederalacarte" />
 
     </group>
     <item
         android:id="@+id/connec"
-        android:title="Utilisateur">
+        android:title="@string/Utilisateur">
 
         <menu>
 
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/profile"
-                    android:icon="@drawable/baseline_input_black_18dp"
+
+
+                    android:icon="@drawable/baseline_person_black_36"
                     android:title="@string/onglet_profile" />
                 <item
                     android:id="@+id/connection"
@@ -48,8 +50,8 @@
 
                 <item
                     android:id="@+id/déconnection"
-                    android:icon="@drawable/personne"
-                    android:title="SE DECONNECTER" />
+                    android:icon="@drawable/baseline_exit_to_app_black_36"
+                    android:title="@string/sedeconnecter" />
 
             </group>
         </menu>

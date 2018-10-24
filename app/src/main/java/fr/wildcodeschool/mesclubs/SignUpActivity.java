@@ -16,6 +16,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import com.google.firebase.auth.FirebaseUser;
+
+
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
 public class SignUpActivity extends AppCompatActivity {

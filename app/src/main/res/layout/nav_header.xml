@@ -30,7 +30,7 @@
             android:textColor="#E1E6FA"
             app:layout_constraintBottom_toTopOf="@+id/textView4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.02"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_header"
             app:layout_constraintVertical_bias="0.533"
@@ -38,8 +38,8 @@
 
         <ImageView
             android:id="@+id/image_header"
-            android:layout_width="266dp"
-            android:layout_height="87dp"
+            android:layout_width="138dp"
+            android:layout_height="90dp"
             android:layout_gravity="center"
             android:layout_marginBottom="50dp"
             android:layout_marginEnd="2dp"
@@ -51,7 +51,7 @@
             android:src="@drawable/personne"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
@@ -75,7 +75,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image"
             app:layout_constraintVertical_bias="1.0" />
 
     </android.support.constraint.ConstraintLayout>
