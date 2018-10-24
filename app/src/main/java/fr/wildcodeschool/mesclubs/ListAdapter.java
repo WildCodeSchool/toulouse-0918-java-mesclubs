@@ -2,8 +2,10 @@ package fr.wildcodeschool.mesclubs;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +15,28 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+
+import static android.content.Context.*;
 
 public class ListAdapter extends ArrayAdapter <Club> {
 
 
     public ListAdapter (Context context,ArrayList<Club> list){
         super(context, 0, list);
+    }
+
+    public void likePreferences (final String clubId, boolean isLiked) {
+        SharedPreferences sharedPref = getContext().getSharedPreferences("clubid",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(clubId, isLiked);
+        editor.commit();
     }
 
     public View getView ( int position, View convertView, ViewGroup parent) {
@@ -41,13 +58,13 @@ public class ListAdapter extends ArrayAdapter <Club> {
             convertView.setTag(viewHolder);
         }
 
-        Club list = getItem(position);
+        final Club club = getItem(position);
         viewHolder = (ListViewHolder) convertView.getTag();
-        viewHolder.clubName.setText(list.getClubName());
-        viewHolder.sport.setText(list.getSport());
-        viewHolder.tv_address.setText(list.getAddress());
-        viewHolder.sportColor.setImageDrawable(getContext().getResources().getDrawable(list.getImage()));
-        viewHolder.tv_website.setText(list.getWebsite());
+        viewHolder.clubName.setText(club.getClubName());
+        viewHolder.sport.setText(club.getSport());
+        viewHolder.tv_address.setText(club.getAddress());
+        viewHolder.sportColor.setImageDrawable(getContext().getResources().getDrawable(club.getImage()));
+        viewHolder.tv_website.setText(club.getWebsite());
         if(viewHolder.tv_website.getText().length() == 0){
             viewHolder.tv_website.setText(R.string.tvWebsite);
         }
@@ -83,18 +100,69 @@ public class ListAdapter extends ArrayAdapter <Club> {
 
         final Drawable likeOn = convertView.getResources().getDrawable(R.drawable.like);
         final Drawable likeOff = convertView.getResources().getDrawable(R.drawable.like_off);
+        final ImageView ivLike = convertView.findViewById(R.id.iv_like);
+        final TextView tvCounter = convertView.findViewById(R.id.tv_counter);
         final ImageView likeImg = viewHolder.iv_like;
+
+
+        SharedPreferences sharedPref = getContext().getSharedPreferences("clubid",Context.MODE_PRIVATE);
+
+        boolean isLiked = sharedPref.getBoolean(club.getId(), false);
+        if (isLiked) {
+            ivLike.setImageDrawable(ListAdapter.this.getContext().getResources().getDrawable(R.drawable.like));
+        }else {
+            ivLike.setImageDrawable(ListAdapter.this.getContext().getResources().getDrawable(R.drawable.like_off));
+        }
+
         likeImg.setTag(false); // set favorite off
         viewHolder.iv_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean isLiked = ((boolean) likeImg.getTag());
-                if (!isLiked) {
-                    likeImg.setImageDrawable(likeOn);
+                boolean isliked = ((boolean) ivLike.getTag());
+                if (!isliked) {
+                    ivLike.setImageDrawable(ListAdapter.this.getContext().getResources().getDrawable(R.drawable.like));
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    final DatabaseReference clubRef = database.getReference("club").child(club.getId());
+                    clubRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Club thisClub = dataSnapshot.getValue(Club.class);
+                            int counter = thisClub.getCounter();
+                            counter++;
+                            thisClub.setCounter(counter);
+                            clubRef.setValue(thisClub);
+                            tvCounter.setText(String.valueOf(thisClub.getCounter()));
+                            likePreferences(dataSnapshot.getKey(),true);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 } else {
-                    likeImg.setImageDrawable(likeOff);
+                    ivLike.setImageDrawable(ListAdapter.this.getContext().getResources().getDrawable(R.drawable.like_off));
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    final DatabaseReference clubRef = database.getReference("club").child(club.getId());
+                    clubRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Club thisClub = dataSnapshot.getValue(Club.class);
+                            int counter = thisClub.getCounter();
+                            counter--;
+                            thisClub.setCounter(counter);
+                            clubRef.setValue(thisClub);
+                            tvCounter.setText(String.valueOf(thisClub.getCounter()));
+                            likePreferences(dataSnapshot.getKey(),false);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 }
-                likeImg.setTag(!isLiked);
+                ivLike.setTag(!isliked);
             }
         });
 
@@ -116,6 +184,7 @@ public class ListAdapter extends ArrayAdapter <Club> {
         });
         return convertView;
     }
+
 }
 
 class ListViewHolder {

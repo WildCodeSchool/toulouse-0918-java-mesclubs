@@ -84,7 +84,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Toolbar toolbar;
     private PopupWindow popUp;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -736,7 +735,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
         //Click on like
-        SharedPreferences sharedPref = MapsActivity.this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = MapsActivity.this.getSharedPreferences("clubid",Context.MODE_PRIVATE);
         boolean isLiked = sharedPref.getBoolean(club.getId(), false);
         if (isLiked) {
             ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like));
@@ -748,7 +747,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         ivLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 boolean isliked = ((boolean) ivLike.getTag());
                 if (!isliked) {
                     ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like));
@@ -799,7 +797,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void likePreferences (String clubId, boolean isLiked) {
-        SharedPreferences sharedPref = MapsActivity.this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = MapsActivity.this.getSharedPreferences("clubid",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean(clubId, isLiked);
         editor.commit();
