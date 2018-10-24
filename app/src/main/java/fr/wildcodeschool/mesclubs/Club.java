@@ -14,8 +14,17 @@ public class Club {
     private int imgHandicap;
     private int counter;
     private String id;
+    private double distance;
 
     public Club() {
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
     public String getId() {

@@ -55,10 +55,13 @@ public class ListAdapter extends ArrayAdapter <Club> {
             viewHolder.tv_address = convertView.findViewById(R.id.tv_address);
             viewHolder.tv_website = convertView.findViewById(R.id.tv_website);
             viewHolder.iv_share = convertView.findViewById(R.id.iv_share);
+            viewHolder.iv_map = convertView.findViewById(R.id.iv_map);
             convertView.setTag(viewHolder);
         }
 
+
         final Club club = getItem(position);
+
         viewHolder = (ListViewHolder) convertView.getTag();
         viewHolder.clubName.setText(club.getClubName());
         viewHolder.sport.setText(club.getSport());
@@ -166,6 +169,23 @@ public class ListAdapter extends ArrayAdapter <Club> {
             }
         });
 
+        final double lat = list.getLatitude();
+        final double lon  =list.getLongitude();
+
+
+
+        viewHolder.iv_map.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intentmap = new Intent();
+                intentmap.setAction(android.content.Intent.ACTION_VIEW);
+                intentmap.setData(Uri.parse("http://maps.google.com/maps?.34&daddr=" + list.getLatitude() + "," + list.getLongitude()));
+                getContext().startActivity(intentmap);
+            }
+        });
+
+
         final Drawable starOn = convertView.getResources().getDrawable(R.drawable.btn_star_big_on);
         final Drawable starOff = convertView.getResources().getDrawable(R.drawable.btn_star_big_off);
         final ImageView starImg = viewHolder.iv_fav;
@@ -199,6 +219,7 @@ class ListViewHolder {
     public ImageView        iv_like;
     public ImageView        iv_fav;
     public ImageView        iv_share;
+    public ImageView        iv_map;
 }
 
 
