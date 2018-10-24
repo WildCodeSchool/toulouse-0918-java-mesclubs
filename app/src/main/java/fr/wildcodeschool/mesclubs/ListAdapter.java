@@ -49,7 +49,6 @@ public class ListAdapter extends ArrayAdapter<Club> {
             viewHolder.popUpButton = convertView.findViewById(R.id.popUpButton);
             viewHolder.drawerInfo = convertView.findViewById(R.id.drawerInfo);
             viewHolder.iv_like = convertView.findViewById(R.id.iv_like);
-            viewHolder.iv_fav = convertView.findViewById(R.id.iv_fav);
             viewHolder.tv_address = convertView.findViewById(R.id.tv_address);
             viewHolder.tv_website = convertView.findViewById(R.id.tv_website);
             viewHolder.iv_share = convertView.findViewById(R.id.iv_share);
@@ -187,32 +186,13 @@ public class ListAdapter extends ArrayAdapter<Club> {
 
                 Intent intentiti = new Intent();
                 intentiti.setAction(android.content.Intent.ACTION_VIEW);
-                intentiti.setData(Uri.parse("http://maps.google.com/maps?.34&daddr=" + list.getLatitude() + "," + list.getLongitude()));
+                intentiti.setData(Uri.parse("http://maps.google.com/maps?.34&daddr=" + club.getLatitude() + "," + club.getLongitude()));
                 getContext().startActivity(intentiti);
 
             }
         });
-
-
-        final Drawable starOn = convertView.getResources().getDrawable(R.drawable.btn_star_big_on);
-        final Drawable starOff = convertView.getResources().getDrawable(R.drawable.btn_star_big_off);
-        final ImageView starImg = viewHolder.iv_fav;
-        starImg.setTag(false); // set favorite off
-        viewHolder.iv_fav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean isFavorite = ((boolean) starImg.getTag());
-                if (!isFavorite) {
-                    starImg.setImageDrawable(starOn);
-                } else {
-                    starImg.setImageDrawable(starOff);
-                }
-                starImg.setTag(!isFavorite);
-            }
-        });
         return convertView;
     }
-
 }
 
 class ListViewHolder {

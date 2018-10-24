@@ -128,6 +128,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/map" />
 
         <ImageView
@@ -241,18 +242,6 @@
             app:layout_constraintTop_toTopOf="@+id/guideline8"
             app:layout_constraintVertical_bias="1.0"
             tools:text="counter" />
-
-        <ImageView
-            android:id="@+id/iv_fav"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_alignBottom="@+id/drawerInfo"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.88"
-            app:layout_constraintStart_toStartOf="@+id/guideline7"
-            app:layout_constraintTop_toTopOf="@+id/guideline8"
-            app:srcCompat="@drawable/btn_star_big_off" />
 
         <TextView
             android:id="@+id/tv_map"

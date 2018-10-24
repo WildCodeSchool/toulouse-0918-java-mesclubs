@@ -692,7 +692,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         final TextView markerSport = popUpView.findViewById(R.id.text_sport);
         final TextView markeurWeb = popUpView.findViewById(R.id.text_web);
         final ImageView ivLike = popUpView.findViewById(R.id.iv_like);
-        final ImageView ivFav = popUpView.findViewById(R.id.iv_fav);
         ImageView ivShare = popUpView.findViewById(R.id.image_share);
         ImageView markerItinerary = popUpView.findViewById(R.id.iv_itinerary);
         final TextView tvCounter = popUpView.findViewById(R.id.tv_counter);
@@ -702,7 +701,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         markerSport.setText(club.getSport());
         markeurWeb.setText(club.getWebsite());
         markerImage.setImageDrawable(MapsActivity.this.getResources().getDrawable(club.getImage()));
-        ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_off));
         ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like_off));
         tvCounter.setText(String.valueOf(club.getCounter()));
 
@@ -737,21 +735,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 assert club != null;
                 intent.setData(Uri.parse("http://maps.google.com/maps?.34&daddr=" + club.getLatitude() + "," + club.getLongitude()));
                 startActivity(intent);
-            }
-        });
-
-        //Click on Favoris
-        ivFav.setTag(false); // set favorite off
-        ivFav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean isFav = ((boolean) ivFav.getTag());
-                if (!isFav) {
-                    ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_on));
-                } else {
-                    ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_off));
-                }
-                ivFav.setTag(!isFav);
             }
         });
 
