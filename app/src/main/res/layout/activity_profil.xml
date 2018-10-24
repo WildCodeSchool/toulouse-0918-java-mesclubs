@@ -32,9 +32,10 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline14"
+                app:layout_constraintHorizontal_bias="0.505"
                 app:layout_constraintStart_toStartOf="@+id/guideline15"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.306" />
+                app:layout_constraintVertical_bias="0.536" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar2"
@@ -68,24 +69,30 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline15"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
                 app:srcCompat="@drawable/personne" />
 
-            <Button
-                android:id="@+id/bTakephoto"
-                android:layout_width="wrap_content"
+            <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+                android:id="@+id/send"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/button_design"
-                android:enabled="true"
                 android:text="@string/galeri"
-                android:visibility="visible"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline14"
                 app:layout_constraintStart_toStartOf="@+id/guideline15"
                 app:layout_constraintTop_toBottomOf="@+id/textView"
-                app:layout_constraintVertical_bias="0.025"
-                tools:clickable="true" />
+                app:layout_constraintVertical_bias="0.299"
+                app:spinning_bar_color="#fff"
+                app:spinning_bar_padding="6dp"
+                app:spinning_bar_width="4dp" />
 
             <android.support.constraint.Guideline
                 android:id="@+id/guideline14"
