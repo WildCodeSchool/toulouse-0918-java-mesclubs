@@ -46,7 +46,7 @@
             <TextView
                 android:id="@+id/tv_filtre"
                 android:layout_width="match_parent"
-                android:layout_height="491dp"
+                android:layout_height="528dp"
                 android:layout_marginBottom="32dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginLeft="32dp"
@@ -270,20 +270,37 @@
                 android:id="@+id/tv_filtre_remove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/retirer_les_filtres"
+                android:text="@string/retirer_tout_les_sports"
                 android:textColor="#fff"
                 android:textSize="20sp"
                 android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_filtre"
                 app:layout_constraintEnd_toEndOf="@+id/tv_filtre"
                 app:layout_constraintStart_toStartOf="@+id/tv_filtre"
                 app:layout_constraintTop_toBottomOf="@+id/tv_filter_yoga" />
+
+            <TextView
+                android:id="@+id/tv_allsport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                android:visibility="invisible"
+                android:text="@string/afficher_tout_les_sports"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_filtre"
+                app:layout_constraintEnd_toEndOf="@+id/tv_filtre"
+                app:layout_constraintStart_toStartOf="@+id/tv_filtre"
+                app:layout_constraintTop_toBottomOf="@+id/tv_filtre_remove" />
 
         </android.support.constraint.ConstraintLayout>
 

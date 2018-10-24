@@ -14,6 +14,7 @@ public class Club {
     private int imgHandicap;
     private int counter;
     private String id;
+    private double distance;
 
     public Club(String clubName, String website, String sport, boolean handicapped, double latitude, double longitude, int color, int image, int picture, int imgHandicap, int counter) {
         this.clubName = clubName;
@@ -37,6 +38,14 @@ public class Club {
     }
 
     public Club() {
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
     public String getId() {
