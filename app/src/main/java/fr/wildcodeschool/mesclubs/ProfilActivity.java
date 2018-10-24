@@ -17,7 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -162,7 +161,7 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
 //        String displayName = etPseudo.getText().toString();
         FirebaseUser user = mAuth.getCurrentUser();
         UserProfileChangeRequest profil = new UserProfileChangeRequest.Builder()
-           //     .setDisplayName(displayName)
+                //     .setDisplayName(displayName)
                 .setPhotoUri(photoStringLink)
                 .build();
         user.updateProfile(profil)
@@ -173,7 +172,7 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                             Toast.makeText(ProfilActivity.this, "Profile Updated",
                                     Toast.LENGTH_SHORT).show();
                             finish();
-                            startActivity(new Intent(ProfilActivity.this,ProfilActivity.class));
+                            startActivity(new Intent(ProfilActivity.this, ProfilActivity.class));
                             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         }
                     }

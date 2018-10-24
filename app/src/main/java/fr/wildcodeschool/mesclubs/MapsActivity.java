@@ -24,18 +24,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-
-import android.view.Display;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.widget.ListPopupWindow;
 import android.widget.PopupWindow;
-
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -73,10 +70,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     //int counter = 0;
     NavigationView navigationView;
     ClipData.Item map;
-    private int MARKER_WIDTH = 100;
-    private int MARKER_HEIGHT = 100;
     Menu connection;
     Menu profil;
+    private int MARKER_WIDTH = 100;
+    private int MARKER_HEIGHT = 100;
     private FirebaseAuth mAuth;
 
     private GoogleMap mMap;
@@ -155,7 +152,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 break;
 
             case R.id.profile:
-                startActivity(new Intent(MapsActivity.this,ProfilActivity.class));
+                startActivity(new Intent(MapsActivity.this, ProfilActivity.class));
                 break;
 
             case R.id.filtre_distance:
@@ -388,7 +385,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void getClubs() {
         Singleton singleton = Singleton.getInstance();
-        ArrayList<Club> clubs =  singleton.getListClub();
+        ArrayList<Club> clubs = singleton.getListClub();
         for (Club club : clubs) {
             Bitmap initialMarkerIcon = BitmapFactory.decodeResource(getResources(), club.getImage());
             Bitmap markerIcon = Bitmap.createScaledBitmap(initialMarkerIcon, MARKER_WIDTH, MARKER_HEIGHT, false);
@@ -735,11 +732,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
         //Click on like
-        SharedPreferences sharedPref = MapsActivity.this.getSharedPreferences("clubid",Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = MapsActivity.this.getSharedPreferences("clubid", Context.MODE_PRIVATE);
         boolean isLiked = sharedPref.getBoolean(club.getId(), false);
         if (isLiked) {
             ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like));
-        }else {
+        } else {
             ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like_off));
         }
 
@@ -761,7 +758,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             thisClub.setCounter(counter);
                             clubRef.setValue(thisClub);
                             tvCounter.setText(String.valueOf(thisClub.getCounter()));
-                            likePreferences(dataSnapshot.getKey(),true);
+                            likePreferences(dataSnapshot.getKey(), true);
                         }
 
                         @Override
@@ -782,7 +779,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             thisClub.setCounter(counter);
                             clubRef.setValue(thisClub);
                             tvCounter.setText(String.valueOf(thisClub.getCounter()));
-                            likePreferences(dataSnapshot.getKey(),false);
+                            likePreferences(dataSnapshot.getKey(), false);
                         }
 
                         @Override
@@ -796,8 +793,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-    public void likePreferences (String clubId, boolean isLiked) {
-        SharedPreferences sharedPref = MapsActivity.this.getSharedPreferences("clubid",Context.MODE_PRIVATE);
+    public void likePreferences(String clubId, boolean isLiked) {
+        SharedPreferences sharedPref = MapsActivity.this.getSharedPreferences("clubid", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean(clubId, isLiked);
         editor.commit();

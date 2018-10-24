@@ -1,13 +1,13 @@
 package fr.wildcodeschool.mesclubs;
 
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,14 +29,14 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ListActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     NavigationView navigationView;
-    private DrawerLayout mDrawerLayout;
-    private Toolbar toolbar;
-    private ListView mListTrip;
-    private FirebaseAuth mAuth;
     ImageView photo;
     View headerLayout;
     Menu connection;
     Menu profil;
+    private DrawerLayout mDrawerLayout;
+    private Toolbar toolbar;
+    private ListView mListTrip;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     private void configureNavigationView() {
         this.navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        }
+    }
 
     @Override
 
@@ -83,7 +83,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
             this.mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-            }
+        }
     }
 
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -102,7 +102,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.profile:
-                startActivity(new Intent(ListActivity.this,ProfilActivity.class));
+                startActivity(new Intent(ListActivity.this, ProfilActivity.class));
                 break;
 
             case R.id.map:
@@ -136,6 +136,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                                 .into(photo);
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }

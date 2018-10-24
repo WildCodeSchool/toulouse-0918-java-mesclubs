@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
@@ -23,23 +22,21 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import static android.content.Context.*;
-
-public class ListAdapter extends ArrayAdapter <Club> {
+public class ListAdapter extends ArrayAdapter<Club> {
 
 
-    public ListAdapter (Context context,ArrayList<Club> list){
+    public ListAdapter(Context context, ArrayList<Club> list) {
         super(context, 0, list);
     }
 
-    public void likePreferences (final String clubId, boolean isLiked) {
-        SharedPreferences sharedPref = getContext().getSharedPreferences("clubid",Context.MODE_PRIVATE);
+    public void likePreferences(final String clubId, boolean isLiked) {
+        SharedPreferences sharedPref = getContext().getSharedPreferences("clubid", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean(clubId, isLiked);
         editor.commit();
     }
 
-    public View getView ( int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
 
         ListViewHolder viewHolder;
         if (convertView == null) {
@@ -65,7 +62,7 @@ public class ListAdapter extends ArrayAdapter <Club> {
         viewHolder.tv_address.setText(club.getAddress());
         viewHolder.sportColor.setImageDrawable(getContext().getResources().getDrawable(club.getImage()));
         viewHolder.tv_website.setText(club.getWebsite());
-        if(viewHolder.tv_website.getText().length() == 0){
+        if (viewHolder.tv_website.getText().length() == 0) {
             viewHolder.tv_website.setText(R.string.tvWebsite);
         }
 
@@ -85,16 +82,16 @@ public class ListAdapter extends ArrayAdapter <Club> {
         viewHolder.iv_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message  = getContext().getResources().getString(R.string.sahreBody);
-                String sport    = finalViewHolder1.sport.getText().toString();
+                String message = getContext().getResources().getString(R.string.sahreBody);
+                String sport = finalViewHolder1.sport.getText().toString();
                 String clubName = finalViewHolder1.clubName.getText().toString();
-                String webSite  = finalViewHolder1.tv_website.getText().toString();
+                String webSite = finalViewHolder1.tv_website.getText().toString();
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
-                String shareBodyText =  message + sport + " " + clubName + " " + webSite;
-                shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"My App");
-                shareIntent.putExtra(Intent.EXTRA_TEXT,shareBodyText);
-                getContext().startActivity(Intent.createChooser(shareIntent,"Share via"));
+                String shareBodyText = message + sport + " " + clubName + " " + webSite;
+                shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "My App");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareBodyText);
+                getContext().startActivity(Intent.createChooser(shareIntent, "Share via"));
             }
         });
 
@@ -105,12 +102,12 @@ public class ListAdapter extends ArrayAdapter <Club> {
         final ImageView likeImg = viewHolder.iv_like;
 
 
-        SharedPreferences sharedPref = getContext().getSharedPreferences("clubid",Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getContext().getSharedPreferences("clubid", Context.MODE_PRIVATE);
 
         boolean isLiked = sharedPref.getBoolean(club.getId(), false);
         if (isLiked) {
             ivLike.setImageDrawable(ListAdapter.this.getContext().getResources().getDrawable(R.drawable.like));
-        }else {
+        } else {
             ivLike.setImageDrawable(ListAdapter.this.getContext().getResources().getDrawable(R.drawable.like_off));
         }
 
@@ -132,7 +129,7 @@ public class ListAdapter extends ArrayAdapter <Club> {
                             thisClub.setCounter(counter);
                             clubRef.setValue(thisClub);
                             tvCounter.setText(String.valueOf(thisClub.getCounter()));
-                            likePreferences(dataSnapshot.getKey(),true);
+                            likePreferences(dataSnapshot.getKey(), true);
                         }
 
                         @Override
@@ -153,7 +150,7 @@ public class ListAdapter extends ArrayAdapter <Club> {
                             thisClub.setCounter(counter);
                             clubRef.setValue(thisClub);
                             tvCounter.setText(String.valueOf(thisClub.getCounter()));
-                            likePreferences(dataSnapshot.getKey(),false);
+                            likePreferences(dataSnapshot.getKey(), false);
                         }
 
                         @Override
@@ -188,17 +185,17 @@ public class ListAdapter extends ArrayAdapter <Club> {
 }
 
 class ListViewHolder {
-    public TextView         clubName;
-    public TextView         sport;
-    public TextView         phone;
-    public TextView         tv_address;
-    public TextView         tv_website;
-    public ImageView        sportColor;
+    public TextView clubName;
+    public TextView sport;
+    public TextView phone;
+    public TextView tv_address;
+    public TextView tv_website;
+    public ImageView sportColor;
     public ConstraintLayout drawerInfo;
-    public ImageButton      popUpButton;
-    public ImageView        iv_like;
-    public ImageView        iv_fav;
-    public ImageView        iv_share;
+    public ImageButton popUpButton;
+    public ImageView iv_like;
+    public ImageView iv_fav;
+    public ImageView iv_share;
 }
 
 
