@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,6 +26,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     EditText etPseudo;
     EditText etPassword;
+    TextView etCeConnecte;
     CircularProgressButton loadingMe;
     private FirebaseAuth mAuth;
 
@@ -37,6 +39,15 @@ public class SignUpActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         mAuth = FirebaseAuth.getInstance();
         loadingMe = findViewById(R.id.send);
+        etCeConnecte = findViewById(R.id.et_ce_connecter);
+
+        etCeConnecte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
 
         loadingMe.setOnClickListener(new View.OnClickListener() {
             @Override
