@@ -62,7 +62,6 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
-    <string name="retirer_tout_les_sports">retirer tout les filtres</string>
-    <string name="afficher_tout_les_sports">Afficher tout les sports</string>
+    <string name="retirer_tout_les_filtres">RETIRER TOUT LES FILTRES</string>
 
 </resources>

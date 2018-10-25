@@ -104,7 +104,6 @@ public class ListAdapter extends ArrayAdapter<Club> {
         final TextView tvCounter = convertView.findViewById(R.id.tv_counter);
         final ImageView likeImg = viewHolder.iv_like;
 
-
         SharedPreferences sharedPref = getContext().getSharedPreferences("clubid", Context.MODE_PRIVATE);
 
         boolean isLiked = sharedPref.getBoolean(club.getId(), false);
@@ -167,7 +166,7 @@ public class ListAdapter extends ArrayAdapter<Club> {
         });
 
         final double lat = club.getLatitude();
-        final double lon  =club.getLongitude();
+        final double lon = club.getLongitude();
         viewHolder.iv_map.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -193,23 +192,21 @@ public class ListAdapter extends ArrayAdapter<Club> {
         });
         return convertView;
     }
+    
+    class ListViewHolder {
+        public TextView clubName;
+        public TextView sport;
+        public TextView phone;
+        public TextView tv_address;
+        public TextView tv_website;
+        public ImageView sportColor;
+        public ConstraintLayout drawerInfo;
+        public ImageButton popUpButton;
+        public ImageView iv_like;
+        public ImageView iv_share;
+        public ImageView iv_map;
+        public TextView tv_map;
+    }
 }
-
-class ListViewHolder {
-    public TextView clubName;
-    public TextView sport;
-    public TextView phone;
-    public TextView tv_address;
-    public TextView tv_website;
-    public ImageView sportColor;
-    public ConstraintLayout drawerInfo;
-    public ImageButton      popUpButton;
-    public ImageView        iv_like;
-    public ImageView        iv_fav;
-    public ImageView        iv_share;
-    public ImageView        iv_map;
-    public TextView         tv_map;
-}
-
 
 
