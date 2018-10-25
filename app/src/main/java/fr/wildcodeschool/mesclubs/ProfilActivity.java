@@ -169,10 +169,8 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference userfirebase = database.getReference("User");
         userfirebase.child(mAuth.getUid()).child("picture").setValue(photoStringLink.toString());
-//        String displayName = etPseudo.getText().toString();
         FirebaseUser user = mAuth.getCurrentUser();
         UserProfileChangeRequest profil = new UserProfileChangeRequest.Builder()
-                //     .setDisplayName(displayName)
                 .setPhotoUri(photoStringLink)
                 .build();
         user.updateProfile(profil)
@@ -225,6 +223,8 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
             });
             TextView pseudo = hedeaderLayout.findViewById(R.id.etPseudo);
             pseudo.setText(user.getEmail());
+            TextView mail = findViewById(R.id.etMail);
+            mail.setText(user.getEmail());
             menu = navigationView.getMenu();
             MenuItem target = menu.findItem(R.id.connection);
             target.setVisible(false);

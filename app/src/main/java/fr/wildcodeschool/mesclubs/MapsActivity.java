@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationListener;
@@ -83,7 +82,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
     private PopupWindow popUp;
-    //SharedPreferences sharedPref = MapsActivity.this.getPreferences(Context.MODE_PRIVATE);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +93,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-       // SharedPreferences sharedPref =MapsActivity.getSharedPreferences(
-                //getString("ki"), Context.MODE_PRIVATE);
 
         this.configureToolBar();
         this.configureDrawerLayout();
@@ -202,8 +198,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         final String sport = tvFiltreAlpinisme.getText().toString();
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
-                          , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
-                          , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
+                                , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
                     }
                 });
 
@@ -517,7 +513,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             .icon(BitmapDescriptorFactory.fromBitmap(markerIcon)));
                     marker.setTag(club);
                 }
-                
+
                 // generer les marqueurs a partir de la liste
                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
@@ -798,7 +794,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             thisClub.setCounter(counter);
                             clubRef.setValue(thisClub);
                             tvCounter.setText(String.valueOf(thisClub.getCounter()));
-                 likePreferences(dataSnapshot.getKey(), false);
+                            likePreferences(dataSnapshot.getKey(), false);
                         }
 
                         @Override

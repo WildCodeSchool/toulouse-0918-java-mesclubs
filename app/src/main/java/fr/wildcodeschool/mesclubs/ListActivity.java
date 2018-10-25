@@ -39,6 +39,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     Menu profil;
     private DrawerLayout mDrawerLayout;
     Menu list;
+    Menu filtre;
     private Toolbar toolbar;
     private ListView mListTrip;
     private FirebaseAuth mAuth;
@@ -61,6 +62,9 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
         list = navigationView.getMenu();
         MenuItem target = list.findItem(R.id.liste);
         target.setVisible(false);
+        filtre = navigationView.getMenu();
+        MenuItem target2 = filtre.findItem(R.id.filtre_distance);
+        target2.setVisible(false);
     }
 
     public void getClubs() {
@@ -119,9 +123,6 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(this, MapsActivity.class));
                 break;
 
-            case R.id.filtre_distance:
-                //getClubsByDistance();
-                break;
 
             case R.id.filtre_hand:
                 getClubsByHand();
