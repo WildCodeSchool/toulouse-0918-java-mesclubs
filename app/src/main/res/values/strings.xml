@@ -69,5 +69,7 @@
         completions."
     </string>
     <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="retirer_tout_les_sports">retirer tout les sports</string>
+    <string name="afficher_tout_les_sports">Afficher tout les sports</string>
 
 </resources>

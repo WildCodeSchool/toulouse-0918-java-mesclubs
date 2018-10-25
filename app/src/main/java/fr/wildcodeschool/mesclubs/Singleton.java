@@ -30,7 +30,6 @@ class Singleton {
         final DatabaseReference clubRef = database.getReference("club");
 
 
-        //DatabaseReference countRef = database.getReference("counter");
         clubRef.orderByChild("counter").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
