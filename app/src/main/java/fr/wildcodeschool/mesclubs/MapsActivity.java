@@ -93,7 +93,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
         this.configureToolBar();
         this.configureDrawerLayout();
         this.configureNavigationView();
@@ -197,6 +196,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         mMap.clear();
                         final String sport = tvFiltreAlpinisme.getText().toString();
                         getClubsBySport(sport);
+
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
                                 , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
                                 , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
@@ -457,7 +457,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.getLatitude(), club.getLongitude()))
                                     .icon(BitmapDescriptorFactory.fromBitmap(markerIcon)));
                             marker.setTag(club);
-                            //location location =
                         }
                         // generer les marqueurs a partir de la liste
                         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -794,6 +793,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             thisClub.setCounter(counter);
                             clubRef.setValue(thisClub);
                             tvCounter.setText(String.valueOf(thisClub.getCounter()));
+                 likePreferences(dataSnapshot.getKey(), false);
                             likePreferences(dataSnapshot.getKey(), false);
                         }
 
