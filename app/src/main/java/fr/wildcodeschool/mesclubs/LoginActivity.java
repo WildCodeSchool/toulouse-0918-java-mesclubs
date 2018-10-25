@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                 final String email = emailLog.getText().toString();
                 String passwordField = passwordLog.getText().toString();
                 if (email.isEmpty() || passwordField.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "PLEASE FILL YOUR FORM",
+                    Toast.makeText(LoginActivity.this, R.string.replir_champ,
                             Toast.LENGTH_SHORT).show();
                 } else {
                     @SuppressLint("StaticFieldLeak") AsyncTask<String, String, String> demoLogin = new AsyncTask<String, String, String>() {
@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(LoginActivity.this, "Vous êtes connecté",
+                            Toast.makeText(LoginActivity.this, R.string.connecté,
                                     Toast.LENGTH_SHORT).show();
                             Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
                             LoginActivity.this.startActivity(goToMain);
@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(LoginActivity.this, "404 ERROR",
+                            Toast.makeText(LoginActivity.this, R.string.email_password,
                                     Toast.LENGTH_SHORT).show();
                             finish();
                             startActivity(new Intent(LoginActivity.this, LoginActivity.class));

@@ -2,23 +2,18 @@ package fr.wildcodeschool.mesclubs;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.Marker;
 
 public class CustomMarkerAdapter implements GoogleMap.InfoWindowAdapter {
 
     private Context context;
 
-    public CustomMarkerAdapter(Context context){
+    public CustomMarkerAdapter(Context context) {
         this.context = context;
     }
 
@@ -47,7 +42,7 @@ public class CustomMarkerAdapter implements GoogleMap.InfoWindowAdapter {
         markeurWeb.setText(club.getWebsite());
         markerImage.setImageDrawable(context.getResources().getDrawable(club.getImage()));
 
-        if (club.isHandicapped()){
+        if (club.isHandicapped()) {
             markerHandicap.setImageDrawable(context.getResources().getDrawable(R.drawable.handicapicon));
         }
         return view;

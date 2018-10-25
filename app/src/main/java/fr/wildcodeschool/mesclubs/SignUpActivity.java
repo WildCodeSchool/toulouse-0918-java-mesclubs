@@ -33,20 +33,19 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        Button send = findViewById(R.id.send);
         etPseudo = findViewById(R.id.etPseudo);
         etPassword = findViewById(R.id.etPassword);
         mAuth = FirebaseAuth.getInstance();
-        loadingMe = (CircularProgressButton) findViewById(R.id.send);
+        loadingMe = findViewById(R.id.send);
 
-        send.setOnClickListener(new View.OnClickListener() {
+        loadingMe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mAuth = FirebaseAuth.getInstance();
                 String semailog = etPseudo.getText().toString();
                 String spassword = etPassword.getText().toString();
                 if (semailog.isEmpty() || spassword.isEmpty()) {
-                    Toast.makeText(SignUpActivity.this, "PLEASE FILL YOUR FORM",
+                    Toast.makeText(SignUpActivity.this, R.string.replir_champ,
                             Toast.LENGTH_SHORT).show();
                 } else {
                     @SuppressLint("StaticFieldLeak") AsyncTask<String, String, String> demoLogin = new AsyncTask<String, String, String>() {
@@ -83,7 +82,7 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(SignUpActivity.this, "Inscription reussi",
+                            Toast.makeText(SignUpActivity.this, R.string.reussite,
                                     Toast.LENGTH_SHORT).show();
                             Intent goToMain = new Intent(SignUpActivity.this, ProfilActivity.class);
                             SignUpActivity.this.startActivity(goToMain);
@@ -91,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(SignUpActivity.this, "Inscription échouée",
+                            Toast.makeText(SignUpActivity.this, R.string.echec,
                                     Toast.LENGTH_SHORT).show();
                             finish();
                             startActivity(new Intent(SignUpActivity.this, SignUpActivity.class));
