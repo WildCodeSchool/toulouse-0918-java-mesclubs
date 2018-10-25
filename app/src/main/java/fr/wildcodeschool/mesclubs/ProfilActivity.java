@@ -198,17 +198,17 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
         if (user != null) {
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference userfirebase = database.getReference("User");
-            userfirebase.child(mAuth.getUid()).child("picture").addValueEventListener(new ValueEventListener() {
+            userfirebase.child(mAuth.getUid()).child("picture").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     String value = dataSnapshot.getValue(String.class);
                     if (value != null && !value.isEmpty()) {
                         ImageView photo = hedeaderLayout.findViewById(R.id.image_header);
-                        Glide.with(ProfilActivity.this)
+                        Glide.with(photo.getContext())
                                 .load(value)
                                 .apply(RequestOptions.circleCropTransform())
                                 .into(photo);
-                        Glide.with(ProfilActivity.this)
+                        Glide.with(photo.getContext())
                                 .load(value)
                                 .apply(RequestOptions.circleCropTransform())
                                 .into(mImageView);
