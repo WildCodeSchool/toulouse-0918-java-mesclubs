@@ -71,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                     };
-
                     loadingMe.startAnimation();
                     demoLogin.execute();
                 }
@@ -87,8 +86,6 @@ public class LoginActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
-
-
     }
 
     private void login() {

@@ -15,13 +15,11 @@ class Singleton {
     private ArrayList<Club> listClub = new ArrayList<>();
 
     private Singleton() {
-
     }
 
     static Singleton getInstance() {
 
         return ourInstance;
-
     }
 
     public void loadClubs(final ClubListener listener) {
@@ -105,7 +103,6 @@ class Singleton {
         }
         return image;
     }
-
     public ArrayList<Club> getListClub() {
         return listClub;
     }

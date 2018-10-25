@@ -42,12 +42,11 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     Menu filtreDis;
     Menu filtreHand;
     Menu filtreSport;
+    Menu dec;
     private Toolbar toolbar;
     private ListView mListTrip;
     private FirebaseAuth mAuth;
-
     private ArrayList<Club> listClub = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -433,6 +432,9 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
             filtreSport = navigationView.getMenu();
             MenuItem target4 = filtreSport.findItem(R.id.filtre_sport);
             target4.setVisible(false);
+            dec=navigationView.getMenu();
+            MenuItem target6 = dec.findItem(R.id.déconnection);
+            target6.setVisible(false);
         }
     }
 
