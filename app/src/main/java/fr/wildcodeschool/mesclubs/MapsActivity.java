@@ -83,6 +83,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Toolbar toolbar;
     private PopupWindow popUp;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +93,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
 
         this.configureToolBar();
         this.configureDrawerLayout();
@@ -192,6 +195,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         mMap.clear();
                         final String sport = tvFiltreAlpinisme.getText().toString();
                         getClubsBySport(sport);
+
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
                           , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
                           , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
@@ -786,6 +790,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             thisClub.setCounter(counter);
                             clubRef.setValue(thisClub);
                             tvCounter.setText(String.valueOf(thisClub.getCounter()));
+                 likePreferences(dataSnapshot.getKey(), false);
                             likePreferences(dataSnapshot.getKey(), false);
                         }
 

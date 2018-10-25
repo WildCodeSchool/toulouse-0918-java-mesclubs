@@ -3,13 +3,17 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_profil">ProfilActivity</string>
     <string name="entrer_dans_l_application">Entrer dans l\'application</string>
-    <string name="ongletti">ITINERAIRE</string>
-    <string name="ongletfiltre">FILTRE</string>
+    <string name="ongletti">Itinairaire</string>
+    <string name="ongletfiltre">filtre</string>
+    <string name="Utilisateur">Utilisateur</string>
 
-    <string name="ongletconnect">SE CONNECTER/S\'INSCRIRE</string>
-    <string name="onglet_profile">Profile</string>
-    <string name="ongletfav">FAVORIS</string>
+    <string name="ongletconnect">Se connecter/s\'inscrire</string>
+    <string name="onglet_profile">Profil</string>
+    <string name="ongletfav">Favoris</string>
     <string name="se_connecter">se connecter</string>
+    <string name="Voirlaliste">Voir la liste</string>
+    <string name="Accederalacarte">Acceder à la carte</string>
+    <string name="sedeconnecter">Se déconnecter</string>
 
     <string name="go">Allez - y !</string>
     <string name="nom">LOOK \'n\' SPORT</string>
@@ -19,9 +23,11 @@
     <string name="tvWebsite">Pas de site disponible pour ce club</string>
     <string name="sahreBody">J\'adore ce club :</string>
     <string name="s_inscrire">S\'inscrire</string>
+    <string name="counter">comp</string>
 
 
-    <string name="USER">pseudonyme</string>
+
+    <string name="USER">Pseudo</string>
     <string name="galeri">Galerie</string>
     <string name="title_activity_fragment">fragmentActivity</string>
     <string name="navigation_drawer_open">open navigation drawer</string>
@@ -42,18 +48,18 @@
     <string name="voile">VOILE</string>
     <string name="yoga">YOGA</string>
     <string name="retirer_les_filtres">Retirer les filtres</string>
-    <string name="filtre_handicap">FILTRE HANDICAP</string>
-    <string name="filtre_par_sport">FILTRE PAR SPORT</string>
+    <string name="filtre_handicap">Filtre Handicap</string>
+    <string name="filtre_par_sport">Filtre Sport</string>
     <string name="course_d_orientation">COURSE D\'ORIENTATION</string>
     <string name="plongee">PLONGEE</string>
     <string name="randonnee">RANDONNEE</string>
     <string name="speleologie">SPELEOLOGIE</string>
-    <string name="filtre_distance">FILTRE DISTANCE</string>
+    <string name="filtre_distance">Filtre Distance</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Mot de pass</string>
+    <string name="prompt_password">Mot de passe</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
