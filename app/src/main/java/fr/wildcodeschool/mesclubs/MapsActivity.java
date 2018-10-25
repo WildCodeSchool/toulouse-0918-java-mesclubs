@@ -74,6 +74,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     ClipData.Item map;
     Menu connection;
     Menu profil;
+    Menu carte;
     private int MARKER_WIDTH = 100;
     private int MARKER_HEIGHT = 100;
     private FirebaseAuth mAuth;
@@ -100,6 +101,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.configureToolBar();
         this.configureDrawerLayout();
         this.configureNavigationView();
+        carte = navigationView.getMenu();
+        MenuItem target = carte.findItem(R.id.map);
+        target.setVisible(false);
     }
 
     //GESTION DU MENU
@@ -664,6 +668,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             connection = navigationView.getMenu();
             MenuItem target = connection.findItem(R.id.connection);
             target.setVisible(false);
+
         } else {
             connection = navigationView.getMenu();
             MenuItem target = connection.findItem(R.id.connection);
@@ -673,6 +678,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             target2.setVisible(false);
         }
     }
+
 
     private void popupBuilder(Marker marker) {
 
