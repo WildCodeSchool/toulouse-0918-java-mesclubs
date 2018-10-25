@@ -22,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static fr.wildcodeschool.mesclubs.R.id.iv_map;
+
 public class ListAdapter extends ArrayAdapter<Club> {
 
 
@@ -47,13 +49,10 @@ public class ListAdapter extends ArrayAdapter<Club> {
             viewHolder.sportColor = convertView.findViewById(R.id.sportColor);
             viewHolder.popUpButton = convertView.findViewById(R.id.popUpButton);
             viewHolder.drawerInfo = convertView.findViewById(R.id.drawerInfo);
-
             viewHolder.ivLike = convertView.findViewById(R.id.iv_like);
-            viewHolder.tvAddress = convertView.findViewById(R.id.tv_address);
             viewHolder.tvWebsite = convertView.findViewById(R.id.tv_website);
             viewHolder.ivShare = convertView.findViewById(R.id.iv_share);
-            viewHolder.ivMap = convertView.findViewById(R.id.iv_map);
-            viewHolder.tvMap = convertView.findViewById(R.id.tv_map);
+            viewHolder.ivMap = convertView.findViewById(iv_map);
 
             convertView.setTag(viewHolder);
         }
@@ -63,7 +62,7 @@ public class ListAdapter extends ArrayAdapter<Club> {
         viewHolder = (ListViewHolder) convertView.getTag();
         viewHolder.clubName.setText(club.getClubName());
         viewHolder.sport.setText(club.getSport());
-        viewHolder.tvAddress.setText(club.getAddress());
+//        viewHolder.tvAddress.setText(club.getAddress());
         viewHolder.sportColor.setImageDrawable(getContext().getResources().getDrawable(club.getImage()));
         viewHolder.tvWebsite.setText(club.getWebsite());
         if (viewHolder.tvWebsite.getText().length() == 0) {
@@ -166,8 +165,6 @@ public class ListAdapter extends ArrayAdapter<Club> {
             }
         });
 
-        final double lat = club.getLatitude();
-        final double lon = club.getLongitude();
         viewHolder.ivMap.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -176,19 +173,6 @@ public class ListAdapter extends ArrayAdapter<Club> {
                 intentmap.setAction(android.content.Intent.ACTION_VIEW);
                 intentmap.setData(Uri.parse("http://maps.google.com/maps?.34&daddr=" + club.getLatitude() + "," + club.getLongitude()));
                 getContext().startActivity(intentmap);
-            }
-        });
-
-        viewHolder.tvMap.setText(R.string.go);
-        viewHolder.tvMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intentiti = new Intent();
-                intentiti.setAction(android.content.Intent.ACTION_VIEW);
-                intentiti.setData(Uri.parse("http://maps.google.com/maps?.34&daddr=" + club.getLatitude() + "," + club.getLongitude()));
-                getContext().startActivity(intentiti);
-
             }
         });
 
@@ -215,20 +199,18 @@ public class ListAdapter extends ArrayAdapter<Club> {
         });
     }
   
-    class ListViewHolder {
-        public TextView clubName;
-        public TextView sport;
-        public TextView phone;
-        public TextView tvAddress;
-        public TextView tvWebsite;
-        public ImageView sportColor;
-        public ConstraintLayout drawerInfo;
-        public ImageButton popUpButton;
-        public ImageView ivLike;
-        public ImageView ivShare;
-        public ImageView ivMap;
-        public TextView tvMap;
-    }
+
 }
 
-
+class ListViewHolder {
+    public TextView clubName;
+    public TextView sport;
+    public TextView phone;
+    public TextView tvWebsite;
+    public ImageView sportColor;
+    public ConstraintLayout drawerInfo;
+    public ImageButton popUpButton;
+    public ImageView ivLike;
+    public ImageView ivShare;
+    public ImageView ivMap;
+}

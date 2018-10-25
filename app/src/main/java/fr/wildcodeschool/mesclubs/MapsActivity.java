@@ -74,6 +74,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     Menu connection;
     Menu profil;
     Menu carte;
+    Menu filtreDis;
+    Menu filtreHand;
+    Menu filtreSport;
     private int MARKER_WIDTH = 100;
     private int MARKER_HEIGHT = 100;
     private FirebaseAuth mAuth;
@@ -669,6 +672,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             profil = navigationView.getMenu();
             MenuItem target2 = profil.findItem(R.id.profile);
             target2.setVisible(false);
+            filtreHand = navigationView.getMenu();
+            MenuItem target3 = filtreHand.findItem(R.id.filtre_distance);
+            target3.setVisible(false);
+            filtreSport = navigationView.getMenu();
+            MenuItem target4 = filtreSport.findItem(R.id.filtre_sport);
+            target4.setVisible(false);
+            filtreDis = navigationView.getMenu();
+            MenuItem target5 = filtreDis.findItem(R.id.filtre_hand);
+            target5.setVisible(false);
         }
     }
 
