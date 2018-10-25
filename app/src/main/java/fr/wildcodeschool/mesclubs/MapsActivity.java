@@ -77,12 +77,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private int MARKER_WIDTH = 100;
     private int MARKER_HEIGHT = 100;
     private FirebaseAuth mAuth;
-
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
     private PopupWindow popUp;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +91,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-
 
         this.configureToolBar();
         this.configureDrawerLayout();
@@ -107,7 +103,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
-
     }
 
     private void configureDrawerLayout() {
@@ -699,7 +694,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         ImageView ivShare = popUpView.findViewById(R.id.image_share);
         ImageView markerItinerary = popUpView.findViewById(R.id.iv_itinerary);
         final TextView tvCounter = popUpView.findViewById(R.id.tv_counter);
-
 
         markerName.setText(club.getClubName());
         markerSport.setText(club.getSport());
