@@ -22,7 +22,7 @@
             android:title="@string/filtre_par_sport" />
         <item
             android:id="@+id/liste"
-            android:icon="@drawable/baseline_format_list_bulleted_black_18dp"
+            android:icon="@drawable/list_icon"
             android:title="@string/Voirlaliste" />
         <item
             android:id="@+id/map"
