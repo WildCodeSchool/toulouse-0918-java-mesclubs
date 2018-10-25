@@ -77,6 +77,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     Menu filtreDis;
     Menu filtreHand;
     Menu filtreSport;
+    Menu dec;
     private int MARKER_WIDTH = 100;
     private int MARKER_HEIGHT = 100;
     private FirebaseAuth mAuth;
@@ -681,6 +682,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             filtreDis = navigationView.getMenu();
             MenuItem target5 = filtreDis.findItem(R.id.filtre_hand);
             target5.setVisible(false);
+            dec = navigationView.getMenu();
+            MenuItem target6 = dec.findItem(R.id.déconnection);
+            target6.setVisible(false);
         }
     }
 

@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Animation fade = AnimationUtils.loadAnimation(this, R.anim.fade);
-
         imageMap.setAnimation(fade);
         imageList.setAnimation(fade);
         imageLogo.setAnimation(fade);
