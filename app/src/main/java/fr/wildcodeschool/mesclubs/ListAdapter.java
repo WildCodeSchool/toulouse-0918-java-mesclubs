@@ -49,11 +49,9 @@ public class ListAdapter extends ArrayAdapter<Club> {
             viewHolder.popUpButton = convertView.findViewById(R.id.popUpButton);
             viewHolder.drawerInfo = convertView.findViewById(R.id.drawerInfo);
             viewHolder.iv_like = convertView.findViewById(R.id.iv_like);
-            viewHolder.tv_address = convertView.findViewById(R.id.tv_address);
             viewHolder.tv_website = convertView.findViewById(R.id.tv_website);
             viewHolder.iv_share = convertView.findViewById(R.id.iv_share);
             viewHolder.iv_map = convertView.findViewById(R.id.iv_map);
-            viewHolder.tv_map = convertView.findViewById(R.id.tv_map);
             convertView.setTag(viewHolder);
         }
 
@@ -63,7 +61,6 @@ public class ListAdapter extends ArrayAdapter<Club> {
         viewHolder = (ListViewHolder) convertView.getTag();
         viewHolder.clubName.setText(club.getClubName());
         viewHolder.sport.setText(club.getSport());
-        viewHolder.tv_address.setText(club.getAddress());
         viewHolder.sportColor.setImageDrawable(getContext().getResources().getDrawable(club.getImage()));
         viewHolder.tv_website.setText(club.getWebsite());
         if (viewHolder.tv_website.getText().length() == 0) {
@@ -179,18 +176,6 @@ public class ListAdapter extends ArrayAdapter<Club> {
             }
         });
 
-        viewHolder.tv_map.setText(R.string.go);
-        viewHolder.tv_map.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intentiti = new Intent();
-                intentiti.setAction(android.content.Intent.ACTION_VIEW);
-                intentiti.setData(Uri.parse("http://maps.google.com/maps?.34&daddr=" + club.getLatitude() + "," + club.getLongitude()));
-                getContext().startActivity(intentiti);
-
-            }
-        });
         return convertView;
     }
 }
@@ -208,7 +193,6 @@ class ListViewHolder {
     public ImageView        iv_fav;
     public ImageView        iv_share;
     public ImageView        iv_map;
-    public TextView         tv_map;
 }
 
 
