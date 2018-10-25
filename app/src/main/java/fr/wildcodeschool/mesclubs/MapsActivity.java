@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationListener;
@@ -74,10 +73,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     ClipData.Item map;
     Menu connection;
     Menu profil;
+    Menu carte;
     private int MARKER_WIDTH = 100;
     private int MARKER_HEIGHT = 100;
     private FirebaseAuth mAuth;
-
     private GoogleMap mMap;
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
@@ -96,6 +95,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.configureToolBar();
         this.configureDrawerLayout();
         this.configureNavigationView();
+        carte = navigationView.getMenu();
+        MenuItem target = carte.findItem(R.id.map);
+        target.setVisible(false);
     }
 
     //GESTION DU MENU
@@ -104,7 +106,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
-
     }
 
     private void configureDrawerLayout() {
@@ -141,11 +142,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.connection:
-                startActivity(new Intent(this, ProfilActivity.class));
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
             case R.id.déconnection:
                 FirebaseAuth.getInstance().signOut();
                 updateUI(null);
+                startActivity(new Intent(MapsActivity.this, MainActivity.class));
 
                 break;
             case R.id.liste:
@@ -192,9 +194,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         mMap.clear();
                         final String sport = tvFiltreAlpinisme.getText().toString();
                         getClubsBySport(sport);
+
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
-                          , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
-                          , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
+                                , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
                     }
                 });
 
@@ -491,7 +494,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     clubList.add(club);
                 }
 
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 9; i++) {
                     for (int j = i; j <= clubList.size() - 1; j++) {
                         if (clubList.get(j).getDistance() < clubList.get(i).getDistance()) {
                             Collections.swap(clubList, i, j);
@@ -499,7 +502,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 }
 
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 9; i++) {
                     Club club = clubList.get(i);
                     Bitmap initialMarkerIcon = BitmapFactory.decodeResource(getResources(), club.getImage());
                     Bitmap markerIcon = Bitmap.createScaledBitmap(initialMarkerIcon, MARKER_WIDTH, MARKER_HEIGHT, false);
@@ -507,7 +510,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             .icon(BitmapDescriptorFactory.fromBitmap(markerIcon)));
                     marker.setTag(club);
                 }
-                
+
                 // generer les marqueurs a partir de la liste
                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
@@ -658,6 +661,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             connection = navigationView.getMenu();
             MenuItem target = connection.findItem(R.id.connection);
             target.setVisible(false);
+
         } else {
             connection = navigationView.getMenu();
             MenuItem target = connection.findItem(R.id.connection);
@@ -667,6 +671,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             target2.setVisible(false);
         }
     }
+
 
     private void popupBuilder(Marker marker) {
 
@@ -695,7 +700,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         ImageView ivShare = popUpView.findViewById(R.id.image_share);
         ImageView markerItinerary = popUpView.findViewById(R.id.iv_itinerary);
         final TextView tvCounter = popUpView.findViewById(R.id.tv_counter);
-
 
         markerName.setText(club.getClubName());
         markerSport.setText(club.getSport());
@@ -786,6 +790,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             thisClub.setCounter(counter);
                             clubRef.setValue(thisClub);
                             tvCounter.setText(String.valueOf(thisClub.getCounter()));
+                 likePreferences(dataSnapshot.getKey(), false);
                             likePreferences(dataSnapshot.getKey(), false);
                         }
 

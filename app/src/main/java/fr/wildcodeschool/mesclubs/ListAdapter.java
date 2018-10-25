@@ -3,7 +3,6 @@ package fr.wildcodeschool.mesclubs;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -48,23 +47,27 @@ public class ListAdapter extends ArrayAdapter<Club> {
             viewHolder.sportColor = convertView.findViewById(R.id.sportColor);
             viewHolder.popUpButton = convertView.findViewById(R.id.popUpButton);
             viewHolder.drawerInfo = convertView.findViewById(R.id.drawerInfo);
-            viewHolder.iv_like = convertView.findViewById(R.id.iv_like);
-            viewHolder.tv_website = convertView.findViewById(R.id.tv_website);
-            viewHolder.iv_share = convertView.findViewById(R.id.iv_share);
-            viewHolder.iv_map = convertView.findViewById(R.id.iv_map);
+
+            viewHolder.ivLike = convertView.findViewById(R.id.iv_like);
+            viewHolder.tvAddress = convertView.findViewById(R.id.tv_address);
+            viewHolder.tvWebsite = convertView.findViewById(R.id.tv_website);
+            viewHolder.ivShare = convertView.findViewById(R.id.iv_share);
+            viewHolder.ivMap = convertView.findViewById(R.id.iv_map);
+            viewHolder.tvMap = convertView.findViewById(R.id.tv_map);
+
             convertView.setTag(viewHolder);
         }
-
 
         final Club club = getItem(position);
 
         viewHolder = (ListViewHolder) convertView.getTag();
         viewHolder.clubName.setText(club.getClubName());
         viewHolder.sport.setText(club.getSport());
+        viewHolder.tvAddress.setText(club.getAddress());
         viewHolder.sportColor.setImageDrawable(getContext().getResources().getDrawable(club.getImage()));
-        viewHolder.tv_website.setText(club.getWebsite());
-        if (viewHolder.tv_website.getText().length() == 0) {
-            viewHolder.tv_website.setText(R.string.tvWebsite);
+        viewHolder.tvWebsite.setText(club.getWebsite());
+        if (viewHolder.tvWebsite.getText().length() == 0) {
+            viewHolder.tvWebsite.setText(R.string.tvWebsite);
         }
 
         final ListViewHolder finalViewHolder = viewHolder;
@@ -80,13 +83,13 @@ public class ListAdapter extends ArrayAdapter<Club> {
         });
 
         final ListViewHolder finalViewHolder1 = viewHolder;
-        viewHolder.iv_share.setOnClickListener(new View.OnClickListener() {
+        viewHolder.ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String message = getContext().getResources().getString(R.string.sahreBody);
                 String sport = finalViewHolder1.sport.getText().toString();
                 String clubName = finalViewHolder1.clubName.getText().toString();
-                String webSite = finalViewHolder1.tv_website.getText().toString();
+                String webSite = finalViewHolder1.tvWebsite.getText().toString();
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
                 String shareBodyText = message + sport + " " + clubName + " " + webSite;
@@ -96,13 +99,13 @@ public class ListAdapter extends ArrayAdapter<Club> {
             }
         });
 
-
         final ImageView ivLike = convertView.findViewById(R.id.iv_like);
         final TextView tvCounter = convertView.findViewById(R.id.tv_counter);
-        final ImageView likeImg = viewHolder.iv_like;
-
+        final ImageView likeImg = viewHolder.ivLike;
 
         SharedPreferences sharedPref = getContext().getSharedPreferences("clubid", Context.MODE_PRIVATE);
+
+        showCounter(ivLike, tvCounter, club);
 
         boolean isLiked = sharedPref.getBoolean(club.getId(), false);
         if (isLiked) {
@@ -112,7 +115,7 @@ public class ListAdapter extends ArrayAdapter<Club> {
         }
 
         likeImg.setTag(false); // set favorite off
-        viewHolder.iv_like.setOnClickListener(new View.OnClickListener() {
+        viewHolder.ivLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean isliked = ((boolean) ivLike.getTag());
@@ -164,8 +167,8 @@ public class ListAdapter extends ArrayAdapter<Club> {
         });
 
         final double lat = club.getLatitude();
-        final double lon  =club.getLongitude();
-        viewHolder.iv_map.setOnClickListener(new View.OnClickListener() {
+        final double lon = club.getLongitude();
+        viewHolder.ivMap.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -176,24 +179,56 @@ public class ListAdapter extends ArrayAdapter<Club> {
             }
         });
 
+        viewHolder.tvMap.setText(R.string.go);
+        viewHolder.tvMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intentiti = new Intent();
+                intentiti.setAction(android.content.Intent.ACTION_VIEW);
+                intentiti.setData(Uri.parse("http://maps.google.com/maps?.34&daddr=" + club.getLatitude() + "," + club.getLongitude()));
+                getContext().startActivity(intentiti);
+
+            }
+        });
+
         return convertView;
     }
-}
 
-class ListViewHolder {
-    public TextView clubName;
-    public TextView sport;
-    public TextView phone;
-    public TextView tv_address;
-    public TextView tv_website;
-    public ImageView sportColor;
-    public ConstraintLayout drawerInfo;
-    public ImageButton      popUpButton;
-    public ImageView        iv_like;
-    public ImageView        iv_fav;
-    public ImageView        iv_share;
-    public ImageView        iv_map;
-}
 
+    public void showCounter(ImageView ivLike, final TextView tvCounter, Club club) {
+
+        ivLike.setImageDrawable(ListAdapter.this.getContext().getResources().getDrawable(R.drawable.like));
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference clubRef = database.getReference("club").child(club.getId());
+        clubRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Club thisClub = dataSnapshot.getValue(Club.class);
+                int counter = thisClub.getCounter();
+                thisClub.setCounter(counter);
+                tvCounter.setText(String.valueOf(thisClub.getCounter()));
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+  
+    class ListViewHolder {
+        public TextView clubName;
+        public TextView sport;
+        public TextView phone;
+        public TextView tvAddress;
+        public TextView tvWebsite;
+        public ImageView sportColor;
+        public ConstraintLayout drawerInfo;
+        public ImageButton popUpButton;
+        public ImageView ivLike;
+        public ImageView ivShare;
+        public ImageView ivMap;
+        public TextView tvMap;
+    }
+}
 
 

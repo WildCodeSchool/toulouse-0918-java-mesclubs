@@ -8,5 +8,6 @@
     <color name="escalade">#008000</color>
     <color name="marche">#00FFFF</color>
     <color name="natation">#0000FF</color>
+    <color name="white">#FFFFFF</color>
 
 </resources>
