@@ -50,7 +50,7 @@
 
                 <item
                     android:id="@+id/déconnection"
-                    android:icon="@drawable/baseline_exit_to_app_black_36"
+                    android:icon="@drawable/log_out"
                     android:title="@string/sedeconnecter" />
 
             </group>
