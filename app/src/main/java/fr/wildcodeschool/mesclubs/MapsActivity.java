@@ -491,7 +491,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     clubList.add(club);
                 }
 
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 9; i++) {
                     for (int j = i; j <= clubList.size() - 1; j++) {
                         if (clubList.get(j).getDistance() < clubList.get(i).getDistance()) {
                             Collections.swap(clubList, i, j);
@@ -499,7 +499,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 }
 
-                for (int i = 0; i < 4; i++) {
+                for (int i = 0; i < 9; i++) {
                     Club club = clubList.get(i);
                     Bitmap initialMarkerIcon = BitmapFactory.decodeResource(getResources(), club.getImage());
                     Bitmap markerIcon = Bitmap.createScaledBitmap(initialMarkerIcon, MARKER_WIDTH, MARKER_HEIGHT, false);
