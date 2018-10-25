@@ -84,7 +84,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_design"
-        android:text="@string/s_inscrire"
+        android:text="@string/se_connecter"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"

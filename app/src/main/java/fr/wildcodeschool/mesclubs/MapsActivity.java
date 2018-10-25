@@ -82,6 +82,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
     private PopupWindow popUp;
+    //SharedPreferences sharedPref = MapsActivity.this.getPreferences(Context.MODE_PRIVATE);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +93,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+       // SharedPreferences sharedPref =MapsActivity.getSharedPreferences(
+                //getString("ki"), Context.MODE_PRIVATE);
 
         this.configureToolBar();
         this.configureDrawerLayout();
@@ -453,6 +457,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.getLatitude(), club.getLongitude()))
                                     .icon(BitmapDescriptorFactory.fromBitmap(markerIcon)));
                             marker.setTag(club);
+                            //location location =
                         }
                         // generer les marqueurs a partir de la liste
                         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -787,7 +792,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             thisClub.setCounter(counter);
                             clubRef.setValue(thisClub);
                             tvCounter.setText(String.valueOf(thisClub.getCounter()));
-                            likePreferences(dataSnapshot.getKey(), false);
+                 likePreferences(dataSnapshot.getKey(), false);
                         }
 
                         @Override
