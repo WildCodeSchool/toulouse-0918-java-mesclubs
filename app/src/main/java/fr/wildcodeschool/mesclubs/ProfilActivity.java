@@ -176,7 +176,7 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(ProfilActivity.this, "Profile Updated",
+                            Toast.makeText(ProfilActivity.this, R.string.photo_updated,
                                     Toast.LENGTH_SHORT).show();
                             finish();
                             startActivity(new Intent(ProfilActivity.this, ProfilActivity.class));
@@ -269,7 +269,7 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(this, MainActivity.class));
                 updateUI(null);
-                Toast.makeText(ProfilActivity.this, "Vous n'êtes pas connecté", Toast.LENGTH_LONG).show();
+                Toast.makeText(ProfilActivity.this, R.string.deconnection, Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.liste:

@@ -22,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static fr.wildcodeschool.mesclubs.R.id.iv_map;
+
 public class ListAdapter extends ArrayAdapter<Club> {
 
 
@@ -47,12 +49,10 @@ public class ListAdapter extends ArrayAdapter<Club> {
             viewHolder.sportColor = convertView.findViewById(R.id.sportColor);
             viewHolder.popUpButton = convertView.findViewById(R.id.popUpButton);
             viewHolder.drawerInfo = convertView.findViewById(R.id.drawerInfo);
-
             viewHolder.ivLike = convertView.findViewById(R.id.iv_like);
             viewHolder.tvWebsite = convertView.findViewById(R.id.tv_website);
             viewHolder.ivShare = convertView.findViewById(R.id.iv_share);
             viewHolder.ivMap = convertView.findViewById(R.id.iv_map);
-
             convertView.setTag(viewHolder);
         }
 
@@ -162,8 +162,6 @@ public class ListAdapter extends ArrayAdapter<Club> {
             }
         });
 
-        final double lat = club.getLatitude();
-        final double lon = club.getLongitude();
         viewHolder.ivMap.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -196,7 +194,7 @@ public class ListAdapter extends ArrayAdapter<Club> {
             }
         });
     }
-  
+
     class ListViewHolder {
         public TextView clubName;
         public TextView sport;
@@ -211,5 +209,3 @@ public class ListAdapter extends ArrayAdapter<Club> {
 
     }
 }
-
-

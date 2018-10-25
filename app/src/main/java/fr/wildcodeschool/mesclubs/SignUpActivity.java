@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,6 +26,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     EditText etPseudo;
     EditText etPassword;
+    TextView etCeConnecte;
     CircularProgressButton loadingMe;
     private FirebaseAuth mAuth;
 
@@ -33,20 +35,28 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        Button send = findViewById(R.id.send);
         etPseudo = findViewById(R.id.etPseudo);
         etPassword = findViewById(R.id.etPassword);
         mAuth = FirebaseAuth.getInstance();
-        loadingMe = (CircularProgressButton) findViewById(R.id.send);
+        loadingMe = findViewById(R.id.send);
+        etCeConnecte = findViewById(R.id.et_ce_connecter);
 
-        send.setOnClickListener(new View.OnClickListener() {
+        etCeConnecte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+        loadingMe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mAuth = FirebaseAuth.getInstance();
                 String semailog = etPseudo.getText().toString();
                 String spassword = etPassword.getText().toString();
                 if (semailog.isEmpty() || spassword.isEmpty()) {
-                    Toast.makeText(SignUpActivity.this, "PLEASE FILL YOUR FORM",
+                    Toast.makeText(SignUpActivity.this, R.string.replir_champ,
                             Toast.LENGTH_SHORT).show();
                 } else {
                     @SuppressLint("StaticFieldLeak") AsyncTask<String, String, String> demoLogin = new AsyncTask<String, String, String>() {
@@ -83,7 +93,7 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(SignUpActivity.this, "Inscription reussi",
+                            Toast.makeText(SignUpActivity.this, R.string.reussite,
                                     Toast.LENGTH_SHORT).show();
                             Intent goToMain = new Intent(SignUpActivity.this, ProfilActivity.class);
                             SignUpActivity.this.startActivity(goToMain);
@@ -91,7 +101,7 @@ public class SignUpActivity extends AppCompatActivity {
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(SignUpActivity.this, "Inscription échouée",
+                            Toast.makeText(SignUpActivity.this, R.string.echec,
                                     Toast.LENGTH_SHORT).show();
                             finish();
                             startActivity(new Intent(SignUpActivity.this, SignUpActivity.class));

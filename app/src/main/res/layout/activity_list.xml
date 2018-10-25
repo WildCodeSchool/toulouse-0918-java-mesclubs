@@ -32,7 +32,6 @@
                 android:layout_width="52dp"
                 android:layout_height="48dp"
                 android:layout_marginBottom="8dp"
-
                 android:background="@drawable/toolbar_background"
                 android:bottomLeftRadius="17dp"
                 android:minHeight="?attr/actionBarSize"
