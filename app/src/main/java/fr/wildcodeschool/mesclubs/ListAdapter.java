@@ -192,7 +192,7 @@ public class ListAdapter extends ArrayAdapter<Club> {
         });
         return convertView;
     }
-    
+
     class ListViewHolder {
         public TextView clubName;
         public TextView sport;
