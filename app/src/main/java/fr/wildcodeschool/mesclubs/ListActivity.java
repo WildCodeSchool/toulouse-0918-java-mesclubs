@@ -39,7 +39,9 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     Menu profil;
     private DrawerLayout mDrawerLayout;
     Menu list;
-    Menu filtre;
+    Menu filtreDis;
+    Menu filtreHand;
+    Menu filtreSport;
     private Toolbar toolbar;
     private ListView mListTrip;
     private FirebaseAuth mAuth;
@@ -62,8 +64,8 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
         list = navigationView.getMenu();
         MenuItem target = list.findItem(R.id.liste);
         target.setVisible(false);
-        filtre = navigationView.getMenu();
-        MenuItem target2 = filtre.findItem(R.id.filtre_distance);
+        filtreDis = navigationView.getMenu();
+        MenuItem target2 = filtreDis.findItem(R.id.filtre_distance);
         target2.setVisible(false);
     }
 
@@ -425,6 +427,12 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
             profil = navigationView.getMenu();
             MenuItem target2 = profil.findItem(R.id.profile);
             target2.setVisible(false);
+            filtreHand = navigationView.getMenu();
+            MenuItem target3 = filtreHand.findItem(R.id.filtre_hand);
+            target3.setVisible(false);
+            filtreSport = navigationView.getMenu();
+            MenuItem target4 = filtreSport.findItem(R.id.filtre_sport);
+            target4.setVisible(false);
         }
     }
 
