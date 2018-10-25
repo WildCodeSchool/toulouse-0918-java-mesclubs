@@ -110,9 +110,7 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                 demoLogin.execute();
             }
         });
-        menu = navigationView.getMenu();
-        MenuItem target = menu.findItem(R.id.map);
-        target.setVisible(false);
+
     }
 
     private void showImageChooser() {
