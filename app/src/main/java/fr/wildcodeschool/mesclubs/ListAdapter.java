@@ -47,12 +47,14 @@ public class ListAdapter extends ArrayAdapter<Club> {
             viewHolder.sportColor = convertView.findViewById(R.id.sportColor);
             viewHolder.popUpButton = convertView.findViewById(R.id.popUpButton);
             viewHolder.drawerInfo = convertView.findViewById(R.id.drawerInfo);
+
             viewHolder.ivLike = convertView.findViewById(R.id.iv_like);
             viewHolder.tvAddress = convertView.findViewById(R.id.tv_address);
             viewHolder.tvWebsite = convertView.findViewById(R.id.tv_website);
             viewHolder.ivShare = convertView.findViewById(R.id.iv_share);
             viewHolder.ivMap = convertView.findViewById(R.id.iv_map);
             viewHolder.tvMap = convertView.findViewById(R.id.tv_map);
+
             convertView.setTag(viewHolder);
         }
 
@@ -189,8 +191,10 @@ public class ListAdapter extends ArrayAdapter<Club> {
 
             }
         });
+
         return convertView;
     }
+
 
     public void showCounter(ImageView ivLike, final TextView tvCounter, Club club) {
 
