@@ -49,21 +49,17 @@ public class ListAdapter extends ArrayAdapter<Club> {
             viewHolder.drawerInfo = convertView.findViewById(R.id.drawerInfo);
 
             viewHolder.ivLike = convertView.findViewById(R.id.iv_like);
-            viewHolder.tvAddress = convertView.findViewById(R.id.tv_address);
             viewHolder.tvWebsite = convertView.findViewById(R.id.tv_website);
             viewHolder.ivShare = convertView.findViewById(R.id.iv_share);
             viewHolder.ivMap = convertView.findViewById(R.id.iv_map);
-            viewHolder.tvMap = convertView.findViewById(R.id.tv_map);
 
             convertView.setTag(viewHolder);
         }
 
         final Club club = getItem(position);
-
         viewHolder = (ListViewHolder) convertView.getTag();
         viewHolder.clubName.setText(club.getClubName());
         viewHolder.sport.setText(club.getSport());
-        viewHolder.tvAddress.setText(club.getAddress());
         viewHolder.sportColor.setImageDrawable(getContext().getResources().getDrawable(club.getImage()));
         viewHolder.tvWebsite.setText(club.getWebsite());
         if (viewHolder.tvWebsite.getText().length() == 0) {
@@ -178,20 +174,6 @@ public class ListAdapter extends ArrayAdapter<Club> {
                 getContext().startActivity(intentmap);
             }
         });
-
-        viewHolder.tvMap.setText(R.string.go);
-        viewHolder.tvMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intentiti = new Intent();
-                intentiti.setAction(android.content.Intent.ACTION_VIEW);
-                intentiti.setData(Uri.parse("http://maps.google.com/maps?.34&daddr=" + club.getLatitude() + "," + club.getLongitude()));
-                getContext().startActivity(intentiti);
-
-            }
-        });
-
         return convertView;
     }
 
@@ -219,7 +201,6 @@ public class ListAdapter extends ArrayAdapter<Club> {
         public TextView clubName;
         public TextView sport;
         public TextView phone;
-        public TextView tvAddress;
         public TextView tvWebsite;
         public ImageView sportColor;
         public ConstraintLayout drawerInfo;
@@ -227,7 +208,7 @@ public class ListAdapter extends ArrayAdapter<Club> {
         public ImageView ivLike;
         public ImageView ivShare;
         public ImageView ivMap;
-        public TextView tvMap;
+
     }
 }
 
