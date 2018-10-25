@@ -682,7 +682,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             filtreDis = navigationView.getMenu();
             MenuItem target5 = filtreDis.findItem(R.id.filtre_hand);
             target5.setVisible(false);
-            dec=navigationView.getMenu();
+            dec = navigationView.getMenu();
             MenuItem target6 = dec.findItem(R.id.déconnection);
             target6.setVisible(false);
         }

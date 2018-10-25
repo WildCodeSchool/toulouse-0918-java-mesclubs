@@ -432,7 +432,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
             filtreSport = navigationView.getMenu();
             MenuItem target4 = filtreSport.findItem(R.id.filtre_sport);
             target4.setVisible(false);
-            dec=navigationView.getMenu();
+            dec = navigationView.getMenu();
             MenuItem target6 = dec.findItem(R.id.déconnection);
             target6.setVisible(false);
         }
