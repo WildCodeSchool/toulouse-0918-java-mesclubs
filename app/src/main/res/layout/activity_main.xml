@@ -25,7 +25,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
-        app:srcCompat="@drawable/mapsicon" />
+        app:srcCompat="@drawable/iconmap2" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline3"
@@ -62,7 +62,7 @@
         app:layout_constraintHorizontal_bias="0.625"
         app:layout_constraintStart_toEndOf="@+id/map_icon"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
-        app:srcCompat="@drawable/list" />
+        app:srcCompat="@drawable/iconlist4" />
 
     <ImageView
         android:id="@+id/image_logo"
