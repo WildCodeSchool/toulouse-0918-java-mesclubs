@@ -204,7 +204,6 @@ public class ListAdapter extends ArrayAdapter<Club> {
                 int counter = thisClub.getCounter();
                 thisClub.setCounter(counter);
                 tvCounter.setText(String.valueOf(thisClub.getCounter()));
-                likePreferences(dataSnapshot.getKey(), true);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

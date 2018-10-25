@@ -346,6 +346,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                         for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
                             Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
                             club.setImage(getImages(club.getSport()));
+                            club.setId(clubSnapshot.getKey());
                             listClub.add(club);
                         }
                         ListAdapter adapter = new ListAdapter(ListActivity.this, listClub);
@@ -370,6 +371,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
                         for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
                             Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
                             club.setImage(getImages(club.getSport()));
+                            club.setId(clubSnapshot.getKey());
                             listClub.add(club);
                         }
                         ListAdapter adapter = new ListAdapter(ListActivity.this, listClub);
