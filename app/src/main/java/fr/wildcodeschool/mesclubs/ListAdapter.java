@@ -49,11 +49,11 @@ public class ListAdapter extends ArrayAdapter<Club> {
             viewHolder.popUpButton = convertView.findViewById(R.id.popUpButton);
             viewHolder.drawerInfo = convertView.findViewById(R.id.drawerInfo);
             viewHolder.iv_like = convertView.findViewById(R.id.iv_like);
-            viewHolder.iv_fav = convertView.findViewById(R.id.iv_fav);
             viewHolder.tv_address = convertView.findViewById(R.id.tv_address);
             viewHolder.tv_website = convertView.findViewById(R.id.tv_website);
             viewHolder.iv_share = convertView.findViewById(R.id.iv_share);
             viewHolder.iv_map = convertView.findViewById(R.id.iv_map);
+            viewHolder.tv_map = convertView.findViewById(R.id.tv_map);
             convertView.setTag(viewHolder);
         }
 
@@ -168,9 +168,6 @@ public class ListAdapter extends ArrayAdapter<Club> {
 
         final double lat = club.getLatitude();
         final double lon  =club.getLongitude();
-
-
-
         viewHolder.iv_map.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -182,26 +179,20 @@ public class ListAdapter extends ArrayAdapter<Club> {
             }
         });
 
-
-        final Drawable starOn = convertView.getResources().getDrawable(R.drawable.btn_star_big_on);
-        final Drawable starOff = convertView.getResources().getDrawable(R.drawable.btn_star_big_off);
-        final ImageView starImg = viewHolder.iv_fav;
-        starImg.setTag(false); // set favorite off
-        viewHolder.iv_fav.setOnClickListener(new View.OnClickListener() {
+        viewHolder.tv_map.setText(R.string.go);
+        viewHolder.tv_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean isFavorite = ((boolean) starImg.getTag());
-                if (!isFavorite) {
-                    starImg.setImageDrawable(starOn);
-                } else {
-                    starImg.setImageDrawable(starOff);
-                }
-                starImg.setTag(!isFavorite);
+
+                Intent intentiti = new Intent();
+                intentiti.setAction(android.content.Intent.ACTION_VIEW);
+                intentiti.setData(Uri.parse("http://maps.google.com/maps?.34&daddr=" + club.getLatitude() + "," + club.getLongitude()));
+                getContext().startActivity(intentiti);
+
             }
         });
         return convertView;
     }
-
 }
 
 class ListViewHolder {
@@ -217,6 +208,7 @@ class ListViewHolder {
     public ImageView        iv_fav;
     public ImageView        iv_share;
     public ImageView        iv_map;
+    public TextView         tv_map;
 }
 
 

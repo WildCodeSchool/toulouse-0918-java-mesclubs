@@ -83,6 +83,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Toolbar toolbar;
     private PopupWindow popUp;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +93,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
 
         this.configureToolBar();
         this.configureDrawerLayout();
@@ -138,7 +141,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
-
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.connection:
@@ -182,20 +184,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 final TextView tvFiltreYoga = findViewById(R.id.tv_filter_yoga);
                 final TextView tvFiltrePlonge = findViewById(R.id.tv_filter_plonge);
                 final TextView tvNotFiltre = findViewById(R.id.tv_filtre_remove);
-                final TextView tvAllFiltre = findViewById(R.id.tv_allsport);
 
                 showFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
                         , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
-                        , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre, tvAllFiltre);
+                        , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
 
                 tvFiltreAlpinisme.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mMap.clear();
-                        tvFiltreAlpinisme.setTextColor(Color.parseColor("#FFFF00"));
                         final String sport = tvFiltreAlpinisme.getText().toString();
                         getClubsBySport(sport);
 
+                        dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
+                          , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                          , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
                     }
                 });
 
@@ -207,7 +210,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
                                 , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
-                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre, tvAllFiltre);
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
                     }
                 });
 
@@ -219,7 +222,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
                                 , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
-                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre, tvAllFiltre);
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
                     }
                 });
 
@@ -231,7 +234,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
                                 , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
-                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre, tvAllFiltre);
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
                     }
                 });
 
@@ -243,7 +246,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
                                 , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
-                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre, tvAllFiltre);
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
                     }
                 });
 
@@ -255,7 +258,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
                                 , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
-                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre, tvAllFiltre);
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
                     }
                 });
 
@@ -267,7 +270,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
                                 , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
-                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre, tvAllFiltre);
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
                     }
                 });
 
@@ -279,7 +282,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
                                 , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
-                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre, tvAllFiltre);
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
                     }
                 });
 
@@ -291,7 +294,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
                                 , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
-                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre, tvAllFiltre);
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
                     }
                 });
 
@@ -303,7 +306,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
                                 , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
-                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre, tvAllFiltre);
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
                     }
                 });
 
@@ -315,7 +318,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
                                 , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
-                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre, tvAllFiltre);
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
                     }
                 });
 
@@ -327,7 +330,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
                                 , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
-                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre, tvAllFiltre);
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
                     }
                 });
 
@@ -337,7 +340,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         getClubs();
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
                                 , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
-                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre, tvAllFiltre);
+                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
                     }
                 });
         }
@@ -348,7 +351,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void showFilters(TextView tvFiltre, TextView tvFiltreAlpinisme, TextView tvFiltreAviron, TextView tvFiltreCanoe
             , TextView tvFiltreCanyonisme, TextView tvFiltreCourse, TextView tvFiltreEcalade, TextView tvFiltreNatation
             , TextView tvFiltreVoile, TextView tvFiltreRando, TextView tvFiltreSpeleo, TextView tvFiltreYoga
-            , TextView tvFiltrePlonge, TextView tvNotFiltre, TextView tvAllFiltre) {
+            , TextView tvFiltrePlonge, TextView tvNotFiltre) {
         tvFiltre.setVisibility(View.VISIBLE);
         tvFiltreAlpinisme.setVisibility(View.VISIBLE);
         tvFiltreAviron.setVisibility(View.VISIBLE);
@@ -363,13 +366,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         tvFiltreYoga.setVisibility(View.VISIBLE);
         tvFiltrePlonge.setVisibility(View.VISIBLE);
         tvNotFiltre.setVisibility(View.VISIBLE);
-        tvAllFiltre.setVisibility(View.VISIBLE);
     }
 
     public void dontShowFilters(TextView tvFiltre, TextView tvFiltreAlpinisme, TextView tvFiltreAviron, TextView tvFiltreCanoe
             , TextView tvFiltreCanyonisme, TextView tvFiltreCourse, TextView tvFiltreEcalade, TextView tvFiltreNatation
             , TextView tvFiltreVoile, TextView tvFiltreRando, TextView tvFiltreSpeleo, TextView tvFiltreYoga
-            , TextView tvFiltrePlonge, TextView tvNotFiltre, TextView tvAllFiltre) {
+            , TextView tvFiltrePlonge, TextView tvNotFiltre) {
         tvFiltre.setVisibility(View.INVISIBLE);
         tvFiltreAlpinisme.setVisibility(View.INVISIBLE);
         tvFiltreAviron.setVisibility(View.INVISIBLE);
@@ -384,7 +386,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         tvFiltreYoga.setVisibility(View.INVISIBLE);
         tvFiltrePlonge.setVisibility(View.INVISIBLE);
         tvNotFiltre.setVisibility(View.INVISIBLE);
-        tvAllFiltre.setVisibility(View.INVISIBLE);
     }
 
     public void getClubs() {
@@ -510,7 +511,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             .icon(BitmapDescriptorFactory.fromBitmap(markerIcon)));
                     marker.setTag(club);
                 }
-
+                
                 // generer les marqueurs a partir de la liste
                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
@@ -611,7 +612,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         LatLng userLatLong = new LatLng(location.getLatitude(), location.getLongitude());
         userLocation = location;
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLatLong, 15.0f));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLatLong, 13.5f));
     }
 
     @Override
@@ -695,7 +696,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         final TextView markerSport = popUpView.findViewById(R.id.text_sport);
         final TextView markeurWeb = popUpView.findViewById(R.id.text_web);
         final ImageView ivLike = popUpView.findViewById(R.id.iv_like);
-        final ImageView ivFav = popUpView.findViewById(R.id.iv_fav);
         ImageView ivShare = popUpView.findViewById(R.id.image_share);
         ImageView markerItinerary = popUpView.findViewById(R.id.iv_itinerary);
         final TextView tvCounter = popUpView.findViewById(R.id.tv_counter);
@@ -705,7 +705,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         markerSport.setText(club.getSport());
         markeurWeb.setText(club.getWebsite());
         markerImage.setImageDrawable(MapsActivity.this.getResources().getDrawable(club.getImage()));
-        ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_off));
         ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like_off));
         tvCounter.setText(String.valueOf(club.getCounter()));
 
@@ -740,21 +739,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 assert club != null;
                 intent.setData(Uri.parse("http://maps.google.com/maps?.34&daddr=" + club.getLatitude() + "," + club.getLongitude()));
                 startActivity(intent);
-            }
-        });
-
-        //Click on Favoris
-        ivFav.setTag(false); // set favorite off
-        ivFav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean isFav = ((boolean) ivFav.getTag());
-                if (!isFav) {
-                    ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_on));
-                } else {
-                    ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_off));
-                }
-                ivFav.setTag(!isFav);
             }
         });
 
@@ -806,6 +790,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             thisClub.setCounter(counter);
                             clubRef.setValue(thisClub);
                             tvCounter.setText(String.valueOf(thisClub.getCounter()));
+                 likePreferences(dataSnapshot.getKey(), false);
                             likePreferences(dataSnapshot.getKey(), false);
                         }
 
