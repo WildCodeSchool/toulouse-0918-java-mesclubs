@@ -73,6 +73,14 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
         loadingMe = (CircularProgressButton) findViewById(R.id.send);
         hedeaderLayout = navigationView.getHeaderView(0);
         photos = hedeaderLayout.findViewById(R.id.image_header);
+        menu = navigationView.getMenu();
+        MenuItem filtreDistance = menu.findItem(R.id.filtre_distance);
+        filtreDistance.setVisible(false);
+        MenuItem filtreSport = menu.findItem(R.id.filtre_sport);
+        filtreSport.setVisible(false);
+        MenuItem filtreHand = menu.findItem(R.id.filtre_hand);
+        filtreHand.setVisible(false);
+
 
         //Prendre la photo
         loadingMe.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +110,9 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                 demoLogin.execute();
             }
         });
+        menu = navigationView.getMenu();
+        MenuItem target = menu.findItem(R.id.map);
+        target.setVisible(false);
     }
 
     private void showImageChooser() {
@@ -158,10 +169,8 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference userfirebase = database.getReference("User");
         userfirebase.child(mAuth.getUid()).child("picture").setValue(photoStringLink.toString());
-//        String displayName = etPseudo.getText().toString();
         FirebaseUser user = mAuth.getCurrentUser();
         UserProfileChangeRequest profil = new UserProfileChangeRequest.Builder()
-                //     .setDisplayName(displayName)
                 .setPhotoUri(photoStringLink)
                 .build();
         user.updateProfile(profil)
@@ -214,6 +223,8 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
             });
             TextView pseudo = hedeaderLayout.findViewById(R.id.etPseudo);
             pseudo.setText(user.getEmail());
+            TextView mail = findViewById(R.id.etMail);
+            mail.setText(user.getEmail());
             menu = navigationView.getMenu();
             MenuItem target = menu.findItem(R.id.connection);
             target.setVisible(false);
@@ -258,9 +269,11 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                 break;
             case R.id.déconnection:
                 FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(this, MainActivity.class));
                 updateUI(null);
+                Toast.makeText(ProfilActivity.this, "Vous n'êtes pas connecté", Toast.LENGTH_LONG).show();
+                break;
 
-                Toast.makeText(ProfilActivity.this, "Vous n'êtes pas connecté", Toast.LENGTH_LONG);
             case R.id.liste:
                 startActivity(new Intent(this, ListActivity.class));
                 break;
