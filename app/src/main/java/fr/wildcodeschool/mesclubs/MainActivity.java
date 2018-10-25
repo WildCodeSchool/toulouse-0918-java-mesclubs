@@ -15,34 +15,42 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageView imageMap = findViewById(R.id.map_icon);
-        ImageView imageList = findViewById(R.id.list_logo);
+        final ImageView imageMap = findViewById(R.id.map_icon);
+        final ImageView imageList = findViewById(R.id.list_logo);
         ImageView imageLogo = findViewById(R.id.image_logo);
 
-        Singleton.getInstance();
+        Singleton singleton = Singleton.getInstance();
+        singleton.loadClubs(new ClubListener() {
+            @Override
+            public void onResponse(boolean success) {
+                if (!success) {
+                    //TODO afficher error
+                } else {
+                    imageMap.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent goToMap = new Intent(MainActivity.this, MapsActivity.class);
+                            MainActivity.this.startActivity(goToMap);
+                            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                        }
+                    });
+
+                    imageList.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent goToList = new Intent(MainActivity.this, ListActivity.class);
+                            MainActivity.this.startActivity(goToList);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        }
+                    });
+                }
+            }
+        });
 
         Animation fade = AnimationUtils.loadAnimation(this, R.anim.fade);
 
         imageMap.setAnimation(fade);
         imageList.setAnimation(fade);
         imageLogo.setAnimation(fade);
-
-        imageMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goToMap = new Intent(MainActivity.this, MapsActivity.class);
-                MainActivity.this.startActivity(goToMap);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-            }
-        });
-
-        imageList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent goToList = new Intent(MainActivity.this, ListActivity.class);
-                MainActivity.this.startActivity(goToList);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
     }
 }

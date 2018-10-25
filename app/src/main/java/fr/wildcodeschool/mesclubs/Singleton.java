@@ -15,7 +15,7 @@ class Singleton {
     private ArrayList<Club> listClub = new ArrayList<>();
 
     private Singleton() {
-        loadClubs();
+
     }
 
     static Singleton getInstance() {
@@ -24,7 +24,7 @@ class Singleton {
 
     }
 
-    public void loadClubs() {
+    public void loadClubs(final ClubListener listener) {
         //firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference clubRef = database.getReference("club");
@@ -42,15 +42,15 @@ class Singleton {
                     club.setId(clubSnapshot.getKey());
                     club.setImage(getImages(club.getSport()));
 
-
                     listClub.add(club);
                 }
                 Collections.reverse(listClub);
-
+                listener.onResponse(true);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                listener.onResponse(false);
             }
         });
     }
