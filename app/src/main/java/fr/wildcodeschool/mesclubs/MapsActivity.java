@@ -141,11 +141,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.connection:
-                startActivity(new Intent(this, ProfilActivity.class));
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
             case R.id.déconnection:
                 FirebaseAuth.getInstance().signOut();
                 updateUI(null);
+                startActivity(new Intent(MapsActivity.this, MainActivity.class));
 
                 break;
             case R.id.liste:

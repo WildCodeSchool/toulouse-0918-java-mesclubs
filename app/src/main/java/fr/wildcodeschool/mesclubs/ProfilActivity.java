@@ -73,6 +73,14 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
         loadingMe = (CircularProgressButton) findViewById(R.id.send);
         hedeaderLayout = navigationView.getHeaderView(0);
         photos = hedeaderLayout.findViewById(R.id.image_header);
+        menu = navigationView.getMenu();
+        MenuItem filtreDistance = menu.findItem(R.id.filtre_distance);
+        filtreDistance.setVisible(false);
+        MenuItem filtreSport = menu.findItem(R.id.filtre_sport);
+        filtreSport.setVisible(false);
+        MenuItem filtreHand = menu.findItem(R.id.filtre_hand);
+        filtreHand.setVisible(false);
+
 
         //Prendre la photo
         loadingMe.setOnClickListener(new View.OnClickListener() {
@@ -258,9 +266,11 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
                 break;
             case R.id.déconnection:
                 FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(this, MainActivity.class));
                 updateUI(null);
+                Toast.makeText(ProfilActivity.this, "Vous n'êtes pas connecté", Toast.LENGTH_LONG).show();
+                break;
 
-                Toast.makeText(ProfilActivity.this, "Vous n'êtes pas connecté", Toast.LENGTH_LONG);
             case R.id.liste:
                 startActivity(new Intent(this, ListActivity.class));
                 break;

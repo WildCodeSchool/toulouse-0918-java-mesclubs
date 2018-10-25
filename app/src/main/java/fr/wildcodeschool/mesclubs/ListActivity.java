@@ -101,10 +101,9 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.déconnection:
                 //check si connecté
-                //si oui logout
-                //si non toast
                 FirebaseAuth.getInstance().signOut();
                 updateUI(null);
+                startActivity(new Intent(ListActivity.this, MainActivity.class));
                 Toast.makeText(ListActivity.this, "Vous n'êtes pas connecté", Toast.LENGTH_LONG);
                 break;
 
