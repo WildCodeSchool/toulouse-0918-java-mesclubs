@@ -3,7 +3,6 @@ package fr.wildcodeschool.mesclubs;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -48,12 +47,12 @@ public class ListAdapter extends ArrayAdapter<Club> {
             viewHolder.sportColor = convertView.findViewById(R.id.sportColor);
             viewHolder.popUpButton = convertView.findViewById(R.id.popUpButton);
             viewHolder.drawerInfo = convertView.findViewById(R.id.drawerInfo);
-            viewHolder.iv_like = convertView.findViewById(R.id.iv_like);
-            viewHolder.tv_address = convertView.findViewById(R.id.tv_address);
-            viewHolder.tv_website = convertView.findViewById(R.id.tv_website);
-            viewHolder.iv_share = convertView.findViewById(R.id.iv_share);
-            viewHolder.iv_map = convertView.findViewById(R.id.iv_map);
-            viewHolder.tv_map = convertView.findViewById(R.id.tv_map);
+            viewHolder.ivLike = convertView.findViewById(R.id.iv_like);
+            viewHolder.tvAddress = convertView.findViewById(R.id.tv_address);
+            viewHolder.tvWebsite = convertView.findViewById(R.id.tv_website);
+            viewHolder.ivShare = convertView.findViewById(R.id.iv_share);
+            viewHolder.ivMap = convertView.findViewById(R.id.iv_map);
+            viewHolder.tvMap = convertView.findViewById(R.id.tv_map);
             convertView.setTag(viewHolder);
         }
 
@@ -63,11 +62,11 @@ public class ListAdapter extends ArrayAdapter<Club> {
         viewHolder = (ListViewHolder) convertView.getTag();
         viewHolder.clubName.setText(club.getClubName());
         viewHolder.sport.setText(club.getSport());
-        viewHolder.tv_address.setText(club.getAddress());
+        viewHolder.tvAddress.setText(club.getAddress());
         viewHolder.sportColor.setImageDrawable(getContext().getResources().getDrawable(club.getImage()));
-        viewHolder.tv_website.setText(club.getWebsite());
-        if (viewHolder.tv_website.getText().length() == 0) {
-            viewHolder.tv_website.setText(R.string.tvWebsite);
+        viewHolder.tvWebsite.setText(club.getWebsite());
+        if (viewHolder.tvWebsite.getText().length() == 0) {
+            viewHolder.tvWebsite.setText(R.string.tvWebsite);
         }
 
         final ListViewHolder finalViewHolder = viewHolder;
@@ -83,13 +82,13 @@ public class ListAdapter extends ArrayAdapter<Club> {
         });
 
         final ListViewHolder finalViewHolder1 = viewHolder;
-        viewHolder.iv_share.setOnClickListener(new View.OnClickListener() {
+        viewHolder.ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String message = getContext().getResources().getString(R.string.sahreBody);
                 String sport = finalViewHolder1.sport.getText().toString();
                 String clubName = finalViewHolder1.clubName.getText().toString();
-                String webSite = finalViewHolder1.tv_website.getText().toString();
+                String webSite = finalViewHolder1.tvWebsite.getText().toString();
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
                 String shareBodyText = message + sport + " " + clubName + " " + webSite;
@@ -102,7 +101,7 @@ public class ListAdapter extends ArrayAdapter<Club> {
 
         final ImageView ivLike = convertView.findViewById(R.id.iv_like);
         final TextView tvCounter = convertView.findViewById(R.id.tv_counter);
-        final ImageView likeImg = viewHolder.iv_like;
+        final ImageView likeImg = viewHolder.ivLike;
 
         SharedPreferences sharedPref = getContext().getSharedPreferences("clubid", Context.MODE_PRIVATE);
 
@@ -114,7 +113,7 @@ public class ListAdapter extends ArrayAdapter<Club> {
         }
 
         likeImg.setTag(false); // set favorite off
-        viewHolder.iv_like.setOnClickListener(new View.OnClickListener() {
+        viewHolder.ivLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean isliked = ((boolean) ivLike.getTag());
@@ -167,7 +166,7 @@ public class ListAdapter extends ArrayAdapter<Club> {
 
         final double lat = club.getLatitude();
         final double lon = club.getLongitude();
-        viewHolder.iv_map.setOnClickListener(new View.OnClickListener() {
+        viewHolder.ivMap.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -178,8 +177,8 @@ public class ListAdapter extends ArrayAdapter<Club> {
             }
         });
 
-        viewHolder.tv_map.setText(R.string.go);
-        viewHolder.tv_map.setOnClickListener(new View.OnClickListener() {
+        viewHolder.tvMap.setText(R.string.go);
+        viewHolder.tvMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -197,15 +196,15 @@ public class ListAdapter extends ArrayAdapter<Club> {
         public TextView clubName;
         public TextView sport;
         public TextView phone;
-        public TextView tv_address;
-        public TextView tv_website;
+        public TextView tvAddress;
+        public TextView tvWebsite;
         public ImageView sportColor;
         public ConstraintLayout drawerInfo;
         public ImageButton popUpButton;
-        public ImageView iv_like;
-        public ImageView iv_share;
-        public ImageView iv_map;
-        public TextView tv_map;
+        public ImageView ivLike;
+        public ImageView ivShare;
+        public ImageView ivMap;
+        public TextView tvMap;
     }
 }
 
