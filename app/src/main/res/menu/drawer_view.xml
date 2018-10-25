@@ -26,8 +26,8 @@
             android:title="@string/Voirlaliste" />
         <item
             android:id="@+id/map"
-            android:icon="@drawable/baseline_map_black_36"
-            android:title="@string/Accederalacarte" />
+            android:icon="@drawable/mapsicon"
+            android:title="Acceder à la carte" />
 
     </group>
     <item

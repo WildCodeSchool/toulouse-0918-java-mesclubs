@@ -38,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         emailLog = findViewById(R.id.etPseudo);
         loadingMe = (CircularProgressButton) findViewById(R.id.send);
 
-
         currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
 
@@ -91,7 +90,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
-
 
     private void login() {
         String email = emailLog.getText().toString();

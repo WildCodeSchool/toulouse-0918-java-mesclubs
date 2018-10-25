@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationListener;
@@ -24,18 +25,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-
-import android.view.Display;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.widget.ListPopupWindow;
 import android.widget.PopupWindow;
-
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -60,6 +58,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static fr.wildcodeschool.mesclubs.Singleton.getImages;
 
@@ -70,13 +69,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     final static int POPUP_POSITION_Y = 0;
     LocationManager mLocationManager = null;
     boolean moveCam = false;
-    //int counter = 0;
+    Location userLocation = null;
     NavigationView navigationView;
     ClipData.Item map;
-    private int MARKER_WIDTH = 100;
-    private int MARKER_HEIGHT = 100;
     Menu connection;
     Menu profil;
+    private int MARKER_WIDTH = 100;
+    private int MARKER_HEIGHT = 100;
     private FirebaseAuth mAuth;
 
     private GoogleMap mMap;
@@ -84,7 +83,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Toolbar toolbar;
     private PopupWindow popUp;
     //SharedPreferences sharedPref = MapsActivity.this.getPreferences(Context.MODE_PRIVATE);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +142,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
-
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.connection:
@@ -160,7 +157,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 break;
 
             case R.id.profile:
-                startActivity(new Intent(MapsActivity.this,ProfilActivity.class));
+                startActivity(new Intent(MapsActivity.this, ProfilActivity.class));
                 break;
 
             case R.id.filtre_distance:
@@ -200,8 +197,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         final String sport = tvFiltreAlpinisme.getText().toString();
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
-                                , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
-                                , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
+                          , tvFiltreCanyonisme, tvFiltreCourse, tvFiltreEcalade, tvFiltreNatation
+                          , tvFiltreVoile, tvFiltreRando, tvFiltreSpeleo, tvFiltreYoga, tvFiltrePlonge, tvNotFiltre);
                     }
                 });
 
@@ -393,7 +390,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void getClubs() {
         Singleton singleton = Singleton.getInstance();
-        ArrayList<Club> clubs =  singleton.getListClub();
+        ArrayList<Club> clubs = singleton.getListClub();
         for (Club club : clubs) {
             Bitmap initialMarkerIcon = BitmapFactory.decodeResource(getResources(), club.getImage());
             Bitmap markerIcon = Bitmap.createScaledBitmap(initialMarkerIcon, MARKER_WIDTH, MARKER_HEIGHT, false);
@@ -478,36 +475,58 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void getClubsByDistance() {
+        final ArrayList<Club> clubList = new ArrayList<>();
         //firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference clubRef = database.getReference("club");
-        clubRef.orderByChild("latitude").limitToFirst(5)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
-                            Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
-                            club.setImage(getImages(club.getSport()));
-                            Bitmap initialMarkerIcon = BitmapFactory.decodeResource(getResources(), club.getImage());
-                            Bitmap markerIcon = Bitmap.createScaledBitmap(initialMarkerIcon, MARKER_WIDTH, MARKER_HEIGHT, false);
-                            Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.getLatitude(), club.getLongitude()))
-                                    .icon(BitmapDescriptorFactory.fromBitmap(markerIcon)));
-                            marker.setTag(club);
-                        }
-                        // generer les marqueurs a partir de la liste
-                        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                            @Override
-                            public boolean onMarkerClick(Marker marker) {
-                                popupBuilder(marker);
-                                return false;
-                            }
-                        });
+        clubRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                clubList.clear();
+                for (DataSnapshot clubSnapshot : dataSnapshot.getChildren()) {
+                    Club club = clubSnapshot.getValue(Club.class);//transform JSON en objet club
+                    club.setImage(getImages(club.getSport()));
+                    Location distanceClub = new Location(LocationManager.GPS_PROVIDER);
+                    distanceClub.setLatitude(club.getLatitude());
+                    distanceClub.setLongitude(club.getLongitude());
+                    if (userLocation != null) {
+                        double distance = userLocation.distanceTo(distanceClub);
+                        club.setDistance(distance);
                     }
+                    clubList.add(club);
+                }
 
+                for (int i = 0; i < 4; i++) {
+                    for (int j = i; j <= clubList.size() - 1; j++) {
+                        if (clubList.get(j).getDistance() < clubList.get(i).getDistance()) {
+                            Collections.swap(clubList, i, j);
+                        }
+                    }
+                }
+
+                for (int i = 0; i < 4; i++) {
+                    Club club = clubList.get(i);
+                    Bitmap initialMarkerIcon = BitmapFactory.decodeResource(getResources(), club.getImage());
+                    Bitmap markerIcon = Bitmap.createScaledBitmap(initialMarkerIcon, MARKER_WIDTH, MARKER_HEIGHT, false);
+                    Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.getLatitude(), club.getLongitude()))
+                            .icon(BitmapDescriptorFactory.fromBitmap(markerIcon)));
+                    marker.setTag(club);
+                }
+                
+                // generer les marqueurs a partir de la liste
+                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                    public boolean onMarkerClick(Marker marker) {
+                        popupBuilder(marker);
+                        return false;
                     }
                 });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     @SuppressLint("MissingPermission")
@@ -592,8 +611,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void moveCameraOnUser(Location location) {
 
-        LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15.0f));
+        LatLng userLatLong = new LatLng(location.getLatitude(), location.getLongitude());
+        userLocation = location;
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLatLong, 13.5f));
     }
 
     @Override
@@ -677,7 +697,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         final TextView markerSport = popUpView.findViewById(R.id.text_sport);
         final TextView markeurWeb = popUpView.findViewById(R.id.text_web);
         final ImageView ivLike = popUpView.findViewById(R.id.iv_like);
-        final ImageView ivFav = popUpView.findViewById(R.id.iv_fav);
         ImageView ivShare = popUpView.findViewById(R.id.image_share);
         ImageView markerItinerary = popUpView.findViewById(R.id.iv_itinerary);
         final TextView tvCounter = popUpView.findViewById(R.id.tv_counter);
@@ -687,7 +706,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         markerSport.setText(club.getSport());
         markeurWeb.setText(club.getWebsite());
         markerImage.setImageDrawable(MapsActivity.this.getResources().getDrawable(club.getImage()));
-        ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_off));
         ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like_off));
         tvCounter.setText(String.valueOf(club.getCounter()));
 
@@ -725,27 +743,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        //Click on Favoris
-        ivFav.setTag(false); // set favorite off
-        ivFav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean isFav = ((boolean) ivFav.getTag());
-                if (!isFav) {
-                    ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_on));
-                } else {
-                    ivFav.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.btn_star_big_off));
-                }
-                ivFav.setTag(!isFav);
-            }
-        });
-
         //Click on like
-        ivLike.setTag(false); // set favorite off
+        SharedPreferences sharedPref = MapsActivity.this.getSharedPreferences("clubid", Context.MODE_PRIVATE);
+        boolean isLiked = sharedPref.getBoolean(club.getId(), false);
+        if (isLiked) {
+            ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like));
+        } else {
+            ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like_off));
+        }
+
+        ivLike.setTag(isLiked); // set favorite off
         ivLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 boolean isliked = ((boolean) ivLike.getTag());
                 if (!isliked) {
                     ivLike.setImageDrawable(MapsActivity.this.getResources().getDrawable(R.drawable.like));
@@ -760,7 +770,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             thisClub.setCounter(counter);
                             clubRef.setValue(thisClub);
                             tvCounter.setText(String.valueOf(thisClub.getCounter()));
-
+                            likePreferences(dataSnapshot.getKey(), true);
                         }
 
                         @Override
@@ -781,7 +791,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             thisClub.setCounter(counter);
                             clubRef.setValue(thisClub);
                             tvCounter.setText(String.valueOf(thisClub.getCounter()));
-
+                 likePreferences(dataSnapshot.getKey(), false);
                         }
 
                         @Override
@@ -793,6 +803,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 ivLike.setTag(!isliked);
             }
         });
+    }
+
+    public void likePreferences(String clubId, boolean isLiked) {
+        SharedPreferences sharedPref = MapsActivity.this.getSharedPreferences("clubid", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(clubId, isLiked);
+        editor.commit();
     }
 }
 
