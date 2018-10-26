@@ -85,10 +85,9 @@ public class ListAdapter extends ArrayAdapter<Club> {
                 String message = getContext().getResources().getString(R.string.sahreBody);
                 String sport = finalViewHolder1.sport.getText().toString();
                 String clubName = finalViewHolder1.clubName.getText().toString();
-                String webSite = finalViewHolder1.tvWebsite.getText().toString();
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
-                String shareBodyText = message + sport + " " + clubName + " " + webSite;
+                String shareBodyText = message + sport + " " + clubName;
                 shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "My App");
                 shareIntent.putExtra(Intent.EXTRA_TEXT, shareBodyText);
                 getContext().startActivity(Intent.createChooser(shareIntent, "Share via"));
