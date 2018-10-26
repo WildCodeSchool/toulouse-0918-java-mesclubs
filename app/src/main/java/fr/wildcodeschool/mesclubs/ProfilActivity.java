@@ -227,7 +227,7 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
             target.setVisible(false);
             dec = navigationView.getMenu();
             MenuItem target6 = dec.findItem(R.id.déconnection);
-            target6.setVisible(false);
+            target6.setVisible(true);
         } else {
             menu = navigationView.getMenu();
             MenuItem target = menu.findItem(R.id.connection);
