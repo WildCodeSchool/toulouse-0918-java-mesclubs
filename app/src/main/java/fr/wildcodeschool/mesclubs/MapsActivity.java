@@ -195,7 +195,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 tvFiltreAlpinisme.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mMap.clear();
                         final String sport = tvFiltreAlpinisme.getText().toString();
                         getClubsBySport(sport);
 
@@ -208,7 +207,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 tvFiltreAviron.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mMap.clear();
                         final String sport = tvFiltreAviron.getText().toString();
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
@@ -220,7 +218,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 tvFiltreCanoe.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mMap.clear();
                         final String sport = tvFiltreCanoe.getText().toString();
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
@@ -232,7 +229,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 tvFiltreCanyonisme.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mMap.clear();
                         final String sport = tvFiltreCanyonisme.getText().toString();
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
@@ -244,7 +240,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 tvFiltreCourse.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mMap.clear();
                         final String sport = tvFiltreCourse.getText().toString();
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
@@ -256,7 +251,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 tvFiltreEcalade.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mMap.clear();
                         final String sport = tvFiltreEcalade.getText().toString();
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
@@ -268,7 +262,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 tvFiltreNatation.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mMap.clear();
                         final String sport = tvFiltreNatation.getText().toString();
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
@@ -280,7 +273,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 tvFiltreVoile.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mMap.clear();
                         final String sport = tvFiltreVoile.getText().toString();
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
@@ -292,7 +284,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 tvFiltreRando.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mMap.clear();
                         final String sport = tvFiltreRando.getText().toString();
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
@@ -304,7 +295,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 tvFiltreSpeleo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mMap.clear();
                         final String sport = tvFiltreSpeleo.getText().toString();
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
@@ -316,7 +306,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 tvFiltreYoga.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mMap.clear();
                         final String sport = tvFiltreYoga.getText().toString();
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
@@ -328,7 +317,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 tvFiltrePlonge.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mMap.clear();
                         final String sport = tvFiltrePlonge.getText().toString();
                         getClubsBySport(sport);
                         dontShowFilters(tvFiltre, tvFiltreAlpinisme, tvFiltreAviron, tvFiltreCanoe
@@ -411,6 +399,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void getClubsBySport(String sport) {
+        mMap.clear();
         //firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference clubRef = database.getReference("club");
