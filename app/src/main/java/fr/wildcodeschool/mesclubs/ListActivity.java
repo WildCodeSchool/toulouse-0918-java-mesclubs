@@ -362,6 +362,7 @@ public class ListActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void getClubsByHand() {
+        listClub.clear();
         //firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference clubRef = database.getReference("club");
