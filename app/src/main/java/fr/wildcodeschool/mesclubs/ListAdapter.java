@@ -88,7 +88,7 @@ public class ListAdapter extends ArrayAdapter<Club> {
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
                 String shareBodyText = message + sport + " " + clubName;
-                shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "My App");
+                shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Look 'n' Sport");
                 shareIntent.putExtra(Intent.EXTRA_TEXT, shareBodyText);
                 getContext().startActivity(Intent.createChooser(shareIntent, "Share via"));
             }

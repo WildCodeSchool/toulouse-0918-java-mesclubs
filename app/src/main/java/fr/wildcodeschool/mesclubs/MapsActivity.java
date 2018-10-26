@@ -734,10 +734,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 String message = getString(R.string.sahreBody);
                 String sport = markerSport.getText().toString();
                 String clubName = markerName.getText().toString();
-                String webSite = markeurWeb.getText().toString();
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
-                String shareText = message + " " + sport + " " + clubName + " " + webSite;
+                String shareText = message + " " + sport + " " + clubName;
                 shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Look'n'Sport");
                 shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
                 startActivity(Intent.createChooser(shareIntent, "Share via"));
