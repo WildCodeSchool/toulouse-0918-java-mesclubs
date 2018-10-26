@@ -12,7 +12,7 @@
     <string name="ongletfav">Favoris</string>
     <string name="se_connecter">Se connecter</string>
     <string name="Voirlaliste">Voir la liste</string>
-    <string name="Accederalacarte">Acceder à la carte</string>
+    <string name="Accederalacarte">Voir la carte</string>
     <string name="sedeconnecter">Se déconnecter</string>
 
     <string name="nom">LOOK \'n\' SPORT</string>
@@ -22,7 +22,6 @@
     <string name="sahreBody">J\'adore ce club :</string>
     <string name="s_inscrire">S\'inscrire</string>
     <string name="counter">comp</string>
-
 
     <string name="USER">Pseudo</string>
     <string name="galeri">Galerie</string>
@@ -68,5 +67,6 @@
     <string name="reussite">Inscription réussie</string>
     <string name="photo_updated">Photo enregistrée</string>
     <string name="deconnection">Vous n\'êtes plus connecté</string>
+    <string name="echec_connexion">Echec de la connexion</string>
 
 </resources>

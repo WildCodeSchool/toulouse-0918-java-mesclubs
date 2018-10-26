@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(boolean success) {
                 if (!success) {
-                    //TODO afficher error
+                    Toast.makeText(MainActivity.this, R.string.echec_connexion, Toast.LENGTH_SHORT).show();
                 } else {
                     imageMap.setOnClickListener(new View.OnClickListener() {
                         @Override
