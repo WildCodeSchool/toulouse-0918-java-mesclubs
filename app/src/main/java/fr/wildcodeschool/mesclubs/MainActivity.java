@@ -52,4 +52,14 @@ public class MainActivity extends AppCompatActivity {
         imageList.setAnimation(fade);
         imageLogo.setAnimation(fade);
     }
+
+    boolean shouldAllowBack = false;
+    @Override
+    public void onBackPressed() {
+        if (!shouldAllowBack) {
+
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
