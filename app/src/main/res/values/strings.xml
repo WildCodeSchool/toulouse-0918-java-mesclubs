@@ -44,7 +44,7 @@
     <string name="plongee">PLONGEE</string>
     <string name="randonnee">RANDONNEE</string>
     <string name="speleologie">SPELEOLOGIE</string>
-    <string name="filtre_distance">Filtre Distance</string>
+    <string name="filtre_distance">Clubs les plus proches</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->

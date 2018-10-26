@@ -52,17 +52,14 @@ public class ListAdapter extends ArrayAdapter<Club> {
             viewHolder.ivLike = convertView.findViewById(R.id.iv_like);
             viewHolder.tvWebsite = convertView.findViewById(R.id.tv_website);
             viewHolder.ivShare = convertView.findViewById(R.id.iv_share);
-            viewHolder.ivMap = convertView.findViewById(iv_map);
-
+            viewHolder.ivMap = convertView.findViewById(R.id.iv_map);
             convertView.setTag(viewHolder);
         }
 
         final Club club = getItem(position);
-
         viewHolder = (ListViewHolder) convertView.getTag();
         viewHolder.clubName.setText(club.getClubName());
         viewHolder.sport.setText(club.getSport());
-//        viewHolder.tvAddress.setText(club.getAddress());
         viewHolder.sportColor.setImageDrawable(getContext().getResources().getDrawable(club.getImage()));
         viewHolder.tvWebsite.setText(club.getWebsite());
         if (viewHolder.tvWebsite.getText().length() == 0) {
@@ -175,7 +172,6 @@ public class ListAdapter extends ArrayAdapter<Club> {
                 getContext().startActivity(intentmap);
             }
         });
-
         return convertView;
     }
 
@@ -198,19 +194,18 @@ public class ListAdapter extends ArrayAdapter<Club> {
             }
         });
     }
-  
 
-}
+    class ListViewHolder {
+        public TextView clubName;
+        public TextView sport;
+        public TextView phone;
+        public TextView tvWebsite;
+        public ImageView sportColor;
+        public ConstraintLayout drawerInfo;
+        public ImageButton popUpButton;
+        public ImageView ivLike;
+        public ImageView ivShare;
+        public ImageView ivMap;
 
-class ListViewHolder {
-    public TextView clubName;
-    public TextView sport;
-    public TextView phone;
-    public TextView tvWebsite;
-    public ImageView sportColor;
-    public ConstraintLayout drawerInfo;
-    public ImageButton popUpButton;
-    public ImageView ivLike;
-    public ImageView ivShare;
-    public ImageView ivMap;
+    }
 }

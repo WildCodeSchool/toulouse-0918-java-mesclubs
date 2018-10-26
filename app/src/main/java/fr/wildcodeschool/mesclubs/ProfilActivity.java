@@ -54,6 +54,7 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
     Uri uriProfileImage;
     Uri photoStringLink;
     Menu menu;
+    Menu dec;
     ImageView photos;
     private DrawerLayout mDrawerLayout;
     private Toolbar toolbar;
@@ -80,7 +81,6 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
         filtreSport.setVisible(false);
         MenuItem filtreHand = menu.findItem(R.id.filtre_hand);
         filtreHand.setVisible(false);
-
 
         //Prendre la photo
         loadingMe.setOnClickListener(new View.OnClickListener() {
@@ -162,7 +162,6 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
     }
 
     private void saveUserInformation() {
-
         //se connecter a firebase
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference userfirebase = database.getReference("User");
@@ -226,6 +225,9 @@ public class ProfilActivity extends AppCompatActivity implements NavigationView.
             menu = navigationView.getMenu();
             MenuItem target = menu.findItem(R.id.connection);
             target.setVisible(false);
+            dec = navigationView.getMenu();
+            MenuItem target6 = dec.findItem(R.id.déconnection);
+            target6.setVisible(false);
         } else {
             menu = navigationView.getMenu();
             MenuItem target = menu.findItem(R.id.connection);
