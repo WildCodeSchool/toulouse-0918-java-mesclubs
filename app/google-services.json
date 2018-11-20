@@ -1,0 +1,89 @@
+{
+  "project_info": {
+
+    "project_number": "724087223577",
+    "firebase_url": "https://mesclubs-1492e.firebaseio.com",
+    "project_id": "mesclubs-1492e",
+    "storage_bucket": "mesclubs-1492e.appspot.com"
+
+  },
+  "client": [
+    {
+      "client_info": {
+
+        "mobilesdk_app_id": "1:724087223577:android:609691fb5e9ea71e",
+
+        "android_client_info": {
+          "package_name": "fr.wildcodeschool.mesclubs"
+        }
+      },
+      "oauth_client": [
+        {
+
+          "client_id": "724087223577-lq7qvi7vb35bb9u90em7d380ijrgqu7k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.wildcodeschool.mesclubs",
+            "certificate_hash": "39b628db43a28908ea27523f960cb30720a85b93"
+          }
+        },
+        {
+          "client_id": "724087223577-vagj0gp32v4k5ebag8adbi3ou9o0jdui.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.wildcodeschool.mesclubs",
+            "certificate_hash": "a45005a2931b039cb652ada6815fc080b91eb12d"
+          }
+        },
+        {
+          "client_id": "724087223577-p47g2otgbq12cqd3gmshm2r2rbfvm58s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.wildcodeschool.mesclubs",
+            "certificate_hash": "c1760c570e8f38e1674f268a247dafda45d28510"
+          }
+        },
+        {
+          "client_id": "724087223577-u742vmr0svgmdvo4o49t4ie4pbblkcvb.apps.googleusercontent.com",
+
+          "client_id": "724087223577-ujq472pi4vn2mjqevdo5kfs41eupr18t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.wildcodeschool.mesclubs",
+            "certificate_hash": "4451d7113efd07bb21a6f210d8231303f02ae169"
+          }
+        },
+        {
+          "client_id": "724087223577-u742vmr0svgmdvo4o49t4ie4pbblkcvb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHHDIhTdMktNMae19SLPMJuJrf5ybP2UA"
+
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+
+              "client_id": "724087223577-u742vmr0svgmdvo4o49t4ie4pbblkcvb.apps.googleusercontent.com",
+
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

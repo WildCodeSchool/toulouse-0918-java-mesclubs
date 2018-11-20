@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/filtre_distance"
+            android:color="#ffffff"
+            android:icon="@drawable/baseline_filter_list_black_36"
+            android:radius="5dp"
+            android:shape="rectangle"
+            android:title="@string/filtre_distance" />
+
+        <item
+            android:id="@+id/filtre_hand"
+            android:icon="@drawable/baseline_filter_list_black_36"
+            android:title="@string/filtre_handicap" />
+        <item
+            android:id="@+id/filtre_sport"
+            android:icon="@drawable/baseline_filter_list_black_36"
+            android:title="@string/filtre_par_sport" />
+        <item
+            android:id="@+id/liste"
+            android:icon="@drawable/list_icon"
+            android:title="@string/Voirlaliste" />
+        <item
+            android:id="@+id/map"
+            android:icon="@drawable/mapsicon"
+            android:title="Acceder à la carte" />
+
+    </group>
+    <item
+        android:id="@+id/connec"
+        android:title="@string/Utilisateur">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/profile"
+
+
+                    android:icon="@drawable/baseline_person_black_36"
+                    android:title="@string/onglet_profile" />
+                <item
+                    android:id="@+id/connection"
+                    android:icon="@drawable/baseline_input_black_18dp"
+                    android:title="@string/ongletconnect" />
+
+                <item
+                    android:id="@+id/déconnection"
+                    android:icon="@drawable/log_out"
+                    android:title="@string/sedeconnecter" />
+
+            </group>
+        </menu>
+    </item>
+
+</menu>

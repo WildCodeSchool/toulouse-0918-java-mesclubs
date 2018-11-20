@@ -1,3 +1,72 @@
 <resources>
-    <string name="app_name">MesClubs</string>
+    <string name="app_name">Look \'n\' Sport</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_profil">ProfilActivity</string>
+    <string name="entrer_dans_l_application">Entrer dans l\'application</string>
+    <string name="ongletti">Itinairaire</string>
+    <string name="ongletfiltre">filtre</string>
+    <string name="Utilisateur">Utilisateur</string>
+
+    <string name="ongletconnect">Se connecter/S\'inscrire</string>
+    <string name="onglet_profile">Profil</string>
+    <string name="ongletfav">Favoris</string>
+    <string name="se_connecter">Se connecter</string>
+    <string name="Voirlaliste">Voir la liste</string>
+    <string name="Accederalacarte">Voir la carte</string>
+    <string name="sedeconnecter">Se déconnecter</string>
+
+    <string name="nom">LOOK \'n\' SPORT</string>
+    <string name="tvPhone">Phone</string>
+    <string name="tvMail">Mail</string>
+    <string name="tvWebsite">Pas de site disponible pour ce club</string>
+    <string name="sahreBody">J\'ai trouvé ce club sur l\'application Look \'n\' Sport :</string>
+    <string name="s_inscrire">S\'inscrire</string>
+    <string name="counter">comp</string>
+
+    <string name="USER">Pseudo</string>
+    <string name="galeri">Galerie</string>
+    <string name="navigation_drawer_open">open navigation drawer</string>
+    <string name="navigation_drawer_close">close navigation drawer</string>
+    <string name="alpinisme">ALPINISME</string>
+    <string name="aviron">AVIRON</string>
+    <string name="canoe_kayak">CANOE-KAYAK</string>
+    <string name="canyonisme">CANYONISME</string>
+    <string name="course_a_pied">COURSE A PIED</string>
+    <string name="escalade">ESCALADE</string>
+    <string name="natation">NATATION</string>
+    <string name="voile">VOILE</string>
+    <string name="yoga">YOGA</string>
+    <string name="retirer_les_filtres">Retirer les filtres</string>
+    <string name="filtre_handicap">Filtre Handicap</string>
+    <string name="filtre_par_sport">Filtre Sport</string>
+    <string name="course_d_orientation">COURSE D\'ORIENTATION</string>
+    <string name="plongee">PLONGEE</string>
+    <string name="randonnee">RANDONNEE</string>
+    <string name="speleologie">SPELEOLOGIE</string>
+    <string name="filtre_distance">Clubs les plus proches</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Mot de passe</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="retirer_tout_les_filtres">RETIRER TOUT LES FILTRES</string>
+    <string name="site_web">Site web</string>
+    <string name="sport">Sport</string>
+    <string name="email_password">Mot de passe ou email incorrect</string>
+    <string name="connecté">Vous êtes connecté</string>
+    <string name="replir_champ">Remplissez tous les champs</string>
+    <string name="echec">Inscription échouée</string>
+    <string name="reussite">Inscription réussie</string>
+    <string name="photo_updated">Photo enregistrée</string>
+    <string name="deconnection">Vous n\'êtes plus connecté</string>
+    <string name="echec_connexion">Echec de la connexion</string>
+
 </resources>

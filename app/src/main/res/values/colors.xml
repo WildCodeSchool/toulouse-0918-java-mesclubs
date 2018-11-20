@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="translucent_red">#80ff0000</color>
+    <color name="alpinism">#c21807</color>
+    <color name="escalade">#008000</color>
+    <color name="marche">#00FFFF</color>
+    <color name="natation">#0000FF</color>
+    <color name="white">#FFFFFF</color>
+
 </resources>
